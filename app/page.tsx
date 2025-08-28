@@ -25,20 +25,14 @@ const LanguageToggle = dynamic(() => import("@/components/LanguageToggle"), { ss
 
 class ErrorBoundary extends React.Component<{ name: string; children: React.ReactNode }, { error?: Error }> {
   state = { error: undefined as Error | undefined };
-  static getDerivedStateFromError(error: Error) {
-    return { error };
-  }
-  componentDidCatch() {
-    /* no-op */
-  }
+  static getDerivedStateFromError(error: Error) { return { error }; }
+  componentDidCatch() { /* no-op */ }
   render() {
     if (this.state.error) {
       return (
         <div className="border rounded-lg p-3 bg-red-50 dark:bg-red-950">
           <div className="font-semibold">🔴 {this.props.name} failed to render</div>
-          <pre className="mt-2 text-xs whitespace-pre-wrap">
-            {String(this.state.error?.stack || this.state.error?.message)}
-          </pre>
+          <pre className="mt-2 text-xs whitespace-pre-wrap">{String(this.state.error?.stack || this.state.error?.message)}</pre>
         </div>
       );
     }
@@ -72,25 +66,29 @@ export default function Page() {
               My current work spans lignin chemistry &amp; biopolymers, Python/TF pipelines, and small interactive quant apps.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/resume" className="btn">
+              {/* Magnetic hero buttons */}
+              <MagneticButton href="/resume" className="btn inline-block" aria-label="View resume">
                 {t("hero.viewResume")}
-              </Link>
+              </MagneticButton>
 
               {/* Force file download (GitHub Pages-safe via base path) */}
-              <a
+              <MagneticButton
                 href={`${base}/downloads/Resume%20P.pdf`}
                 download="John_Slavinskas_Resume_1p.pdf"
-                className="btn-outline"
+                className="btn-outline inline-block"
+                aria-label="Download 1-page resume PDF"
               >
                 {t("hero.download1p")}
-              </a>
-              <a
+              </MagneticButton>
+
+              <MagneticButton
                 href={`${base}/downloads/CV-P.pdf`}
                 download="John_Slavinskas_CV.pdf"
-                className="btn-outline"
+                className="btn-outline inline-block"
+                aria-label="Download full CV PDF"
               >
                 {t("hero.downloadCV")}
-              </a>
+              </MagneticButton>
             </div>
           </div>
         </div>
@@ -189,7 +187,7 @@ function ComponentsCheckGate({ isDev }: { isDev: boolean }) {
 
         <Smoke name="EmailLink"><EmailLink /></Smoke>
         <Smoke name="LanguageToggle"><LanguageToggle /></Smoke>
-        <Smoke name="MagneticButton"><MagneticButton>Hover me</MagneticButton></Smoke>
+        <Smoke name="MagneticButton"><MagneticButton className="btn inline-block">Hover me</MagneticButton></Smoke>
 
         <Smoke name="KPIs (demo)">
           <KPIs
@@ -215,20 +213,8 @@ function ComponentsCheckGate({ isDev }: { isDev: boolean }) {
         <Smoke name="Timeline">
           <Timeline
             items={[
-              {
-                role: "Now",
-                org: "Demo Org",
-                loc: "Berlin",
-                period: "Today",
-                bullets: ["Testing components"],
-              },
-              {
-                role: "Later",
-                org: "Demo Org",
-                loc: "Berlin",
-                period: "Soon",
-                bullets: ["Ship"],
-              },
+              { role: "Now", org: "Demo Org", loc: "Berlin", period: "Today", bullets: ["Testing components"] },
+              { role: "Later", org: "Demo Org", loc: "Berlin", period: "Soon", bullets: ["Ship"] },
             ]}
           />
         </Smoke>
