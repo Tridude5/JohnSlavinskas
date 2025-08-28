@@ -88,6 +88,74 @@ function SkillsSidebar() {
   );
 }
 
+/* ---------------- Publications (fancier spacing & badges) ---------------- */
+function Publications() {
+  return (
+    <ul className="mt-3 divide-y divide-white/10">
+      <li className="py-4">
+        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/425" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+          <span className="font-medium">Lignin-Derived Carbon Fibres: Opportunities and Challenges</span>
+          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
+        </a>
+        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
+          <span>2025</span>
+        </div>
+      </li>
+      <li className="py-4">
+        <a href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+          <span className="font-medium">Lignin Derived Chemicals and Aromatics: A Review</span>
+          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
+        </a>
+        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">ChemRxiv</span>
+          <span>Apr 24, 2025</span>
+        </div>
+      </li>
+      <li className="py-4">
+        <a href="https://journaljerr.com/index.php/JERR/article/view/1174" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+          <span className="font-medium">Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</span>
+          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
+        </a>
+        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
+          <span>2024</span>
+        </div>
+      </li>
+      <li className="py-4">
+        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/251" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+          <span className="font-medium">Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study</span>
+          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
+        </a>
+        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
+          <span>2023</span>
+        </div>
+      </li>
+      <li className="py-4">
+        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/225" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+          <span className="font-medium">Upgrading of OCC with Aseptic Packaging for Paper Board Applications</span>
+          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
+        </a>
+        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
+          <span>2022</span>
+        </div>
+      </li>
+      <li className="py-4">
+        <a href="https://journaljerr.com/index.php/JERR/article/view/780" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+          <span className="font-medium">A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review</span>
+          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
+        </a>
+        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
+          <span>2022</span>
+        </div>
+      </li>
+    </ul>
+  );
+}
+
 /* ------------------- PAGE ------------------- */
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -361,7 +429,7 @@ export default function Page() {
 
               <li>
                 <div className="font-medium flex items-center gap-2">
-                  <span className="text-xl">🧻</span> BS Paper Engineering
+                  <span className="text-xl">📄</span> BS Paper Engineering
                 </div>
                 <div className="text-gray-500">SUNY ESF · Aug 2020 – Aug 2023 (ABET)</div>
                 <div className="mt-1 text-gray-400">
@@ -374,44 +442,7 @@ export default function Page() {
           {/* Research & Publications — with your links */}
           <div className="card">
             <h3 className="font-semibold">Research & Publications</h3>
-            <ul className="mt-2 text-sm space-y-2">
-              <li>
-                <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/425" className="fancy-underline" target="_blank" rel="noreferrer">
-                  Lignin-Derived Carbon Fibres: Opportunities and Challenges
-                </a>{" "}
-                — <strong>JMSRR</strong>, 2025.
-              </li>
-              <li>
-                <a href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80" className="fancy-underline" target="_blank" rel="noreferrer">
-                  Lignin Derived Chemicals and Aromatics: A Review
-                </a>{" "}
-                — <strong>ChemRxiv</strong>, Apr 24, 2025.
-              </li>
-              <li>
-                <a href="https://journaljerr.com/index.php/JERR/article/view/1174" className="fancy-underline" target="_blank" rel="noreferrer">
-                  Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine
-                </a>{" "}
-                — <strong>J. Engineering Research &amp; Reports</strong>, 2024.
-              </li>
-              <li>
-                <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/251" className="fancy-underline" target="_blank" rel="noreferrer">
-                  Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study
-                </a>{" "}
-                — <strong>JMSRR</strong>, 2023.
-              </li>
-              <li>
-                <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/225" className="fancy-underline" target="_blank" rel="noreferrer">
-                  Upgrading of OCC with Aseptic Packaging for Paper Board Applications
-                </a>{" "}
-                — <strong>JMSRR</strong>, 2022.
-              </li>
-              <li>
-                <a href="https://journaljerr.com/index.php/JERR/article/view/780" className="fancy-underline" target="_blank" rel="noreferrer">
-                  A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review
-                </a>{" "}
-                — <strong>J. Engineering Research &amp; Reports</strong>, 2022.
-              </li>
-            </ul>
+            <Publications />
           </div>
         </div>
       </Section>
