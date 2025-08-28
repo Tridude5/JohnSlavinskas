@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 
 import Section from "@/components/Section";
 import ProjectCard from "@/components/ProjectCard";
-import Timeline from "@/components/Timeline";
 import KPIs from "@/components/KPIs";
 import BlueprintFX from "@/components/BlueprintFX";
 import ParallaxGroup from "@/components/ParallaxGroup";
@@ -17,6 +16,44 @@ import AutomationShowcase from "@/components/AutomationShowcase";
 const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ssr: false });
 
 /* ---------------- little UI helpers ---------------- */
+function Chip({ children, ghost = false }: { children: React.ReactNode; ghost?: boolean }) {
+  return (
+    <span
+      className={
+        ghost
+          ? "inline-flex items-center rounded-full border px-3 py-1 text-sm text-gray-300 border-white/15 bg-white/[0.04]"
+          : "inline-flex items-center rounded-full border px-3 py-1 text-sm border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+      }
+    >
+      {children}
+    </span>
+  );
+}
+
+type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
+function GreenTimeline({ items }: { items: TLItem[] }) {
+  return (
+    <ol className="relative border-l-2 border-emerald-500/40 pl-6 space-y-6">
+      {items.map((it, i) => (
+        <li key={i} className="relative">
+          <span className="absolute -left-3 top-1 size-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" />
+          <div className="card p-4">
+            <div className="flex flex-wrap items-baseline gap-2">
+              <h3 className="font-semibold">
+                {it.role} — <span className="text-emerald-400">{it.org}</span>
+              </h3>
+              <span className="text-xs text-gray-400">· {it.period}{it.loc ? ` · ${it.loc}` : ""}</span>
+            </div>
+            <ul className="mt-2 list-disc pl-5 space-y-1 text-sm">
+              {it.bullets.map((b, j) => <li key={j}>{b}</li>)}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 function SkillsCard() {
   return (
     <aside className="rounded-2xl border bg-black/30 backdrop-blur supports-[backdrop-filter]:bg-black/30 p-5 shadow-xl">
@@ -59,41 +96,16 @@ function SkillsCard() {
   );
 }
 
-type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
-function GreenTimeline({ items }: { items: TLItem[] }) {
-  return (
-    <ol className="relative border-l-2 border-emerald-500/40 pl-6 space-y-6">
-      {items.map((it, i) => (
-        <li key={i} className="relative">
-          <span className="absolute -left-3 top-1 size-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" />
-          <div className="card p-4">
-            <div className="flex flex-wrap items-baseline gap-2">
-              <h3 className="font-semibold">
-                {it.role} — <span className="text-emerald-400">{it.org}</span>
-              </h3>
-              <span className="text-xs text-gray-400">· {it.period}{it.loc ? ` · ${it.loc}` : ""}</span>
-            </div>
-            <ul className="mt-2 list-disc pl-5 space-y-1 text-sm">
-              {it.bullets.map((b, j) => <li key={j}>{b}</li>)}
-            </ul>
-          </div>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
 /* -------------------- PAGE -------------------- */
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  // hero KPIs (two cards like hers)
+  // hero KPIs (two cards like the reference)
   const heroKpis = [
     { label: "Publications", value: 6, spark: [1, 2, 3, 4, 5, 6] },
     { label: "Pilot/Lab Projects", value: 12, spark: [2, 3, 5, 7, 10, 12] },
   ];
 
-  // Interests for pills (kept simple)
   const interests = [
     { label: "Running", emoji: "🏃" },
     { label: "Bouldering", emoji: "🧗" },
@@ -105,7 +117,6 @@ export default function Page() {
     { label: "Video Editing", emoji: "🎬" },
   ];
 
-  // Experience (timeline shape used by your <Timeline/>)
   const exp: TLItem[] = [
     {
       role: "Technology Development — Working Student",
@@ -187,7 +198,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: skills card (sticky look on desktop) */}
+          {/* Right: skills card */}
           <div className="md:col-span-5">
             <div className="card card-gradient">
               <SkillsCard />
@@ -282,37 +293,108 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* EDUCATION & RESEARCH (two-up cards like hers) */}
-      <Section title="Education & Leadership">
+      {/* EDUCATION & RESEARCH (emoji-labeled degrees + chips + linked publications) */}
+      <Section title="Education & Research">
         <div className="grid md:grid-cols-2 gap-6">
+          {/* Education */}
           <div className="card">
             <h3 className="font-semibold">Education</h3>
-            <ul className="mt-3 space-y-2 text-sm">
+            <ul className="mt-3 space-y-3 text-sm">
               <li>
-                <div className="font-medium">MEng Paper Technology</div>
-                <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025</div>
-                <div className="text-gray-500">Thesis: Solubility Evaluation of Technical Lignins…</div>
+                <div className="font-medium flex items-center gap-2">
+                  <span className="text-xl">📈</span> MS Financial Engineering
+                </div>
+                <div className="text-gray-500">WorldQuant University · Jan 2024 – Dec 2025 (DEAC)</div>
+                <div className="mt-1 flex flex-wrap gap-2">
+                  <Chip ghost>Derivatives</Chip>
+                  <Chip ghost>Stochastic Modeling</Chip>
+                  <Chip ghost>ML/DL in Finance</Chip>
+                  <Chip ghost>Portfolio & Risk</Chip>
+                </div>
               </li>
+
               <li>
-                <div className="font-medium">MS Financial Engineering</div>
-                <div className="text-gray-500">WorldQuant University · Jan 2024 – Dec 2025</div>
+                <div className="font-medium flex items-center gap-2">
+                  <span className="text-xl">🧪</span> MEng Paper Technology
+                </div>
+                <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</div>
+                <div className="text-gray-500">
+                  Thesis: <em>Solubility Evaluation of Technical Lignins…</em>
+                </div>
+                <div className="mt-1 flex flex-wrap gap-2">
+                  <Chip ghost>Lignin</Chip>
+                  <Chip ghost>Biopolymers</Chip>
+                  <Chip ghost>Solubility/HSP</Chip>
+                  <Chip ghost>Rheology</Chip>
+                </div>
               </li>
+
               <li>
-                <div className="font-medium">BS Computer Science</div>
-                <div className="text-gray-500">University of the People · Jun 2023 – Jun 2025</div>
+                <div className="font-medium flex items-center gap-2">
+                  <span className="text-xl">💻</span> BS Computer Science
+                </div>
+                <div className="text-gray-500">University of the People · Jun 2023 – Jun 2025 (WASC)</div>
+                <div className="mt-1 flex flex-wrap gap-2">
+                  <Chip ghost>Data Science</Chip>
+                  <Chip ghost>Network &amp; App Security</Chip>
+                  <Chip ghost>Python · SQL</Chip>
+                </div>
               </li>
+
               <li>
-                <div className="font-medium">BS Paper Engineering</div>
-                <div className="text-gray-500">SUNY ESF · Aug 2020 – Aug 2023</div>
+                <div className="font-medium flex items-center gap-2">
+                  <span className="text-xl">🧻</span> BS Paper Engineering
+                </div>
+                <div className="text-gray-500">SUNY ESF · Aug 2020 – Aug 2023 (ABET)</div>
+                <div className="mt-1 flex flex-wrap gap-2">
+                  <Chip ghost>Process Optimization</Chip>
+                  <Chip ghost>Sustainable Packaging</Chip>
+                  <Chip ghost>MATLAB · VBA</Chip>
+                </div>
               </li>
             </ul>
           </div>
+
+          {/* Research & Publications — with your links */}
           <div className="card">
-            <h3 className="font-semibold">Leadership & Research</h3>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>Co-author on 4+ peer-reviewed papers: fiber recycling &amp; sustainable packaging.</li>
-              <li>Sensor deployments (Parcview/Everactive) for real-time QC dashboards.</li>
-              <li>Incubator participant (SCE), and ML/AI certs (DeepLearning.AI, IBM).</li>
+            <h3 className="font-semibold">Research & Publications</h3>
+            <ul className="mt-2 text-sm space-y-2">
+              <li>
+                <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/425" className="fancy-underline" target="_blank" rel="noreferrer">
+                  Lignin-Derived Carbon Fibres: Opportunities and Challenges
+                </a>{" "}
+                — <strong>JMSRR</strong>, 2025.
+              </li>
+              <li>
+                <a href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80" className="fancy-underline" target="_blank" rel="noreferrer">
+                  Lignin Derived Chemicals and Aromatics: A Review
+                </a>{" "}
+                — <strong>ChemRxiv</strong>, Apr 24, 2025.
+              </li>
+              <li>
+                <a href="https://journaljerr.com/index.php/JERR/article/view/1174" className="fancy-underline" target="_blank" rel="noreferrer">
+                  Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine
+                </a>{" "}
+                — <strong>J. Engineering Research &amp; Reports</strong>, 2024.
+              </li>
+              <li>
+                <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/251" className="fancy-underline" target="_blank" rel="noreferrer">
+                  Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study
+                </a>{" "}
+                — <strong>JMSRR</strong>, 2023.
+              </li>
+              <li>
+                <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/225" className="fancy-underline" target="_blank" rel="noreferrer">
+                  Upgrading of OCC with Aseptic Packaging for Paper Board Applications
+                </a>{" "}
+                — <strong>JMSRR</strong>, 2022.
+              </li>
+              <li>
+                <a href="https://journaljerr.com/index.php/JERR/article/view/780" className="fancy-underline" target="_blank" rel="noreferrer">
+                  A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review
+                </a>{" "}
+                — <strong>J. Engineering Research &amp; Reports</strong>, 2022.
+              </li>
             </ul>
           </div>
         </div>
