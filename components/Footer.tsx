@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import EmailLink from "./EmailLink";
 import { useI18n } from '@/components/i18n/I18nProvider';
