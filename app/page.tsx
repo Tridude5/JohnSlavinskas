@@ -10,22 +10,17 @@ import ProjectCard from "@/components/ProjectCard";
 import KPIs from "@/components/KPIs";
 import BlueprintFX from "@/components/BlueprintFX";
 import ParallaxGroup from "@/components/ParallaxGroup";
+import SkillsCard from "@/components/SkillsCard";
+import ProgrammingShowcase from "@/components/ProgrammingShowcase";
 
 const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ssr: false });
 
-/* ---------------- types ---------------- */
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---------------- Experience timeline (single line, centered dots) ---------------- */
+/* Single-line timeline with centered dots */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
-    <ol
-      className="
-        relative pl-9 space-y-8
-        before:absolute before:left-3 before:top-0 before:bottom-0
-        before:w-[2px] before:bg-emerald-500/40 before:content-['']
-      "
-    >
+    <ol className="relative pl-9 space-y-8 before:absolute before:left-3 before:top-0 before:bottom-0 before:w-[2px] before:bg-emerald-500/40 before:content-['']">
       {items.map((it, i) => (
         <li key={i} className="relative">
           <span
@@ -54,204 +49,114 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
   );
 }
 
-/* ---------------- Hero: Skills at a glance ---------------- */
-function SkillsCard() {
-  return (
-    <aside className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur p-5 shadow-xl">
-      <h3 className="font-semibold">Skills at a glance</h3>
-      <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
-        <div>
-          <div className="text-gray-500">Materials</div>
-          <ul className="mt-1 space-y-1">
-            <li>Lignin · Biopolymers</li>
-            <li>Pulp &amp; Paper</li>
-            <li>DOE/SPC · Rheology</li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-gray-500">Programming</div>
-          <ul className="mt-1 space-y-1">
-            <li>Python · JS/TS · Java</li>
-            <li>TensorFlow · Keras</li>
-            <li>SQL / NoSQL</li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-gray-500">Quant</div>
-          <ul className="mt-1 space-y-1">
-            <li>Option Pricing</li>
-            <li>Efficient Frontier</li>
-            <li>Backtesting</li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-gray-500">Lab &amp; Tools</div>
-          <ul className="mt-1 space-y-1">
-            <li>FTIR · NMR · GC/VOC</li>
-            <li>MATLAB · VBA</li>
-            <li>Firebase</li>
-          </ul>
-        </div>
-      </div>
-    </aside>
-  );
-}
-
-/* ---------------- Experience sidebar: Programming Showcase ---------------- */
-function Bar({ label, pct }: { label: string; pct: number }) {
-  return (
-    <div>
-      <div className="flex items-baseline justify-between text-xs text-gray-400">
-        <span>{label}</span>
-        <span>{pct}%</span>
-      </div>
-      <div className="mt-1 h-2 w-full rounded-full bg-white/10 overflow-hidden">
-        <div className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-300" style={{ width: `${pct}%` }} />
-      </div>
-    </div>
-  );
-}
-
-function Badge({ children }: { children: React.ReactNode }) {
-  return <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-xs">{children}</span>;
-}
-
-function ProgrammingShowcase() {
-  const [lang, setLang] = React.useState<"ts" | "py">("ts");
-  return (
-    <aside className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur p-5 shadow-xl">
-      <h3 className="font-semibold">Programming Showcase</h3>
-
-      {/* language bars */}
-      <div className="mt-4 space-y-3">
-        <Bar label="TypeScript / JavaScript" pct={88} />
-        <Bar label="Python (data/ML)" pct={85} />
-        <Bar label="SQL / NoSQL" pct={78} />
-        <Bar label="Kotlin / Swift (lightweight)" pct={55} />
-      </div>
-
-      {/* stack badges */}
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Badge>Next.js</Badge>
-        <Badge>Node</Badge>
-        <Badge>Tailwind</Badge>
-        <Badge>Firebase</Badge>
-        <Badge>TensorFlow</Badge>
-        <Badge>Keras</Badge>
-        <Badge>Pandas</Badge>
-        <Badge>NumPy</Badge>
-        <Badge>GitHub Actions</Badge>
-      </div>
-
-      {/* mini activity sparkline (pure CSS) */}
-      <div className="mt-5">
-        <div className="text-xs text-gray-400 mb-2">Recent commits</div>
-        <div className="flex items-end gap-1 h-10">
-          {[4, 7, 2, 9, 6, 10, 5, 8, 3, 9, 7, 11].map((h, i) => (
-            <div key={i} className="w-2 rounded-sm bg-emerald-400/70 animate-pulse" style={{ height: `${h * 0.22}rem`, animationDelay: `${i * 120}ms` }} />
-          ))}
-        </div>
-      </div>
-
-      {/* tiny code tabs */}
-      <div className="mt-6 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-3">
-        <div className="flex gap-2">
-          <button
-            onClick={() => setLang("ts")}
-            className={`px-2 py-1 text-xs rounded ${lang === "ts" ? "bg-emerald-500/20 border border-emerald-500/40" : "border border-white/10"}`}
-          >
-            TypeScript
-          </button>
-          <button
-            onClick={() => setLang("py")}
-            className={`px-2 py-1 text-xs rounded ${lang === "py" ? "bg-emerald-500/20 border border-emerald-500/40" : "border border-white/10"}`}
-          >
-            Python
-          </button>
-        </div>
-        <pre className="mt-2 font-mono text-xs whitespace-pre-wrap">
-{lang === "ts"
-  ? `// HSP proximity demo (TS)
-const r = (x:number[]) => Math.hypot(...x);
-function proximity(a:number[], b:number[]) {
-  const d = a.map((v,i)=>v-b[i]);
-  return +(1 - r(d)/r(a)).toFixed(2);
-}
-console.log('HSP:', proximity([18,10,7],[17.8,8.5,6.8]));`
-  : `# HSP proximity demo (Py)
-import math
-def proximity(a,b):
-    d=[ai-bi for ai,bi in zip(a,b)]
-    r=lambda x: math.hypot(*x)
-    return round(1 - r(d)/r(a), 2)
-print("HSP:", proximity([18,10,7],[17.8,8.5,6.8]))`}
-        </pre>
-      </div>
-    </aside>
-  );
-}
-
-/* ---------------- Publications (clean spacing & badges) ---------------- */
 function Publications() {
   return (
     <ul className="mt-3 divide-y divide-white/10">
       <li className="py-4">
-        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/425" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+        <a
+          href="https://journaljmsrr.com/index.php/JMSRR/article/view/425"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className="font-medium">Lignin-Derived Carbon Fibres: Opportunities and Challenges</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            JMSRR
+          </span>
           <span>2025</span>
         </div>
       </li>
       <li className="py-4">
-        <a href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+        <a
+          href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className="font-medium">Lignin Derived Chemicals and Aromatics: A Review</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">ChemRxiv</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            ChemRxiv
+          </span>
           <span>Apr 24, 2025</span>
         </div>
       </li>
       <li className="py-4">
-        <a href="https://journaljerr.com/index.php/JERR/article/view/1174" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</span>
+        <a
+          href="https://journaljerr.com/index.php/JERR/article/view/1174"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            J. Engineering Research & Reports
+          </span>
           <span>2024</span>
         </div>
       </li>
       <li className="py-4">
-        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/251" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study</span>
+        <a
+          href="https://journaljmsrr.com/index.php/JMSRR/article/view/251"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            JMSRR
+          </span>
           <span>2023</span>
         </div>
       </li>
       <li className="py-4">
-        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/225" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+        <a
+          href="https://journaljmsrr.com/index.php/JMSRR/article/view/225"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className="font-medium">Upgrading of OCC with Aseptic Packaging for Paper Board Applications</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            JMSRR
+          </span>
           <span>2022</span>
         </div>
       </li>
       <li className="py-4">
-        <a href="https://journaljerr.com/index.php/JERR/article/view/780" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review</span>
+        <a
+          href="https://journaljerr.com/index.php/JERR/article/view/780"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            J. Engineering Research & Reports
+          </span>
           <span>2022</span>
         </div>
       </li>
@@ -259,7 +164,6 @@ function Publications() {
   );
 }
 
-/* ------------------- PAGE ------------------- */
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -341,8 +245,7 @@ export default function Page() {
             </h1>
 
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
-              Researcher and builder at the intersection of lignin &amp; biobased materials, Python/ML data
-              pipelines, and small interactive quant apps.
+              Researcher and builder at the intersection of lignin &amp; biobased materials, Python/ML data pipelines, and small interactive quant apps.
             </p>
 
             <div className="mt-6 max-w-xl">
@@ -357,7 +260,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: Skills at a glance (restored) */}
+          {/* Right: Skills at a glance (component) */}
           <div className="md:col-span-5">
             <div className="card card-gradient">
               <SkillsCard />
@@ -373,9 +276,7 @@ export default function Page() {
             <div className="space-y-3 text-gray-700 dark:text-gray-300">
               <p>
                 Strong research background in lignin chemistry, biopolymers, and sustainable materials.
-                Comfortable moving between lab trials, pilot scale, and code: Python/TensorFlow/Keras, SQL,
-                Java/TypeScript, and lightweight mobile (Kotlin/Swift). I like building practical tools—from
-                solvent-selection helpers to option-pricing and portfolio demos.
+                Comfortable moving between lab trials, pilot scale, and code: Python/TensorFlow/Keras, SQL, Java/TypeScript, and lightweight mobile (Kotlin/Swift). I like building practical tools—from solvent-selection helpers to option-pricing and portfolio demos.
               </p>
 
               <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60">
@@ -435,7 +336,6 @@ export default function Page() {
                 <div className="text-gray-500">WorldQuant University · Jan 2024 – Dec 2025 (DEAC)</div>
                 <div className="mt-1 text-gray-400"><span className="font-medium text-gray-300">Capstone:</span> Sustainability (TBD).</div>
               </li>
-
               <li>
                 <div className="font-medium flex items-center gap-2">
                   <span className="text-xl">🧻</span> MEng Paper Technology
@@ -443,7 +343,6 @@ export default function Page() {
                 <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</div>
                 <div className="mt-1 text-gray-400"><span className="font-medium text-gray-300">Thesis:</span> <em>Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract</em></div>
               </li>
-
               <li>
                 <div className="font-medium flex items-center gap-2">
                   <span className="text-xl">💻</span> BS Computer Science
@@ -451,7 +350,6 @@ export default function Page() {
                 <div className="text-gray-500">University of the People · Jun 2023 – Jun 2025 (WASC)</div>
                 <div className="mt-1 text-gray-400"><span className="font-medium text-gray-300">Concentrations:</span> Data Science, Network & Application Security</div>
               </li>
-
               <li>
                 <div className="font-medium flex items-center gap-2">
                   <span className="text-xl">📄</span> BS Paper Engineering
