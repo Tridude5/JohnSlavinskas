@@ -1,3 +1,4 @@
+"use client";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
 export const metadata = { title: "Privacy — John Slavinskas" };
