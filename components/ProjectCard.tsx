@@ -17,17 +17,11 @@ const BARS = [
 ];
 
 const BADGES = [
-  // ML / Data
   "TensorFlow", "Keras", "PyTorch", "Pandas", "NumPy",
-  // Web / Platform
   "Next.js", "Node", "Tailwind", "HTML/CSS", "GitHub Actions",
-  // Data stores
   "SQL", "NoSQL",
-  // Eng / Tools
   "MATLAB", "VBA", "ChemCAD",
-  // Mobile (light)
   "Kotlin", "Swift",
-  // Networking/tooling
   "Wireshark",
 ];
 
@@ -128,7 +122,7 @@ export default function SkillsCard() {
       <div className="pointer-events-none absolute -left-10 top-0 h-full w-24 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent rotate-6 blur-sm" />
       <div className="pointer-events-none absolute -left-20 top-0 h-full w-24 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent rotate-6 blur-sm animate-[shimmer_3.6s_ease-in-out_infinite]" />
 
-      {/* inline keyframes for shimmer */}
+      {/* inline keyframes */}
       <style jsx>{`
         @keyframes shimmer {
           0% { transform: translateX(0) rotate(6deg); }
