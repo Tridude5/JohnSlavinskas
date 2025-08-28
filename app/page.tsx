@@ -27,7 +27,10 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
         {items.map((it, i) => (
           <li key={i} className="relative">
             {/* halo */}
-            <span aria-hidden className="absolute left-4 top-[0.2rem] -translate-x-1/2 h-6 w-6 rounded-full bg-emerald-400/10" />
+            <span
+              aria-hidden
+              className="absolute left-4 top-[0.2rem] -translate-x-1/2 h-6 w-6 rounded-full bg-emerald-400/10"
+            />
             {/* dot */}
             <span className="absolute left-4 top-1 -translate-x-1/2 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" />
 
@@ -36,7 +39,10 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
                 <h3 className="font-semibold">
                   {it.role} — <span className="text-emerald-400">{it.org}</span>
                 </h3>
-                <span className="text-xs text-gray-400">· {it.period}{it.loc ? ` · ${it.loc}` : ""}</span>
+                <span className="text-xs text-gray-400">
+                  · {it.period}
+                  {it.loc ? ` · ${it.loc}` : ""}
+                </span>
               </div>
               <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
                 {it.bullets.map((b, j) => (
@@ -48,28 +54,6 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
         ))}
       </ol>
     </div>
-  );
-} className="relative">
-          {/* green dot */}
-          <span className="absolute -left-3 top-1 size-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" />
-
-          {/* content (no card/box) */}
-          <div className="pt-1">
-            <div className="flex flex-wrap items-baseline gap-2">
-              <h3 className="font-semibold">
-                {it.role} — <span className="text-emerald-400">{it.org}</span>
-              </h3>
-              <span className="text-xs text-gray-400">· {it.period}{it.loc ? ` · ${it.loc}` : ""}</span>
-            </div>
-            <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
-              {it.bullets.map((b, j) => (
-                <li key={j}>{b}</li>
-              ))}
-            </ul>
-          </div>
-        </li>
-      ))}
-    </ol>
   );
 }
 
@@ -120,62 +104,120 @@ function Publications() {
   return (
     <ul className="mt-3 divide-y divide-white/10">
       <li className="py-4">
-        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/425" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">Lignin-Derived Carbon Fibres: Opportunities and Challenges</span>
+        <a
+          href="https://journaljmsrr.com/index.php/JMSRR/article/view/425"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            Lignin-Derived Carbon Fibres: Opportunities and Challenges
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            JMSRR
+          </span>
           <span>2025</span>
         </div>
       </li>
+
       <li className="py-4">
-        <a href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+        <a
+          href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className="font-medium">Lignin Derived Chemicals and Aromatics: A Review</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">ChemRxiv</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            ChemRxiv
+          </span>
           <span>Apr 24, 2025</span>
         </div>
       </li>
+
       <li className="py-4">
-        <a href="https://journaljerr.com/index.php/JERR/article/view/1174" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</span>
+        <a
+          href="https://journaljerr.com/index.php/JERR/article/view/1174"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            J. Engineering Research & Reports
+          </span>
           <span>2024</span>
         </div>
       </li>
+
       <li className="py-4">
-        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/251" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study</span>
+        <a
+          href="https://journaljmsrr.com/index.php/JMSRR/article/view/251"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            JMSRR
+          </span>
           <span>2023</span>
         </div>
       </li>
+
       <li className="py-4">
-        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/225" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">Upgrading of OCC with Aseptic Packaging for Paper Board Applications</span>
+        <a
+          href="https://journaljmsrr.com/index.php/JMSRR/article/view/225"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            Upgrading of OCC with Aseptic Packaging for Paper Board Applications
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            JMSRR
+          </span>
           <span>2022</span>
         </div>
       </li>
+
       <li className="py-4">
-        <a href="https://journaljerr.com/index.php/JERR/article/view/780" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review</span>
+        <a
+          href="https://journaljerr.com/index.php/JERR/article/view/780"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic
+            Waste – A Brief Review
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            J. Engineering Research & Reports
+          </span>
           <span>2022</span>
         </div>
       </li>
@@ -269,8 +311,8 @@ export default function Page() {
             </h1>
 
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
-              Researcher and builder at the intersection of lignin &amp; biobased materials,
-              Python/ML data pipelines, and small interactive quant apps.
+              Researcher and builder at the intersection of lignin &amp; biobased materials, Python/ML data
+              pipelines, and small interactive quant apps.
             </p>
 
             <div className="mt-6 max-w-xl">
@@ -278,17 +320,32 @@ export default function Page() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <MagneticButton href="/resume" className="btn inline-block">Resume</MagneticButton>
-              <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline inline-block">Download 1-pager</MagneticButton>
-              <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline inline-block">Download CV</MagneticButton>
-              <Link href="/projects" className="btn-outline">View Projects</Link>
+              <MagneticButton href="/resume" className="btn inline-block">
+                Resume
+              </MagneticButton>
+              <MagneticButton
+                href={`${base}/downloads/Resume%20P.pdf`}
+                download="John_Slavinskas_Resume_1p.pdf"
+                className="btn-outline inline-block"
+              >
+                Download 1-pager
+              </MagneticButton>
+              <MagneticButton
+                href={`${base}/downloads/CV-P.pdf`}
+                download="John_Slavinskas_CV.pdf"
+                className="btn-outline inline-block"
+              >
+                Download CV
+              </MagneticButton>
+              <Link href="/projects" className="btn-outline">
+                View Projects
+              </Link>
             </div>
           </div>
 
           {/* Right: subtle skills snapshot */}
           <div className="md:col-span-5">
             <div className="card card-gradient">
-              {/* Reuse a compact skills overview here if desired */}
               <div className="p-5">
                 <h3 className="font-semibold">Skills at a glance</h3>
                 <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
@@ -331,7 +388,7 @@ export default function Page() {
         </div>
       </header>
 
-      {/* ABOUT (50/50: text + your photo from /downloads) */}
+      {/* ABOUT */}
       <Section id="about" title="About" subtitle="Who I am and what I bring to materials + data + finance.">
         <div className="grid gap-6 md:grid-cols-2 items-center">
           <div className="card">
@@ -343,7 +400,6 @@ export default function Page() {
                 solvent-selection helpers to option-pricing and portfolio demos.
               </p>
 
-              {/* Interests */}
               <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60">
                 <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
                 <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl">
@@ -361,9 +417,11 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right image (served from public/downloads/, allow JFIF) */}
           <ParallaxGroup>
-            <figure data-parallax="0.12" className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50">
+            <figure
+              data-parallax="0.12"
+              className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
+            >
               <Image
                 src={`${base}/downloads/1683206302513.jfif`}
                 alt="John Slavinskas"
@@ -377,7 +435,7 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* FEATURED PROJECTS (3-up) */}
+      {/* FEATURED PROJECTS */}
       <Section id="projects" title="Featured projects" subtitle="Hands-on tools & experiments.">
         <div className="grid md:grid-cols-3 gap-6">
           <ProjectCard
@@ -405,7 +463,7 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* EXPERIENCE (timeline + skills sidebar) */}
+      {/* EXPERIENCE */}
       <Section title="Experience">
         <div className="grid md:grid-cols-12 gap-6">
           <div className="md:col-span-8">
@@ -417,7 +475,7 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* EDUCATION & RESEARCH (emoji-labeled degrees, no pills) */}
+      {/* EDUCATION & RESEARCH */}
       <Section title="Education & Research">
         <div className="grid md:grid-cols-2 gap-6">
           {/* Education */}
@@ -440,7 +498,11 @@ export default function Page() {
                 </div>
                 <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Thesis:</span> <em>Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract</em>
+                  <span className="font-medium text-gray-300">Thesis:</span>{" "}
+                  <em>
+                    Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a
+                    Lignin-Based Extract
+                  </em>
                 </div>
               </li>
 
@@ -450,7 +512,8 @@ export default function Page() {
                 </div>
                 <div className="text-gray-500">University of the People · Jun 2023 – Jun 2025 (WASC)</div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Concentrations:</span> Data Science, Network & Application Security
+                  <span className="font-medium text-gray-300">Concentrations:</span> Data Science, Network &
+                  Application Security
                 </div>
               </li>
 
@@ -466,7 +529,7 @@ export default function Page() {
             </ul>
           </div>
 
-          {/* Research & Publications — with your links */}
+          {/* Research & Publications */}
           <div className="card">
             <h3 className="font-semibold">Research & Publications</h3>
             <Publications />
