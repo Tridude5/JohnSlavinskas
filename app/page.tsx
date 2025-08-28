@@ -57,43 +57,88 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
   );
 }
 
-/* ---------------- Skills Sidebar ---------------- */
-function SkillsSidebar() {
+/* ---------------- Fancy programming sidebar ---------------- */
+function Bar({ label, pct }: { label: string; pct: number }) {
+  return (
+    <div>
+      <div className="flex items-baseline justify-between text-xs text-gray-400">
+        <span>{label}</span>
+        <span>{pct}%</span>
+      </div>
+      <div className="mt-1 h-2 w-full rounded-full bg-white/10 overflow-hidden">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-300"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Badge({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-xs">
+      {children}
+    </span>
+  );
+}
+
+function ProgrammingShowcase() {
   return (
     <aside className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur p-5 shadow-xl">
-      <h3 className="font-semibold">Skills & Tooling</h3>
-      <div className="mt-3 grid grid-cols-1 gap-4 text-sm">
-        <div>
-          <div className="text-gray-400">Materials & Processes</div>
-          <ul className="mt-1 space-y-1">
-            <li>Lignin, biopolymers, pulp & paper</li>
-            <li>DOE/SPC, rheology, extrusion & film casting</li>
-            <li>VOC mitigation, solvent screening (HSP)</li>
-          </ul>
+      <h3 className="font-semibold">Programming Showcase</h3>
+
+      {/* language bars */}
+      <div className="mt-4 space-y-3">
+        <Bar label="TypeScript / JavaScript" pct={88} />
+        <Bar label="Python (data/ML)" pct={85} />
+        <Bar label="SQL / NoSQL" pct={78} />
+        <Bar label="Kotlin / Swift (lightweight)" pct={55} />
+      </div>
+
+      {/* stack badges */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Badge>Next.js</Badge>
+        <Badge>Node</Badge>
+        <Badge>Tailwind</Badge>
+        <Badge>Firebase</Badge>
+        <Badge>TensorFlow</Badge>
+        <Badge>Keras</Badge>
+        <Badge>Pandas</Badge>
+        <Badge>NumPy</Badge>
+        <Badge>GitHub Actions</Badge>
+      </div>
+
+      {/* mini activity sparkline (pure CSS) */}
+      <div className="mt-5">
+        <div className="text-xs text-gray-400 mb-2">Recent commits</div>
+        <div className="flex items-end gap-1 h-10">
+          {[4, 7, 2, 9, 6, 10, 5, 8, 3, 9, 7, 11].map((h, i) => (
+            <div
+              key={i}
+              className="w-2 rounded-sm bg-emerald-400/70 animate-pulse"
+              style={{ height: `${h * 0.22}rem`, animationDelay: `${i * 120}ms` }}
+            />
+          ))}
         </div>
-        <div>
-          <div className="text-gray-400">Data & ML</div>
-          <ul className="mt-1 space-y-1">
-            <li>Python, JS/TS, SQL/NoSQL</li>
-            <li>TensorFlow, Keras, pandas, NumPy</li>
-            <li>Firebase, basic mobile (Kotlin/Swift)</li>
-          </ul>
+      </div>
+
+      {/* tiny code card */}
+      <div className="mt-6 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-4 font-mono text-xs">
+        <div className="flex gap-1 mb-2">
+          <span className="size-2 rounded-full bg-red-400" />
+          <span className="size-2 rounded-full bg-yellow-400" />
+          <span className="size-2 rounded-full bg-green-400" />
         </div>
-        <div>
-          <div className="text-gray-400">Quant & Finance</div>
-          <ul className="mt-1 space-y-1">
-            <li>Derivatives & Greeks, option pricing</li>
-            <li>Mean–variance, factor tilts, backtesting</li>
-            <li>Risk metrics & sanity checks</li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-gray-400">Lab & Instruments</div>
-          <ul className="mt-1 space-y-1">
-            <li>FTIR, NMR, GC/VOC</li>
-            <li>MATLAB, VBA, Git</li>
-          </ul>
-        </div>
+        <pre className="whitespace-pre-wrap">
+{`// quick HSP proximity demo (pseudo)
+const toRadius = (x:number[]) => Math.hypot(...x);
+function proximity(sample:number[], solvent:number[]) {
+  const diff = sample.map((v, i) => v - solvent[i]);
+  return (1 - toRadius(diff)/toRadius(sample)).toFixed(2);
+}
+console.log('HSP proximity:', proximity([18,10,7],[17.8,8.5,6.8]));`}
+        </pre>
       </div>
     </aside>
   );
@@ -340,46 +385,10 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: subtle skills snapshot */}
+          {/* Right: programming showcase */}
           <div className="md:col-span-5">
             <div className="card card-gradient">
-              <div className="p-5">
-                <h3 className="font-semibold">Skills at a glance</h3>
-                <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
-                  <div>
-                    <div className="text-gray-500">Materials</div>
-                    <ul className="mt-1 space-y-1">
-                      <li>Lignin · Biopolymers</li>
-                      <li>Pulp &amp; Paper</li>
-                      <li>DOE/SPC · Rheology</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <div className="text-gray-500">Programming</div>
-                    <ul className="mt-1 space-y-1">
-                      <li>Python · JS/TS · Java</li>
-                      <li>TensorFlow · Keras</li>
-                      <li>SQL / NoSQL</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <div className="text-gray-500">Quant</div>
-                    <ul className="mt-1 space-y-1">
-                      <li>Option Pricing</li>
-                      <li>Efficient Frontier</li>
-                      <li>Backtesting</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <div className="text-gray-500">Lab &amp; Tools</div>
-                    <ul className="mt-1 space-y-1">
-                      <li>FTIR · NMR · GC/VOC</li>
-                      <li>MATLAB · VBA</li>
-                      <li>Firebase</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              <ProgrammingShowcase />
             </div>
           </div>
         </div>
@@ -467,7 +476,7 @@ export default function Page() {
             <GreenTimeline items={exp} />
           </div>
           <aside className="md:col-span-4">
-            <SkillsSidebar />
+            <ProgrammingShowcase />
           </aside>
         </div>
       </Section>
