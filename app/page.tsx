@@ -6,6 +6,7 @@ import { useI18n } from "@/components/i18n/I18nProvider";
 
 export default function Page() {
   const { t } = useI18n();
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   const kpis = [
     { label: "Publications", value: 6 },
@@ -24,21 +25,29 @@ export default function Page() {
               {t("hero.title")}
             </h1>
             <p className="mt-5 text-lg text-gray-600 dark:text-gray-300">
-              {t("hero.tagline")}
-              {" "}
+              {t("hero.tagline")}{" "}
               My current work spans lignin chemistry & biopolymers, Python/TF pipelines, and small interactive quant apps.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/resume" className="btn">
                 {t("hero.viewResume")}
               </Link>
-              {/* Use Link so GitHub Pages basePath is handled automatically */}
-              <Link href="/downloads/Resume%20P.pdf" className="btn-outline">
+
+              {/* Force file download (GitHub Pages-safe via base path) */}
+              <a
+                href={`${base}/downloads/Resume%20P.pdf`}
+                download="John_Slavinskas_Resume_1p.pdf"
+                className="btn-outline"
+              >
                 {t("hero.download1p")}
-              </Link>
-              <Link href="/downloads/CV-P.pdf" className="btn-outline">
+              </a>
+              <a
+                href={`${base}/downloads/CV-P.pdf`}
+                download="John_Slavinskas_CV.pdf"
+                className="btn-outline"
+              >
                 {t("hero.downloadCV")}
-              </Link>
+              </a>
             </div>
           </div>
         </div>
