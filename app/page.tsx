@@ -430,7 +430,7 @@ export default function Page() {
                 </div>
                 <div className="text-gray-500">WorldQuant University · Jan 2024 – Dec 2025 (DEAC)</div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Focus areas:</span> Derivatives & Risk, Stochastic Modelling, ML/DL in Finance, Portfolio Construction.
+                  <span className="font-medium text-gray-300">Capstone:</span> Sustainability (TBD).
                 </div>
               </li>
 
@@ -440,7 +440,7 @@ export default function Page() {
                 </div>
                 <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Thesis:</span> <em>Solubility Evaluation of Technical Lignins: Solvent Selection using Hansen Solubility Parameters and Functional Changes During Dissolution</em>
+                  <span className="font-medium text-gray-300">Thesis:</span> <em>Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract</em>
                 </div>
               </li>
 
@@ -450,7 +450,7 @@ export default function Page() {
                 </div>
                 <div className="text-gray-500">University of the People · Jun 2023 – Jun 2025 (WASC)</div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Focus areas:</span> Data Science; Network &amp; App Security; Python &amp; SQL.
+                  <span className="font-medium text-gray-300">Concentrations:</span> Data Science, Network & Application Security
                 </div>
               </li>
 
@@ -460,7 +460,7 @@ export default function Page() {
                 </div>
                 <div className="text-gray-500">SUNY ESF · Aug 2020 – Aug 2023 (ABET)</div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Focus areas:</span> Process Optimization; Sustainable Packaging; MATLAB &amp; VBA.
+                  <span className="font-medium text-gray-300">Minors:</span> Management, Physics
                 </div>
               </li>
             </ul>
