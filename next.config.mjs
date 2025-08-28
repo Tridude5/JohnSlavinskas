@@ -1,12 +1,10 @@
 // next.config.mjs
-const isProd = process.env.NODE_ENV === 'production';
-const repo = 'SandyKao';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 export default {
   output: 'export',
-  images: { unoptimized: true },
-  basePath: isProd ? `/${repo}` : '',
-  assetPrefix: isProd ? `/${repo}/` : '',
+  images: { unoptimized: true },      // needed for static export
+  basePath,                           // e.g. "/JohnSlavinskas" on GitHub Pages
+  assetPrefix: basePath ? `${basePath}/` : '',
   trailingSlash: true,
-  env: { NEXT_PUBLIC_BASE_PATH: isProd ? `/${repo}` : '' }
 };
