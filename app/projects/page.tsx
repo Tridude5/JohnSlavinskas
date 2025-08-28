@@ -1,3 +1,4 @@
+"use client";
 import Section from "@/components/Section";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
