@@ -225,7 +225,11 @@ export default function Page() {
             </Smoke>
 
             <Smoke name="ParallaxGroup (client)">
-              <ParallaxGroup />
+              <ParallaxGroup>
+                <div className="h-24 w-full flex items-center justify-center border rounded-lg">
+                  Parallax content
+                </div>
+              </ParallaxGroup>
             </Smoke>
 
             <Smoke name="BlueprintFX (client)">
