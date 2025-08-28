@@ -20,9 +20,36 @@ type TLItem = { role: string; org: string; period: string; loc?: string; bullets
 /* ---------------- Experience timeline (no boxes) ---------------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
-    <ol className="relative border-l-2 border-emerald-500/40 pl-6 space-y-6">
-      {items.map((it, i) => (
-        <li key={i} className="relative">
+    <div className="relative pl-10">
+      {/* vertical line */}
+      <span className="pointer-events-none absolute left-4 top-0 bottom-0 w-[2px] bg-emerald-500/40" />
+      <ol className="space-y-8">
+        {items.map((it, i) => (
+          <li key={i} className="relative">
+            {/* halo */}
+            <span aria-hidden className="absolute left-4 top-[0.2rem] -translate-x-1/2 h-6 w-6 rounded-full bg-emerald-400/10" />
+            {/* dot */}
+            <span className="absolute left-4 top-1 -translate-x-1/2 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" />
+
+            <div className="pt-1">
+              <div className="flex flex-wrap items-baseline gap-2">
+                <h3 className="font-semibold">
+                  {it.role} — <span className="text-emerald-400">{it.org}</span>
+                </h3>
+                <span className="text-xs text-gray-400">· {it.period}{it.loc ? ` · ${it.loc}` : ""}</span>
+              </div>
+              <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
+                {it.bullets.map((b, j) => (
+                  <li key={j}>{b}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+} className="relative">
           {/* green dot */}
           <span className="absolute -left-3 top-1 size-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" />
 
@@ -409,7 +436,7 @@ export default function Page() {
 
               <li>
                 <div className="font-medium flex items-center gap-2">
-                  <span className="text-xl">🧪</span> MEng Paper Technology
+                  <span className="text-xl">🧻</span> MEng Paper Technology
                 </div>
                 <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</div>
                 <div className="mt-1 text-gray-400">
