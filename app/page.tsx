@@ -17,47 +17,47 @@ const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ss
 /* ---------------- types ---------------- */
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---------------- Experience timeline (no boxes) ---------------- */
+/* ---------------- Experience timeline (no boxes, single line) ---------------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
-    <div className="relative pl-10">
-      {/* vertical line */}
-      <span className="pointer-events-none absolute left-4 top-0 bottom-0 w-[2px] bg-emerald-500/40" />
-      <ol className="space-y-8">
-        {items.map((it, i) => (
-          <li key={i} className="relative">
-            {/* halo */}
-            <span
-              aria-hidden
-              className="absolute left-4 top-[0.2rem] -translate-x-1/2 h-6 w-6 rounded-full bg-emerald-400/10"
-            />
-            {/* dot */}
-            <span className="absolute left-4 top-1 -translate-x-1/2 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" />
-
-            <div className="pt-1">
-              <div className="flex flex-wrap items-baseline gap-2">
-                <h3 className="font-semibold">
-                  {it.role} — <span className="text-emerald-400">{it.org}</span>
-                </h3>
-                <span className="text-xs text-gray-400">
-                  · {it.period}
-                  {it.loc ? ` · ${it.loc}` : ""}
-                </span>
-              </div>
-              <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
-                {it.bullets.map((b, j) => (
-                  <li key={j}>{b}</li>
-                ))}
-              </ul>
+    <ol
+      className="
+        relative pl-9 space-y-8
+        before:absolute before:left-3 before:top-0 before:bottom-0
+        before:w-[2px] before:bg-emerald-500/40 before:content-['']
+      "
+    >
+      {items.map((it, i) => (
+        <li key={i} className="relative">
+          {/* dot (centered on the line) */}
+          <span
+            aria-hidden
+            className="absolute left-3 -translate-x-1/2 top-1 h-3 w-3 rounded-full
+                       bg-emerald-500 ring-4 ring-emerald-500/20"
+          />
+          <div className="pt-1">
+            <div className="flex flex-wrap items-baseline gap-2">
+              <h3 className="font-semibold">
+                {it.role} — <span className="text-emerald-400">{it.org}</span>
+              </h3>
+              <span className="text-xs text-gray-400">
+                · {it.period}
+                {it.loc ? ` · ${it.loc}` : ""}
+              </span>
             </div>
-          </li>
-        ))}
-      </ol>
-    </div>
+            <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
+              {it.bullets.map((b, j) => (
+                <li key={j}>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ol>
   );
 }
 
-/* ---------------- Skills Sidebar (replaces AutomationShowcase) ---------------- */
+/* ---------------- Skills Sidebar ---------------- */
 function SkillsSidebar() {
   return (
     <aside className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur p-5 shadow-xl">
@@ -110,9 +110,7 @@ function Publications() {
           target="_blank"
           rel="noreferrer"
         >
-          <span className="font-medium">
-            Lignin-Derived Carbon Fibres: Opportunities and Challenges
-          </span>
+          <span className="font-medium">Lignin-Derived Carbon Fibres: Opportunities and Challenges</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
@@ -188,9 +186,7 @@ function Publications() {
           target="_blank"
           rel="noreferrer"
         >
-          <span className="font-medium">
-            Upgrading of OCC with Aseptic Packaging for Paper Board Applications
-          </span>
+          <span className="font-medium">Upgrading of OCC with Aseptic Packaging for Paper Board Applications</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
@@ -229,21 +225,22 @@ function Publications() {
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  // hero KPIs (two cards like the reference)
+  // hero KPIs
   const heroKpis = [
     { label: "Publications", value: 6, spark: [1, 2, 3, 4, 5, 6] },
     { label: "Pilot/Lab Projects", value: 12, spark: [2, 3, 5, 7, 10, 12] },
   ];
 
   const interests = [
-    { label: "Running", emoji: "🏃" },
-    { label: "Bouldering", emoji: "🧗" },
-    { label: "Padel", emoji: "🎾" },
-    { label: "Swimming", emoji: "🏊" },
-    { label: "Strength Training", emoji: "🏋️" },
+    { label: "Triathlon (swim • bike • run)", emoji: "🏊🚴🏃" },
+    { label: "Ultimate", emoji: "🥏" },
+    { label: "Programming & Making", emoji: "💻" },
+    { label: "Entrepreneurship", emoji: "🚀" },
     { label: "Travel", emoji: "✈️" },
-    { label: "Photography", emoji: "📷" },
-    { label: "Video Editing", emoji: "🎬" },
+    { label: "Birdwatching", emoji: "🪶" },
+    { label: "Fishing", emoji: "🎣" },
+    { label: "Geocaching", emoji: "📍" },
+    { label: "Model Kits", emoji: "🧩" },
   ];
 
   const exp: TLItem[] = [
@@ -291,7 +288,7 @@ export default function Page() {
 
   return (
     <>
-      {/* HERO (with grid + right skills card) */}
+      {/* HERO */}
       <header className="container pt-14 pb-10 relative overflow-hidden">
         {/* Subtle blueprint background */}
         <div className="absolute inset-0 -z-10 opacity-70">
