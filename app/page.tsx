@@ -182,7 +182,7 @@ export default function Page() {
               <KPIs
                 items={[
                   { label: "Users", value: 1234 },
-                  { label: "Uptime (%)", value: 99.9 }, // number, not string
+                  { label: "Uptime (%)", value: 99.9 },
                 ]}
               />
             </Smoke>
@@ -200,7 +200,24 @@ export default function Page() {
             </Smoke>
 
             <Smoke name="Timeline">
-              <Timeline items={[{ title: "Now", subtitle: "Testing components" }, { title: "Later", subtitle: "Ship" }]} />
+              <Timeline
+                items={[
+                  {
+                    role: "Now",
+                    org: "Demo Org",
+                    loc: "Berlin",
+                    period: "Today",
+                    bullets: ["Testing components"],
+                  },
+                  {
+                    role: "Later",
+                    org: "Demo Org",
+                    loc: "Berlin",
+                    period: "Soon",
+                    bullets: ["Ship"],
+                  },
+                ]}
+              />
             </Smoke>
 
             <Smoke name="Section (nested)">
