@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
@@ -49,8 +49,7 @@ class ErrorBoundary extends React.Component<{ name: string; children: React.Reac
 export default function Page() {
   const { t } = useI18n();
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const searchParams = useSearchParams();
-  const showChecks = process.env.NODE_ENV !== "production" || searchParams.get("check") === "1";
+  const isDev = process.env.NODE_ENV !== "production";
 
   const kpis = [
     { label: "Publications", value: 6 },
@@ -163,95 +162,106 @@ export default function Page() {
         </ul>
       </Section>
 
-      {/* ===================== DEV-ONLY: Components Check ===================== */}
-      {showChecks && (
-        <Section title="Components Check (dev only)">
-          <p className="text-sm text-gray-500 mb-3">
-            Visible in development or with <code>?check=1</code>. Each card is an isolated render with an error boundary.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <Smoke name="Header"><Header /></Smoke>
-            <Smoke name="Footer"><Footer /></Smoke>
-
-            <Smoke name="EmailLink"><EmailLink /></Smoke>
-            <Smoke name="LanguageToggle"><LanguageToggle /></Smoke>
-            <Smoke name="MagneticButton"><MagneticButton>Hover me</MagneticButton></Smoke>
-
-            <Smoke name="KPIs (demo)">
-              <KPIs
-                items={[
-                  { label: "Users", value: 1234 },
-                  { label: "Uptime (%)", value: 99.9 },
-                ]}
-              />
-            </Smoke>
-
-            <Smoke name="ProjectCard">
-              <div className="max-w-sm">
-                <ProjectCard
-                  title="Example Project"
-                  subtitle="Short blurb for the card."
-                  href="#"
-                  cta="Open"
-                  tags={["demo"]}
-                />
-              </div>
-            </Smoke>
-
-            <Smoke name="Timeline">
-              <Timeline
-                items={[
-                  {
-                    role: "Now",
-                    org: "Demo Org",
-                    loc: "Berlin",
-                    period: "Today",
-                    bullets: ["Testing components"],
-                  },
-                  {
-                    role: "Later",
-                    org: "Demo Org",
-                    loc: "Berlin",
-                    period: "Soon",
-                    bullets: ["Ship"],
-                  },
-                ]}
-              />
-            </Smoke>
-
-            <Smoke name="Section (nested)">
-              <Section title="Nested Section">Hello from inside Section.</Section>
-            </Smoke>
-
-            <Smoke name="ParallaxGroup (client)">
-              <ParallaxGroup>
-                <div className="h-24 w-full flex items-center justify-center border rounded-lg">
-                  Parallax content
-                </div>
-              </ParallaxGroup>
-            </Smoke>
-
-            <Smoke name="BlueprintFX (client)">
-              <div className="relative h-40 overflow-hidden rounded-lg">
-                <BlueprintFX />
-              </div>
-            </Smoke>
-
-            <Smoke name="AppEffects (client)">
-              <div className="relative h-24 overflow-hidden rounded-lg">
-                <AppEffects />
-              </div>
-            </Smoke>
-
-            <Smoke name="AutomationShowcase (client)">
-              <AutomationShowcase />
-            </Smoke>
-          </div>
-        </Section>
-      )}
+      {/* ===================== DEV/QUERY-GATED: Components Check ===================== */}
+      <Suspense fallback={null}>
+        <ComponentsCheckGate isDev={isDev} />
+      </Suspense>
       {/* ===================================================================== */}
     </>
+  );
+}
+
+/** This child component uses useSearchParams and is wrapped in <Suspense>. */
+function ComponentsCheckGate({ isDev }: { isDev: boolean }) {
+  const searchParams = useSearchParams();
+  const showChecks = isDev || searchParams.get("check") === "1";
+  if (!showChecks) return null;
+
+  return (
+    <Section title="Components Check (dev only)">
+      <p className="text-sm text-gray-500 mb-3">
+        Visible in development or with <code>?check=1</code>. Each card is an isolated render with an error boundary.
+      </p>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <Smoke name="Header"><Header /></Smoke>
+        <Smoke name="Footer"><Footer /></Smoke>
+
+        <Smoke name="EmailLink"><EmailLink /></Smoke>
+        <Smoke name="LanguageToggle"><LanguageToggle /></Smoke>
+        <Smoke name="MagneticButton"><MagneticButton>Hover me</MagneticButton></Smoke>
+
+        <Smoke name="KPIs (demo)">
+          <KPIs
+            items={[
+              { label: "Users", value: 1234 },
+              { label: "Uptime (%)", value: 99.9 },
+            ]}
+          />
+        </Smoke>
+
+        <Smoke name="ProjectCard">
+          <div className="max-w-sm">
+            <ProjectCard
+              title="Example Project"
+              subtitle="Short blurb for the card."
+              href="#"
+              cta="Open"
+              tags={["demo"]}
+            />
+          </div>
+        </Smoke>
+
+        <Smoke name="Timeline">
+          <Timeline
+            items={[
+              {
+                role: "Now",
+                org: "Demo Org",
+                loc: "Berlin",
+                period: "Today",
+                bullets: ["Testing components"],
+              },
+              {
+                role: "Later",
+                org: "Demo Org",
+                loc: "Berlin",
+                period: "Soon",
+                bullets: ["Ship"],
+              },
+            ]}
+          />
+        </Smoke>
+
+        <Smoke name="Section (nested)">
+          <Section title="Nested Section">Hello from inside Section.</Section>
+        </Smoke>
+
+        <Smoke name="ParallaxGroup (client)">
+          <ParallaxGroup>
+            <div className="h-24 w-full flex items-center justify-center border rounded-lg">
+              Parallax content
+            </div>
+          </ParallaxGroup>
+        </Smoke>
+
+        <Smoke name="BlueprintFX (client)">
+          <div className="relative h-40 overflow-hidden rounded-lg">
+            <BlueprintFX />
+          </div>
+        </Smoke>
+
+        <Smoke name="AppEffects (client)">
+          <div className="relative h-24 overflow-hidden rounded-lg">
+            <AppEffects />
+          </div>
+        </Smoke>
+
+        <Smoke name="AutomationShowcase (client)">
+          <AutomationShowcase />
+        </Smoke>
+      </div>
+    </Section>
   );
 }
 
