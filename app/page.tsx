@@ -10,7 +10,6 @@ import KPIs from "@/components/KPIs";
 import ProjectCard from "@/components/ProjectCard";
 import Timeline from "@/components/Timeline";
 import EmailLink from "@/components/EmailLink";
-// (Header/Footer included in the smoke test too)
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -26,14 +25,20 @@ const LanguageToggle = dynamic(() => import("@/components/LanguageToggle"), { ss
 
 class ErrorBoundary extends React.Component<{ name: string; children: React.ReactNode }, { error?: Error }> {
   state = { error: undefined as Error | undefined };
-  static getDerivedStateFromError(error: Error) { return { error }; }
-  componentDidCatch() {/* no-op: just trap */ }
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+  componentDidCatch() {
+    /* no-op */
+  }
   render() {
     if (this.state.error) {
       return (
         <div className="border rounded-lg p-3 bg-red-50 dark:bg-red-950">
           <div className="font-semibold">🔴 {this.props.name} failed to render</div>
-          <pre className="mt-2 text-xs whitespace-pre-wrap">{String(this.state.error?.stack || this.state.error?.message)}</pre>
+          <pre className="mt-2 text-xs whitespace-pre-wrap">
+            {String(this.state.error?.stack || this.state.error?.message)}
+          </pre>
         </div>
       );
     }
@@ -65,7 +70,7 @@ export default function Page() {
             </h1>
             <p className="mt-5 text-lg text-gray-600 dark:text-gray-300">
               {t("hero.tagline")}{" "}
-              My current work spans lignin chemistry & biopolymers, Python/TF pipelines, and small interactive quant apps.
+              My current work spans lignin chemistry &amp; biopolymers, Python/TF pipelines, and small interactive quant apps.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/resume" className="btn">
@@ -174,7 +179,12 @@ export default function Page() {
             <Smoke name="MagneticButton"><MagneticButton>Hover me</MagneticButton></Smoke>
 
             <Smoke name="KPIs (demo)">
-              <KPIs items={[{ label: "Users", value: 1234 }, { label: "Uptime", value: "99.9%" }]} />
+              <KPIs
+                items={[
+                  { label: "Users", value: 1234 },
+                  { label: "Uptime (%)", value: 99.9 }, // must be a number
+                ]}
+              />
             </Smoke>
 
             <Smoke name="ProjectCard">
@@ -218,7 +228,6 @@ export default function Page() {
   );
 }
 
-// Small helper for consistent error handling & layout
 function Smoke({ name, children }: { name: string; children: React.ReactNode }) {
   return (
     <div className="card">
