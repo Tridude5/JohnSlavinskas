@@ -10,42 +10,34 @@ import ProjectCard from "@/components/ProjectCard";
 import KPIs from "@/components/KPIs";
 import BlueprintFX from "@/components/BlueprintFX";
 import ParallaxGroup from "@/components/ParallaxGroup";
-import AutomationShowcase from "@/components/AutomationShowcase";
 
 /* Magnetic hero buttons */
 const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ssr: false });
 
-/* ---------------- little UI helpers ---------------- */
-function Chip({ children, ghost = false }: { children: React.ReactNode; ghost?: boolean }) {
-  return (
-    <span
-      className={
-        ghost
-          ? "inline-flex items-center rounded-full border px-3 py-1 text-sm text-gray-300 border-white/15 bg-white/[0.04]"
-          : "inline-flex items-center rounded-full border px-3 py-1 text-sm border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-      }
-    >
-      {children}
-    </span>
-  );
-}
-
+/* ---------------- types ---------------- */
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
+
+/* ---------------- Experience timeline (no boxes) ---------------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
     <ol className="relative border-l-2 border-emerald-500/40 pl-6 space-y-6">
       {items.map((it, i) => (
         <li key={i} className="relative">
+          {/* green dot */}
           <span className="absolute -left-3 top-1 size-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" />
-          <div className="card p-4">
+
+          {/* content (no card/box) */}
+          <div className="pt-1">
             <div className="flex flex-wrap items-baseline gap-2">
               <h3 className="font-semibold">
                 {it.role} — <span className="text-emerald-400">{it.org}</span>
               </h3>
               <span className="text-xs text-gray-400">· {it.period}{it.loc ? ` · ${it.loc}` : ""}</span>
             </div>
-            <ul className="mt-2 list-disc pl-5 space-y-1 text-sm">
-              {it.bullets.map((b, j) => <li key={j}>{b}</li>)}
+            <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
+              {it.bullets.map((b, j) => (
+                <li key={j}>{b}</li>
+              ))}
             </ul>
           </div>
         </li>
@@ -54,41 +46,41 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
   );
 }
 
-function SkillsCard() {
+/* ---------------- Skills Sidebar (replaces AutomationShowcase) ---------------- */
+function SkillsSidebar() {
   return (
-    <aside className="rounded-2xl border bg-black/30 backdrop-blur supports-[backdrop-filter]:bg-black/30 p-5 shadow-xl">
-      <h3 className="font-semibold">Skills at a glance</h3>
-      <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+    <aside className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur p-5 shadow-xl">
+      <h3 className="font-semibold">Skills & Tooling</h3>
+      <div className="mt-3 grid grid-cols-1 gap-4 text-sm">
         <div>
-          <div className="text-gray-500">Materials</div>
+          <div className="text-gray-400">Materials & Processes</div>
           <ul className="mt-1 space-y-1">
-            <li>Lignin · Biopolymers</li>
-            <li>Pulp &amp; Paper</li>
-            <li>DOE/SPC · Rheology</li>
+            <li>Lignin, biopolymers, pulp & paper</li>
+            <li>DOE/SPC, rheology, extrusion & film casting</li>
+            <li>VOC mitigation, solvent screening (HSP)</li>
           </ul>
         </div>
         <div>
-          <div className="text-gray-500">Programming</div>
+          <div className="text-gray-400">Data & ML</div>
           <ul className="mt-1 space-y-1">
-            <li>Python · JS/TS · Java</li>
-            <li>TensorFlow · Keras</li>
-            <li>SQL / NoSQL</li>
+            <li>Python, JS/TS, SQL/NoSQL</li>
+            <li>TensorFlow, Keras, pandas, NumPy</li>
+            <li>Firebase, basic mobile (Kotlin/Swift)</li>
           </ul>
         </div>
         <div>
-          <div className="text-gray-500">Quant</div>
+          <div className="text-gray-400">Quant & Finance</div>
           <ul className="mt-1 space-y-1">
-            <li>Option Pricing</li>
-            <li>Efficient Frontier</li>
-            <li>Backtesting</li>
+            <li>Derivatives & Greeks, option pricing</li>
+            <li>Mean–variance, factor tilts, backtesting</li>
+            <li>Risk metrics & sanity checks</li>
           </ul>
         </div>
         <div>
-          <div className="text-gray-500">Lab &amp; Tools</div>
+          <div className="text-gray-400">Lab & Instruments</div>
           <ul className="mt-1 space-y-1">
-            <li>FTIR · NMR · GC/VOC</li>
-            <li>MATLAB · VBA</li>
-            <li>Firebase</li>
+            <li>FTIR, NMR, GC/VOC</li>
+            <li>MATLAB, VBA, Git</li>
           </ul>
         </div>
       </div>
@@ -96,7 +88,7 @@ function SkillsCard() {
   );
 }
 
-/* -------------------- PAGE -------------------- */
+/* ------------------- PAGE ------------------- */
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -198,10 +190,47 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: skills card */}
+          {/* Right: subtle skills snapshot */}
           <div className="md:col-span-5">
             <div className="card card-gradient">
-              <SkillsCard />
+              {/* Reuse a compact skills overview here if desired */}
+              <div className="p-5">
+                <h3 className="font-semibold">Skills at a glance</h3>
+                <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <div className="text-gray-500">Materials</div>
+                    <ul className="mt-1 space-y-1">
+                      <li>Lignin · Biopolymers</li>
+                      <li>Pulp &amp; Paper</li>
+                      <li>DOE/SPC · Rheology</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="text-gray-500">Programming</div>
+                    <ul className="mt-1 space-y-1">
+                      <li>Python · JS/TS · Java</li>
+                      <li>TensorFlow · Keras</li>
+                      <li>SQL / NoSQL</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="text-gray-500">Quant</div>
+                    <ul className="mt-1 space-y-1">
+                      <li>Option Pricing</li>
+                      <li>Efficient Frontier</li>
+                      <li>Backtesting</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="text-gray-500">Lab &amp; Tools</div>
+                    <ul className="mt-1 space-y-1">
+                      <li>FTIR · NMR · GC/VOC</li>
+                      <li>MATLAB · VBA</li>
+                      <li>Firebase</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -219,7 +248,7 @@ export default function Page() {
                 solvent-selection helpers to option-pricing and portfolio demos.
               </p>
 
-              {/* Interests pills */}
+              {/* Interests */}
               <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60">
                 <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
                 <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl">
@@ -281,35 +310,32 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* EXPERIENCE (timeline + automation showcase) */}
+      {/* EXPERIENCE (timeline + skills sidebar) */}
       <Section title="Experience">
         <div className="grid md:grid-cols-12 gap-6">
           <div className="md:col-span-8">
             <GreenTimeline items={exp} />
           </div>
           <aside className="md:col-span-4">
-            <AutomationShowcase />
+            <SkillsSidebar />
           </aside>
         </div>
       </Section>
 
-      {/* EDUCATION & RESEARCH (emoji-labeled degrees + chips + linked publications) */}
+      {/* EDUCATION & RESEARCH (emoji-labeled degrees, no pills) */}
       <Section title="Education & Research">
         <div className="grid md:grid-cols-2 gap-6">
           {/* Education */}
           <div className="card">
             <h3 className="font-semibold">Education</h3>
-            <ul className="mt-3 space-y-3 text-sm">
+            <ul className="mt-3 space-y-4 text-sm">
               <li>
                 <div className="font-medium flex items-center gap-2">
                   <span className="text-xl">📈</span> MS Financial Engineering
                 </div>
                 <div className="text-gray-500">WorldQuant University · Jan 2024 – Dec 2025 (DEAC)</div>
-                <div className="mt-1 flex flex-wrap gap-2">
-                  <Chip ghost>Derivatives</Chip>
-                  <Chip ghost>Stochastic Modeling</Chip>
-                  <Chip ghost>ML/DL in Finance</Chip>
-                  <Chip ghost>Portfolio & Risk</Chip>
+                <div className="mt-1 text-gray-400">
+                  <span className="font-medium text-gray-300">Focus areas:</span> Derivatives & Risk, Stochastic Modelling, ML/DL in Finance, Portfolio Construction.
                 </div>
               </li>
 
@@ -318,14 +344,8 @@ export default function Page() {
                   <span className="text-xl">🧪</span> MEng Paper Technology
                 </div>
                 <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</div>
-                <div className="text-gray-500">
-                  Thesis: <em>Solubility Evaluation of Technical Lignins…</em>
-                </div>
-                <div className="mt-1 flex flex-wrap gap-2">
-                  <Chip ghost>Lignin</Chip>
-                  <Chip ghost>Biopolymers</Chip>
-                  <Chip ghost>Solubility/HSP</Chip>
-                  <Chip ghost>Rheology</Chip>
+                <div className="mt-1 text-gray-400">
+                  <span className="font-medium text-gray-300">Thesis:</span> <em>Solubility Evaluation of Technical Lignins: Solvent Selection using Hansen Solubility Parameters and Functional Changes During Dissolution</em>
                 </div>
               </li>
 
@@ -334,10 +354,8 @@ export default function Page() {
                   <span className="text-xl">💻</span> BS Computer Science
                 </div>
                 <div className="text-gray-500">University of the People · Jun 2023 – Jun 2025 (WASC)</div>
-                <div className="mt-1 flex flex-wrap gap-2">
-                  <Chip ghost>Data Science</Chip>
-                  <Chip ghost>Network &amp; App Security</Chip>
-                  <Chip ghost>Python · SQL</Chip>
+                <div className="mt-1 text-gray-400">
+                  <span className="font-medium text-gray-300">Focus areas:</span> Data Science; Network &amp; App Security; Python &amp; SQL.
                 </div>
               </li>
 
@@ -346,10 +364,8 @@ export default function Page() {
                   <span className="text-xl">🧻</span> BS Paper Engineering
                 </div>
                 <div className="text-gray-500">SUNY ESF · Aug 2020 – Aug 2023 (ABET)</div>
-                <div className="mt-1 flex flex-wrap gap-2">
-                  <Chip ghost>Process Optimization</Chip>
-                  <Chip ghost>Sustainable Packaging</Chip>
-                  <Chip ghost>MATLAB · VBA</Chip>
+                <div className="mt-1 text-gray-400">
+                  <span className="font-medium text-gray-300">Focus areas:</span> Process Optimization; Sustainable Packaging; MATLAB &amp; VBA.
                 </div>
               </li>
             </ul>
