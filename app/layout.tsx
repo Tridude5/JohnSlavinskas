@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "Portfolio of John Slavinskas — Paper Engineer blending sustainable materials research, software/ML, and quantitative finance.",
   // TODO: set to real production domain when ready
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://tridude5.github.io/JohnSlavinskas"),
   openGraph: {
     title: "John Slavinskas — Paper Engineer × Quant Technologist",
     description: "Finance & Data Analyst | SAP • Python • VBA",
