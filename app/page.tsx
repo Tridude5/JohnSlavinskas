@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Section from "@/components/Section";
 import KPIs from "@/components/KPIs";
