@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import Section from "@/components/Section";
 import KPIs from "@/components/KPIs";
@@ -46,6 +47,49 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
         </li>
       ))}
     </ol>
+  );
+}
+
+function SkillsCard() {
+  return (
+    <aside className="rounded-2xl border bg-black/30 backdrop-blur supports-[backdrop-filter]:bg-black/30 p-5 shadow-xl">
+      <h3 className="text-lg font-semibold mb-3">Skills at a glance</h3>
+      <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+        <div>
+          <div className="text-gray-400 font-medium">Finance</div>
+          <div className="mt-1 space-y-1">
+            <div>Financial Econometrics</div>
+            <div>Derivative Pricing</div>
+            <div>Stochastic Modeling</div>
+            <div>Portfolio & Risk</div>
+          </div>
+        </div>
+        <div>
+          <div className="text-gray-400 font-medium">Programming</div>
+          <div className="mt-1 space-y-1">
+            <div>Python · R · SQL</div>
+            <div>TensorFlow · Keras</div>
+            <div>Java · JS/TS</div>
+          </div>
+        </div>
+        <div>
+          <div className="text-gray-400 font-medium">Materials</div>
+          <div className="mt-1 space-y-1">
+            <div>Lignin · Biopolymers</div>
+            <div>Pulp & Paper</div>
+            <div>DOE/SPC · Rheology</div>
+          </div>
+        </div>
+        <div>
+          <div className="text-gray-400 font-medium">Tools</div>
+          <div className="mt-1 space-y-1">
+            <div>FTIR · NMR · GC/VOC</div>
+            <div>Firebase · SQL/NoSQL</div>
+            <div>MATLAB · VBA</div>
+          </div>
+        </div>
+      </div>
+    </aside>
   );
 }
 
@@ -147,9 +191,9 @@ export default function Page() {
 
   return (
     <>
-      {/* Hero */}
+      {/* Hero with right-side skills card */}
       <section className="relative overflow-hidden">
-        <div className="container py-16 md:py-24">
+        <div className="container relative py-16 md:py-24">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
               {t("hero.title")}
@@ -178,11 +222,23 @@ export default function Page() {
               </MagneticButton>
             </div>
           </div>
+
+          {/* Right-side skills card (desktop) */}
+          <div className="hidden lg:block absolute right-0 top-6 w-[440px]">
+            <SkillsCard />
+          </div>
+
+          {/* Stacked under hero (mobile) */}
+          <div className="mt-8 lg:hidden">
+            <SkillsCard />
+          </div>
         </div>
+
+        {/* blueprint micro-grid */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(16,185,129,.12)_1px,transparent_1px)] [background-size:18px_18px]" />
       </section>
 
-      {/* Skills at a Glance */}
+      {/* Skills at a Glance (keep the full grid too if you like) */}
       <Section title="Skills at a Glance">
         <div className="grid md:grid-cols-3 gap-4">
           <div className="card p-4">
@@ -215,20 +271,36 @@ export default function Page() {
         <KPIs items={kpis} />
       </Section>
 
-      {/* About + Interests */}
+      {/* About + Interests, with photo on the right from /downloads */}
       <Section id="about" title={t("sections.about")}>
-        <div className="prose prose-emerald dark:prose-invert">
-          <p>
-            Strong research background in lignin chemistry, biopolymers, and sustainable materials.
-            Operational Python/TensorFlow/Keras + SQL/Java/JS stack. Experienced from lab to pilot scale
-            (GC/VOC analysis, optimization) with four peer-reviewed publications on fiber recycling and sustainable packaging.
-            Native English; A2 German.
-          </p>
-        </div>
-        <div className="mt-4">
-          <div className="text-sm font-semibold tracking-wide text-gray-500">Interests</div>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {interests.map((it) => <Chip key={it} ghost>{it}</Chip>)}
+        <div className="grid gap-6 lg:grid-cols-2 items-center">
+          <div>
+            <div className="prose prose-emerald dark:prose-invert">
+              <p>
+                Strong research background in lignin chemistry, biopolymers, and sustainable materials.
+                Operational Python/TensorFlow/Keras + SQL/Java/JS stack. Experienced from lab to pilot scale
+                (GC/VOC analysis, optimization) with four peer-reviewed publications on fiber recycling and sustainable packaging.
+                Native English; A2 German.
+              </p>
+            </div>
+            <div className="mt-4">
+              <div className="text-sm font-semibold tracking-wide text-gray-500">Interests</div>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {interests.map((it) => <Chip key={it} ghost>{it}</Chip>)}
+              </div>
+            </div>
+          </div>
+
+          {/* Photo on the right (from public/downloads/...) */}
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border">
+            <Image
+              src={`${base}/downloads/1683206302513.jfif`}
+              alt="John Slavinskas"
+              fill
+              className="object-cover"
+              priority
+              unoptimized
+            />
           </div>
         </div>
       </Section>
@@ -246,7 +318,7 @@ export default function Page() {
             <ul className="mt-2 text-sm space-y-2">
               <li>
                 <strong>WorldQuant University</strong> — MS Financial Engineering, <em>Jan 2024 – Dec 2025</em> (DEAC).<br />
-                <span className="text-gray-500">Courses: Financial Markets · Financial Data · Econometrics · Derivative Pricing · Stochastic Modeling · ML/DL in Finance · Portfolio & Risk · Capstone</span>
+                <span className="text-gray-500">Financial Markets · Financial Data · Econometrics · Derivative Pricing · Stochastic Modeling · ML/DL in Finance · Portfolio & Risk · Capstone</span>
               </li>
               <li>
                 <strong>Hochschule München (HM)</strong> — MEng Paper Technology, <em>Oct 2023 – Jul 2025</em> (ZEvA).<br />
@@ -287,8 +359,7 @@ export default function Page() {
                 Dölle, K. <em>et al.</em> incl. J. Slavinskas (2023). <em>Characterization of Recycled Fiber Material…</em> <strong>JMSRR</strong> 6(3):341–353.
               </li>
               <li>
-                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2022). <em>Upgrading of OCC with Aseptic Packaging…</em> <strong>JMSRR</strong> 5(4):42–[…].
-              </li>
+                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2022). <em>Upgrading of OCC with Aseptic Packaging…</em> <strong>JMSRR</strong> 5(4):42–[…].</li>
               <li>
                 Dölle, K. <em>et al.</em> incl. J. Slavinskas (2022). <em>A Global Look at the Market Potential of Liquid Container Board…</em> <strong>J. Eng. Research & Reports</strong> 23(12):223–235.
               </li>
