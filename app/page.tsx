@@ -182,14 +182,20 @@ export default function Page() {
               <KPIs
                 items={[
                   { label: "Users", value: 1234 },
-                  { label: "Uptime (%)", value: 99.9 }, // must be a number
+                  { label: "Uptime (%)", value: 99.9 }, // number, not string
                 ]}
               />
             </Smoke>
 
             <Smoke name="ProjectCard">
               <div className="max-w-sm">
-                <ProjectCard title="Example Project" description="Short blurb for the card." href="#" />
+                <ProjectCard
+                  title="Example Project"
+                  subtitle="Short blurb for the card."
+                  href="#"
+                  cta="Open"
+                  tags={["demo"]}
+                />
               </div>
             </Smoke>
 
