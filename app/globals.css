@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --bg: 255 255 255;
+  --fg: 17 24 39;
+  --muted: 107 114 128;
+  --card: 249 250 251;
+  --ring: 16 185 129;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: 17 24 39;
+    --fg: 243 244 246;
+    --muted: 156 163 175;
+    --card: 31 41 55;
+  }
+}
+
+html, body {
+  @apply h-full;
+}
+body{
+  color: rgb(var(--fg));
+  background: radial-gradient(1200px 1200px at 100% -10%, rgba(16,185,129,0.08), transparent 40%),
+              radial-gradient(1000px 800px at -20% 10%, rgba(16,185,129,0.06), transparent 35%),
+              rgb(var(--bg));
+  font-feature-settings: "cv02","cv03","ss01","ss03";
+}
+
+/* Fancy underline utility */
+.fancy-underline {
+  background-image: linear-gradient(transparent,transparent), linear-gradient(to right, rgba(16,185,129,.35), rgba(16,185,129,1), rgba(16,185,129,.35));
+  background-size: 100% 2px, 0 2px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms ease;
+}
+.fancy-underline:hover {
+  background-size: 0 2px, 100% 2px;
+}
+
+/* Cards */
+.card {
+  @apply rounded-2xl border border-gray-200/30 dark:border-gray-700/50 bg-white/70 dark:bg-gray-800/60 shadow-sm backdrop-blur p-6;
+}
+
+.btn {
+  @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium border border-transparent transition;
+  @apply bg-emerald-600 text-white hover:bg-emerald-700;
+}
+.btn-outline {
+  @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium border transition;
+  @apply border-emerald-600 text-emerald-700 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:bg-emerald-900/20;
+}
+
+/* Timeline */
+.timeline {
+  @apply relative;
+}
+.timeline:before {
+  content: "";
+  @apply absolute left-4 top-0 h-full w-0.5 bg-emerald-200 dark:bg-emerald-900/50;
+}
+.timeline-item {
+  @apply relative pl-10 pb-8;
+}
+.timeline-bullet {
+  @apply absolute left-0 top-1.5 h-3.5 w-3.5 rounded-full bg-emerald-500 ring-4 ring-emerald-200 dark:ring-emerald-900/40;
+}
+
+/* Print rules for Resume (A4) */
+@media print {
+  @page { size: A4; margin: 12mm; }
+  body { background: white; }
+  nav, footer, .no-print { display: none !important; }
+  a { text-decoration: none; color: inherit; }
+  .card { box-shadow: none; border: 1px solid #ddd; }
+}
