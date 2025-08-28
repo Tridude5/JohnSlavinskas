@@ -1,50 +1,16 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useSearchParams } from "next/navigation";
-
 import Section from "@/components/Section";
 import KPIs from "@/components/KPIs";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
-// Optional: existing components used in dev-only checks (keep if you like)
-import ProjectCard from "@/components/ProjectCard";
-import EmailLink from "@/components/EmailLink";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
-// Client-only components
+/* Magnetic hero buttons (already in your /components folder) */
 const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ssr: false });
-// (Dev gallery bits, keep if helpful)
-const ParallaxGroup = dynamic(() => import("@/components/ParallaxGroup"), { ssr: false });
-const BlueprintFX = dynamic(() => import("@/components/BlueprintFX"), { ssr: false });
-const AppEffects = dynamic(() => import("@/components/AppEffects"), { ssr: false });
-const AutomationShowcase = dynamic(() => import("@/components/AutomationShowcase"), { ssr: false });
-const LanguageToggle = dynamic(() => import("@/components/LanguageToggle"), { ssr: false });
 
-/* ---------- tiny error boundary for the dev-only gallery ---------- */
-class ErrorBoundary extends React.Component<{ name: string; children: React.ReactNode }, { error?: Error }> {
-  state = { error: undefined as Error | undefined };
-  static getDerivedStateFromError(error: Error) { return { error }; }
-  componentDidCatch() {}
-  render() {
-    if (this.state.error) {
-      return (
-        <div className="border rounded-lg p-3 bg-red-50 dark:bg-red-950">
-          <div className="font-semibold">🔴 {this.props.name} failed to render</div>
-          <pre className="mt-2 text-xs whitespace-pre-wrap">
-            {String(this.state.error?.stack || this.state.error?.message)}
-          </pre>
-        </div>
-      );
-    }
-    return this.props.children as any;
-  }
-}
-
-/* ---------- small local UI helpers (chips & timeline) ---------- */
+/* ---------- small UI helpers ---------- */
 function Chip({ children, ghost = false }: { children: React.ReactNode; ghost?: boolean }) {
   return (
     <span
@@ -65,7 +31,6 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
     <ol className="relative border-l-2 border-emerald-500/40 pl-6 space-y-6">
       {items.map((it, i) => (
         <li key={i} className="relative">
-          {/* dot */}
           <span className="absolute -left-3 top-1 size-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" />
           <div className="card p-4">
             <div className="flex flex-wrap items-baseline gap-2">
@@ -88,7 +53,6 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
 export default function Page() {
   const { t } = useI18n();
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const isDev = process.env.NODE_ENV !== "production";
 
   const kpis = [
     { label: "Publications", value: 6 },
@@ -97,37 +61,86 @@ export default function Page() {
     { label: "Quant Demos", value: 3, spark: [10, 9, 11, 12, 10, 13, 12, 14] },
   ];
 
-  // Interests: edit freely (these render as “pills”)
-  const interests = ["🏃 Running", "🧗 Bouldering", "🎾 Padel", "🏊 Swimming", "🏋️ Strength Training", "✈️ Travel", "📷 Photography", "🎬 Video Editing"];
+  const interests = [
+    "🏃 Running", "🧗 Bouldering", "🎾 Padel", "🏊 Swimming",
+    "🏋️ Strength Training", "✈️ Travel", "📷 Photography", "🎬 Video Editing",
+  ];
 
-  // Experience items for the green timeline
   const exp: TLItem[] = [
     {
-      role: "Technology Development (Working Student)",
+      role: "Technology Development — Working Student",
       org: "Lignopure",
       period: "Dec 2024 – Jun 2025",
       loc: "Hamburg",
       bullets: [
-        "Developed lignin-based leather (up to 70% lignin) via extrusion; optimized strength.",
-        "Experimented with new lignin formulations to improve compatibility and properties.",
+        "Developed lignin-based leather via extrusion with up to 70% lignin.",
+        "Optimized material properties; achieved industry-leading strength.",
+        "Experimented with new lignin formulations to improve compatibility.",
       ],
     },
     {
-      role: "Master Thesis — Lignin Solubility for Cosmetics",
-      org: "HM Munich",
+      role: "Master Thesis Researcher",
+      org: "HM Munich (with Lignopure)",
       period: "Nov 2024 – Jun 2025",
       bullets: [
         "Solvent selection & optimization (temperature, ratios, surfactants).",
-        "Estimated Hansen Solubility Parameters; evaluated functional changes post-dissolution.",
+        "Estimated Hansen Solubility Parameters for lignin solvent selection.",
+        "Evaluated changes in functional properties during dissolution.",
+      ],
+    },
+    {
+      role: "Technology Development Intern",
+      org: "Lignopure",
+      period: "Aug 2024 – Nov 2024",
+      bullets: [
+        "Lab research on lignin processing and drying methods.",
+        "Contributed to “ForFun” functional materials project.",
+        "Partnered with University of Helsinki for VOC emission testing; identified odor sources and neutralization strategies.",
       ],
     },
     {
       role: "Emerging Leader (Intern)",
-      org: "Sonoco",
+      org: "Sonoco Product Co.",
       period: "May 2023 – Aug 2023",
       bullets: [
-        "Analyzed effluent treatment; implemented cost-effective process improvements.",
-        "Deployed sensors (Parcview/Everactive) for real-time visualization & quality control.",
+        "Analyzed effluent treatment; implemented cost-effective improvements.",
+        "Used Parcview/Everactive sensors for real-time visualization and quality control.",
+      ],
+    },
+    {
+      role: "Intern",
+      org: "Safar Partners",
+      period: "Feb 2023 – Apr 2023",
+      bullets: [
+        "Competitive analysis of biodegradable plastics; recommended Radical Plastics to PE investors.",
+        "Built market + polymer process comparison presentation for investment evaluation.",
+      ],
+    },
+    {
+      role: "Undergraduate Student Researcher",
+      org: "Dept. of Chemistry (ESF)",
+      period: "Feb 2022 – Feb 2023",
+      bullets: [
+        "Synthesized biodegradable bioplastics from genetically modified E. coli.",
+        "Hands-on GC, NMR, electroporation, lyophilization, and plastics testing.",
+        "Collaborated with Envision Biopolymers to scale promising polymer.",
+      ],
+    },
+    {
+      role: "Paper Making Processes — Student Participant",
+      org: "ESF",
+      period: "Jan 2023 – May 2023",
+      bullets: [
+        "Selected raw materials and scaled paper grades; managed work plan and reports.",
+      ],
+    },
+    {
+      role: "Engineering Design — Student Participant",
+      org: "ESF / WestRock",
+      period: "Sep 2022 – Dec 2022",
+      bullets: [
+        "Vendor outreach and mill measurements for pocket conveyor CAPEX study.",
+        "Delivered cost analysis to corporate managers.",
       ],
     },
   ];
@@ -143,18 +156,16 @@ export default function Page() {
             </h1>
             <p className="mt-5 text-lg text-gray-600 dark:text-gray-300">
               {t("hero.tagline")}{" "}
-              I work at the intersection of lignin chemistry &amp; biopolymers, pragmatic software/ML, and finance/analytics.
+              I work at the intersection of lignin &amp; biobased materials, pragmatic software/ML, and finance/analytics.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              {/* Magnetic hero buttons */}
-              <MagneticButton href="/resume" className="btn inline-block" aria-label="View resume">
+              <MagneticButton href="/resume" className="btn inline-block">
                 {t("hero.viewResume")}
               </MagneticButton>
               <MagneticButton
                 href={`${base}/downloads/Resume%20P.pdf`}
                 download="John_Slavinskas_Resume_1p.pdf"
                 className="btn-outline inline-block"
-                aria-label="Download 1-page resume PDF"
               >
                 {t("hero.download1p")}
               </MagneticButton>
@@ -162,14 +173,12 @@ export default function Page() {
                 href={`${base}/downloads/CV-P.pdf`}
                 download="John_Slavinskas_CV.pdf"
                 className="btn-outline inline-block"
-                aria-label="Download full CV PDF"
               >
                 {t("hero.downloadCV")}
               </MagneticButton>
             </div>
           </div>
         </div>
-        {/* blueprint micro-grid */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(16,185,129,.12)_1px,transparent_1px)] [background-size:18px_18px]" />
       </section>
 
@@ -180,41 +189,40 @@ export default function Page() {
             <div className="mb-2 font-semibold">Paper &amp; Materials</div>
             <div className="flex flex-wrap gap-2">
               <Chip>Lignin</Chip><Chip>Biopolymers</Chip><Chip>Pulp &amp; Paper</Chip>
-              <Chip>DOE/SPC</Chip><Chip>FTIR</Chip><Chip>NMR</Chip><Chip>Rheology</Chip>
+              <Chip>VOC &amp; GC</Chip><Chip>DOE/SPC</Chip><Chip>FTIR</Chip><Chip>NMR</Chip><Chip>Rheology</Chip>
             </div>
           </div>
           <div className="card p-4">
             <div className="mb-2 font-semibold">Software &amp; Data</div>
             <div className="flex flex-wrap gap-2">
-              <Chip>TypeScript</Chip><Chip>React/Next.js</Chip><Chip>Flutter/Dart</Chip>
-              <Chip>Firebase (Auth/Firestore)</Chip><Chip>Python (pandas)</Chip><Chip>SQL</Chip>
+              <Chip>Python</Chip><Chip>TensorFlow</Chip><Chip>Keras</Chip>
+              <Chip>SQL/NoSQL</Chip><Chip>Java</Chip><Chip>JS/TS</Chip><Chip>HTML/CSS</Chip>
+              <Chip ghost>PHP</Chip><Chip ghost>Kotlin</Chip><Chip ghost>Swift</Chip><Chip ghost>R</Chip>
             </div>
           </div>
           <div className="card p-4">
             <div className="mb-2 font-semibold">Finance &amp; Analytics</div>
             <div className="flex flex-wrap gap-2">
-              <Chip>DCF</Chip><Chip>NPV/IRR</Chip><Chip>WACC</Chip>
-              <Chip ghost>Sensitivity</Chip><Chip ghost>Monte Carlo</Chip><Chip ghost>Unit Economics</Chip>
+              <Chip>Financial Econometrics</Chip><Chip>Derivative Pricing</Chip><Chip>Stochastic Modeling</Chip>
+              <Chip>Portfolio &amp; Risk</Chip><Chip ghost>ML/DL in Finance</Chip>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* KPIs (keep your numbers) */}
+      {/* KPIs */}
       <Section title={t("sections.at_a_glance")}>
         <KPIs items={kpis} />
       </Section>
 
-      {/* About (with Interests pills) */}
+      {/* About + Interests */}
       <Section id="about" title={t("sections.about")}>
         <div className="prose prose-emerald dark:prose-invert">
           <p>
-            I’m John Slavinskas — materials researcher with a strong software/analytics toolkit and finance fluency.
-            I turn lab results and app telemetry into decisions that improve performance, throughput, and ROI.
-          </p>
-          <p>
-            Recent work spans lignin fractionation/derivatization, solubility for cosmetics, and role-aware apps
-            (Flutter + Firebase) that capture data and surface insights.
+            Strong research background in lignin chemistry, biopolymers, and sustainable materials.
+            Operational Python/TensorFlow/Keras + SQL/Java/JS stack. Experienced from lab to pilot scale
+            (GC/VOC analysis, optimization) with four peer-reviewed publications on fiber recycling and sustainable packaging.
+            Native English; A2 German.
           </p>
         </div>
         <div className="mt-4">
@@ -225,101 +233,69 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* Experience — emerald (green) timeline */}
+      {/* Experience — green timeline */}
       <Section title={t("sections.recent_experience")}>
         <GreenTimeline items={exp} />
-        <div className="mt-6">
-          <Link className="fancy-underline" href="/projects">See projects →</Link>
-        </div>
       </Section>
 
-      {/* Education & Research (two-up cards) */}
+      {/* Education & Research (two-up) */}
       <Section title="Education & Research">
         <div className="grid md:grid-cols-2 gap-4">
           <div className="card p-5">
             <h3 className="font-semibold">Education</h3>
-            <ul className="mt-2 text-sm space-y-1.5">
-              <li><strong>HM Munich</strong> — Master Thesis (Lignin Solubility for Cosmetics), 2024–2025.</li>
-              <li><em>[Add degree/institution here]</em> — e.g., B.S. Chemistry / Materials — <span className="text-gray-500">Institution, Year</span></li>
+            <ul className="mt-2 text-sm space-y-2">
+              <li>
+                <strong>WorldQuant University</strong> — MS Financial Engineering, <em>Jan 2024 – Dec 2025</em> (DEAC).<br />
+                <span className="text-gray-500">Courses: Financial Markets · Financial Data · Econometrics · Derivative Pricing · Stochastic Modeling · ML/DL in Finance · Portfolio & Risk · Capstone</span>
+              </li>
+              <li>
+                <strong>Hochschule München (HM)</strong> — MEng Paper Technology, <em>Oct 2023 – Jul 2025</em> (ZEvA).<br />
+                Thesis: <em>Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract</em>.
+              </li>
+              <li>
+                <strong>University of the People</strong> — BS Computer Science, <em>Jun 2023 – Jun 2025</em> (WASC).<br />
+                Concentrations: Data Science; Network & Application Security.
+              </li>
+              <li>
+                <strong>SUNY ESF</strong> — BS Paper Engineering, <em>Aug 2020 – Aug 2023</em> (ABET).<br />
+                Minors: Management, Physics. Skills: MATLAB · VBA · Python · ChemCAD.
+              </li>
             </ul>
+            <div className="mt-4">
+              <h4 className="font-medium">Certifications</h4>
+              <ul className="mt-1 text-sm space-y-1">
+                <li>Strascheg Center for Entrepreneurship — Incubator: Founding Your Own Startup (<em>Feb 2024 – Feb 2025</em>).</li>
+                <li>DeepLearning.AI — Professional Certificate in TensorFlow Development (<em>Nov 2023</em>).</li>
+                <li>IBM — Professional Certificate in AI Engineering (<em>Sep 2023</em>).</li>
+              </ul>
+            </div>
           </div>
+
           <div className="card p-5">
             <h3 className="font-semibold">Research & Publications</h3>
-            <ul className="mt-2 text-sm space-y-1.5">
-              <li><strong>Lignin-Derived Carbon Fibres: Opportunities and Challenges</strong>, JMSRR, 2025.</li>
-              <li><strong>Lignin Derived Chemicals and Aromatics: A Review</strong>, ChemRxiv, Apr 24, 2025.</li>
-              <li><strong>Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</strong>, JERR, 2024.</li>
-              <li><strong>Characterization of Recycled Fiber Material...</strong>, JMSRR, 2023.</li>
+            <ul className="mt-2 text-sm space-y-2">
+              <li>
+                Slavinskas, J.; Andrew, D. M. (2025). <em>Lignin-Derived Carbon Fibres: Opportunities and Challenges</em>. <strong>JMSRR</strong> 8(3):571–580.
+              </li>
+              <li>
+                Slavinskas, J. (2025). <em>Lignin Derived Chemicals and Aromatics: A Review</em>. <strong>ChemRxiv</strong>, Apr 24, 2025. doi:10.26434/chemrxiv-2025-cprrn.
+              </li>
+              <li>
+                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2024). <em>Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</em>. <strong>J. Eng. Research & Reports</strong>.
+              </li>
+              <li>
+                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2023). <em>Characterization of Recycled Fiber Material…</em> <strong>JMSRR</strong> 6(3):341–353.
+              </li>
+              <li>
+                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2022). <em>Upgrading of OCC with Aseptic Packaging…</em> <strong>JMSRR</strong> 5(4):42–[…].
+              </li>
+              <li>
+                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2022). <em>A Global Look at the Market Potential of Liquid Container Board…</em> <strong>J. Eng. Research & Reports</strong> 23(12):223–235.
+              </li>
             </ul>
           </div>
         </div>
       </Section>
-
-      {/* ============ DEV/QUERY-GATED: small components check (optional) ============ */}
-      <Suspense fallback={null}>
-        <ComponentsCheckGate isDev={isDev} />
-      </Suspense>
     </>
-  );
-}
-
-/* ---------- Dev-only gallery to make sure components render ---------- */
-function ComponentsCheckGate({ isDev }: { isDev: boolean }) {
-  const searchParams = useSearchParams();
-  const showChecks = isDev || searchParams.get("check") === "1";
-  if (!showChecks) return null;
-
-  return (
-    <Section title="Components Check (dev only)">
-      <p className="text-sm text-gray-500 mb-3">
-        Visible in development or with <code>?check=1</code>. Each card is an isolated render with an error boundary.
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <Smoke name="Header"><Header /></Smoke>
-        <Smoke name="Footer"><Footer /></Smoke>
-        <Smoke name="EmailLink"><EmailLink /></Smoke>
-        <Smoke name="LanguageToggle"><LanguageToggle /></Smoke>
-        <Smoke name="MagneticButton"><MagneticButton className="btn inline-block">Hover me</MagneticButton></Smoke>
-
-        <Smoke name="ProjectCard">
-          <div className="max-w-sm">
-            <ProjectCard title="Example Project" subtitle="Short blurb" href="#" cta="Open" tags={["demo"]} />
-          </div>
-        </Smoke>
-
-        <Smoke name="ParallaxGroup (client)">
-          <ParallaxGroup>
-            <div className="h-24 w-full flex items-center justify-center border rounded-lg">Parallax content</div>
-          </ParallaxGroup>
-        </Smoke>
-
-        <Smoke name="BlueprintFX (client)">
-          <div className="relative h-40 overflow-hidden rounded-lg"><BlueprintFX /></div>
-        </Smoke>
-
-        <Smoke name="AppEffects (client)">
-          <div className="relative h-24 overflow-hidden rounded-lg"><AppEffects /></div>
-        </Smoke>
-
-        <Smoke name="AutomationShowcase (client)"><AutomationShowcase /></Smoke>
-      </div>
-    </Section>
-  );
-}
-
-function Smoke({ name, children }: { name: string; children: React.ReactNode }) {
-  return (
-    <div className="card">
-      <div className="mb-2 flex items-center justify-between">
-        <h3 className="font-semibold">{name}</h3>
-        <span className="text-xs px-2 py-0.5 rounded-full border">smoke test</span>
-      </div>
-      <ErrorBoundary name={name}>
-        <div className="p-4 border rounded-lg min-h-[80px] flex items-center justify-center">
-          {children}
-        </div>
-      </ErrorBoundary>
-    </div>
   );
 }
