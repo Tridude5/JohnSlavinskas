@@ -4,25 +4,58 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import Section from "@/components/Section";
-import KPIs from "@/components/KPIs";
-import { useI18n } from "@/components/i18n/I18nProvider";
 
-/* Magnetic hero buttons (already in your /components folder) */
+import Section from "@/components/Section";
+import ProjectCard from "@/components/ProjectCard";
+import Timeline from "@/components/Timeline";
+import KPIs from "@/components/KPIs";
+import BlueprintFX from "@/components/BlueprintFX";
+import ParallaxGroup from "@/components/ParallaxGroup";
+import AutomationShowcase from "@/components/AutomationShowcase";
+
+/* Magnetic hero buttons */
 const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ssr: false });
 
-/* ---------- small UI helpers ---------- */
-function Chip({ children, ghost = false }: { children: React.ReactNode; ghost?: boolean }) {
+/* ---------------- little UI helpers ---------------- */
+function SkillsCard() {
   return (
-    <span
-      className={
-        ghost
-          ? "inline-flex items-center rounded-full border px-3 py-1 text-sm text-gray-300 border-white/15 bg-white/[0.04]"
-          : "inline-flex items-center rounded-full border px-3 py-1 text-sm border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-      }
-    >
-      {children}
-    </span>
+    <aside className="rounded-2xl border bg-black/30 backdrop-blur supports-[backdrop-filter]:bg-black/30 p-5 shadow-xl">
+      <h3 className="font-semibold">Skills at a glance</h3>
+      <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+        <div>
+          <div className="text-gray-500">Materials</div>
+          <ul className="mt-1 space-y-1">
+            <li>Lignin · Biopolymers</li>
+            <li>Pulp &amp; Paper</li>
+            <li>DOE/SPC · Rheology</li>
+          </ul>
+        </div>
+        <div>
+          <div className="text-gray-500">Programming</div>
+          <ul className="mt-1 space-y-1">
+            <li>Python · JS/TS · Java</li>
+            <li>TensorFlow · Keras</li>
+            <li>SQL / NoSQL</li>
+          </ul>
+        </div>
+        <div>
+          <div className="text-gray-500">Quant</div>
+          <ul className="mt-1 space-y-1">
+            <li>Option Pricing</li>
+            <li>Efficient Frontier</li>
+            <li>Backtesting</li>
+          </ul>
+        </div>
+        <div>
+          <div className="text-gray-500">Lab &amp; Tools</div>
+          <ul className="mt-1 space-y-1">
+            <li>FTIR · NMR · GC/VOC</li>
+            <li>MATLAB · VBA</li>
+            <li>Firebase</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
   );
 }
 
@@ -50,66 +83,29 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
   );
 }
 
-function SkillsCard() {
-  return (
-    <aside className="rounded-2xl border bg-black/30 backdrop-blur supports-[backdrop-filter]:bg-black/30 p-5 shadow-xl">
-      <h3 className="text-lg font-semibold mb-3">Skills at a glance</h3>
-      <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
-        <div>
-          <div className="text-gray-400 font-medium">Finance</div>
-          <div className="mt-1 space-y-1">
-            <div>Financial Econometrics</div>
-            <div>Derivative Pricing</div>
-            <div>Stochastic Modeling</div>
-            <div>Portfolio & Risk</div>
-          </div>
-        </div>
-        <div>
-          <div className="text-gray-400 font-medium">Programming</div>
-          <div className="mt-1 space-y-1">
-            <div>Python · R · SQL</div>
-            <div>TensorFlow · Keras</div>
-            <div>Java · JS/TS</div>
-          </div>
-        </div>
-        <div>
-          <div className="text-gray-400 font-medium">Materials</div>
-          <div className="mt-1 space-y-1">
-            <div>Lignin · Biopolymers</div>
-            <div>Pulp & Paper</div>
-            <div>DOE/SPC · Rheology</div>
-          </div>
-        </div>
-        <div>
-          <div className="text-gray-400 font-medium">Tools</div>
-          <div className="mt-1 space-y-1">
-            <div>FTIR · NMR · GC/VOC</div>
-            <div>Firebase · SQL/NoSQL</div>
-            <div>MATLAB · VBA</div>
-          </div>
-        </div>
-      </div>
-    </aside>
-  );
-}
-
-/* ============================== PAGE ============================== */
+/* -------------------- PAGE -------------------- */
 export default function Page() {
-  const { t } = useI18n();
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  const kpis = [
-    { label: "Publications", value: 6 },
-    { label: "Pilot / Lab Projects", value: 12 },
-    { label: "ML / Data Projects", value: 8, spark: [1, 2, 3, 2, 4, 5, 7, 6, 8] },
-    { label: "Quant Demos", value: 3, spark: [10, 9, 11, 12, 10, 13, 12, 14] },
+  // hero KPIs (two cards like hers)
+  const heroKpis = [
+    { label: "Publications", value: 6, spark: [1, 2, 3, 4, 5, 6] },
+    { label: "Pilot/Lab Projects", value: 12, spark: [2, 3, 5, 7, 10, 12] },
   ];
 
+  // Interests for pills (kept simple)
   const interests = [
-    "🏃 Running", "🧗 Bouldering", "🎾 Padel", "🏊 Swimming",
-    "🏋️ Strength Training", "✈️ Travel", "📷 Photography", "🎬 Video Editing",
+    { label: "Running", emoji: "🏃" },
+    { label: "Bouldering", emoji: "🧗" },
+    { label: "Padel", emoji: "🎾" },
+    { label: "Swimming", emoji: "🏊" },
+    { label: "Strength Training", emoji: "🏋️" },
+    { label: "Travel", emoji: "✈️" },
+    { label: "Photography", emoji: "📷" },
+    { label: "Video Editing", emoji: "🎬" },
   ];
 
+  // Experience (timeline shape used by your <Timeline/>)
   const exp: TLItem[] = [
     {
       role: "Technology Development — Working Student",
@@ -117,9 +113,9 @@ export default function Page() {
       period: "Dec 2024 – Jun 2025",
       loc: "Hamburg",
       bullets: [
-        "Developed lignin-based leather via extrusion with up to 70% lignin.",
-        "Optimized material properties; achieved industry-leading strength.",
-        "Experimented with new lignin formulations to improve compatibility.",
+        "Developed lignin-based leather via extrusion (≤70% lignin).",
+        "Optimized properties; achieved industry-leading strength.",
+        "Experimented with new lignin formulations for compatibility.",
       ],
     },
     {
@@ -128,8 +124,8 @@ export default function Page() {
       period: "Nov 2024 – Jun 2025",
       bullets: [
         "Solvent selection & optimization (temperature, ratios, surfactants).",
-        "Estimated Hansen Solubility Parameters for lignin solvent selection.",
-        "Evaluated changes in functional properties during dissolution.",
+        "Estimated Hansen Solubility Parameters for solvent selection.",
+        "Evaluated functional changes during dissolution.",
       ],
     },
     {
@@ -137,9 +133,9 @@ export default function Page() {
       org: "Lignopure",
       period: "Aug 2024 – Nov 2024",
       bullets: [
-        "Lab research on lignin processing and drying methods.",
+        "Lignin processing & drying method studies.",
         "Contributed to “ForFun” functional materials project.",
-        "Partnered with University of Helsinki for VOC emission testing; identified odor sources and neutralization strategies.",
+        "With Univ. of Helsinki: VOC testing; identified odor sources & mitigations.",
       ],
     },
     {
@@ -148,221 +144,175 @@ export default function Page() {
       period: "May 2023 – Aug 2023",
       bullets: [
         "Analyzed effluent treatment; implemented cost-effective improvements.",
-        "Used Parcview/Everactive sensors for real-time visualization and quality control.",
-      ],
-    },
-    {
-      role: "Intern",
-      org: "Safar Partners",
-      period: "Feb 2023 – Apr 2023",
-      bullets: [
-        "Competitive analysis of biodegradable plastics; recommended Radical Plastics to PE investors.",
-        "Built market + polymer process comparison presentation for investment evaluation.",
-      ],
-    },
-    {
-      role: "Undergraduate Student Researcher",
-      org: "Dept. of Chemistry (ESF)",
-      period: "Feb 2022 – Feb 2023",
-      bullets: [
-        "Synthesized biodegradable bioplastics from genetically modified E. coli.",
-        "Hands-on GC, NMR, electroporation, lyophilization, and plastics testing.",
-        "Collaborated with Envision Biopolymers to scale promising polymer.",
-      ],
-    },
-    {
-      role: "Paper Making Processes — Student Participant",
-      org: "ESF",
-      period: "Jan 2023 – May 2023",
-      bullets: [
-        "Selected raw materials and scaled paper grades; managed work plan and reports.",
-      ],
-    },
-    {
-      role: "Engineering Design — Student Participant",
-      org: "ESF / WestRock",
-      period: "Sep 2022 – Dec 2022",
-      bullets: [
-        "Vendor outreach and mill measurements for pocket conveyor CAPEX study.",
-        "Delivered cost analysis to corporate managers.",
+        "Deployed Parcview/Everactive sensors for real-time QC.",
       ],
     },
   ];
 
   return (
     <>
-      {/* Hero with right-side skills card */}
-      <section className="relative overflow-hidden">
-        <div className="container relative py-16 md:py-24">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-              {t("hero.title")}
+      {/* HERO (with grid + right skills card) */}
+      <header className="container pt-14 pb-10 relative overflow-hidden">
+        {/* Subtle blueprint background */}
+        <div className="absolute inset-0 -z-10 opacity-70">
+          <BlueprintFX />
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-12 items-center relative">
+          {/* Left: name, blurb, KPIs, CTAs */}
+          <div className="md:col-span-7">
+            <p className="text-sm uppercase tracking-widest text-gray-500">Materials × Software × Finance</p>
+
+            <h1
+              className="mt-2 text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight
+              bg-gradient-to-r from-emerald-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent"
+            >
+              John (Jack) Slavinskas
             </h1>
-            <p className="mt-5 text-lg text-gray-600 dark:text-gray-300">
-              {t("hero.tagline")}{" "}
-              I work at the intersection of lignin &amp; biobased materials, pragmatic software/ML, and finance/analytics.
+
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
+              Researcher and builder at the intersection of lignin &amp; biobased materials,
+              Python/ML data pipelines, and small interactive quant apps.
             </p>
+
+            <div className="mt-6 max-w-xl">
+              <KPIs items={heroKpis} />
+            </div>
+
             <div className="mt-6 flex flex-wrap gap-3">
-              <MagneticButton href="/resume" className="btn inline-block">
-                {t("hero.viewResume")}
-              </MagneticButton>
-              <MagneticButton
-                href={`${base}/downloads/Resume%20P.pdf`}
-                download="John_Slavinskas_Resume_1p.pdf"
-                className="btn-outline inline-block"
-              >
-                {t("hero.download1p")}
-              </MagneticButton>
-              <MagneticButton
-                href={`${base}/downloads/CV-P.pdf`}
-                download="John_Slavinskas_CV.pdf"
-                className="btn-outline inline-block"
-              >
-                {t("hero.downloadCV")}
-              </MagneticButton>
+              <MagneticButton href="/resume" className="btn inline-block">Resume</MagneticButton>
+              <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline inline-block">Download 1-pager</MagneticButton>
+              <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline inline-block">Download CV</MagneticButton>
+              <Link href="/projects" className="btn-outline">View Projects</Link>
             </div>
           </div>
 
-          {/* Right-side skills card (desktop) */}
-          <div className="hidden lg:block absolute right-0 top-6 w-[440px]">
-            <SkillsCard />
-          </div>
-
-          {/* Stacked under hero (mobile) */}
-          <div className="mt-8 lg:hidden">
-            <SkillsCard />
-          </div>
-        </div>
-
-        {/* blueprint micro-grid */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(16,185,129,.12)_1px,transparent_1px)] [background-size:18px_18px]" />
-      </section>
-
-      {/* Skills at a Glance (keep the full grid too if you like) */}
-      <Section title="Skills at a Glance">
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="card p-4">
-            <div className="mb-2 font-semibold">Paper &amp; Materials</div>
-            <div className="flex flex-wrap gap-2">
-              <Chip>Lignin</Chip><Chip>Biopolymers</Chip><Chip>Pulp &amp; Paper</Chip>
-              <Chip>VOC &amp; GC</Chip><Chip>DOE/SPC</Chip><Chip>FTIR</Chip><Chip>NMR</Chip><Chip>Rheology</Chip>
-            </div>
-          </div>
-          <div className="card p-4">
-            <div className="mb-2 font-semibold">Software &amp; Data</div>
-            <div className="flex flex-wrap gap-2">
-              <Chip>Python</Chip><Chip>TensorFlow</Chip><Chip>Keras</Chip>
-              <Chip>SQL/NoSQL</Chip><Chip>Java</Chip><Chip>JS/TS</Chip><Chip>HTML/CSS</Chip>
-              <Chip ghost>PHP</Chip><Chip ghost>Kotlin</Chip><Chip ghost>Swift</Chip><Chip ghost>R</Chip>
-            </div>
-          </div>
-          <div className="card p-4">
-            <div className="mb-2 font-semibold">Finance &amp; Analytics</div>
-            <div className="flex flex-wrap gap-2">
-              <Chip>Financial Econometrics</Chip><Chip>Derivative Pricing</Chip><Chip>Stochastic Modeling</Chip>
-              <Chip>Portfolio &amp; Risk</Chip><Chip ghost>ML/DL in Finance</Chip>
+          {/* Right: skills card (sticky look on desktop) */}
+          <div className="md:col-span-5">
+            <div className="card card-gradient">
+              <SkillsCard />
             </div>
           </div>
         </div>
-      </Section>
+      </header>
 
-      {/* KPIs */}
-      <Section title={t("sections.at_a_glance")}>
-        <KPIs items={kpis} />
-      </Section>
-
-      {/* About + Interests, with photo on the right from /downloads */}
-      <Section id="about" title={t("sections.about")}>
-        <div className="grid gap-6 lg:grid-cols-2 items-center">
-          <div>
-            <div className="prose prose-emerald dark:prose-invert">
+      {/* ABOUT (50/50: text + your photo from /downloads) */}
+      <Section id="about" title="About" subtitle="Who I am and what I bring to materials + data + finance.">
+        <div className="grid gap-6 md:grid-cols-2 items-center">
+          <div className="card">
+            <div className="space-y-3 text-gray-700 dark:text-gray-300">
               <p>
                 Strong research background in lignin chemistry, biopolymers, and sustainable materials.
-                Operational Python/TensorFlow/Keras + SQL/Java/JS stack. Experienced from lab to pilot scale
-                (GC/VOC analysis, optimization) with four peer-reviewed publications on fiber recycling and sustainable packaging.
-                Native English; A2 German.
+                Comfortable moving between lab trials, pilot scale, and code: Python/TensorFlow/Keras, SQL,
+                Java/TypeScript, and lightweight mobile (Kotlin/Swift). I like building practical tools—from
+                solvent-selection helpers to option-pricing and portfolio demos.
               </p>
-            </div>
-            <div className="mt-4">
-              <div className="text-sm font-semibold tracking-wide text-gray-500">Interests</div>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {interests.map((it) => <Chip key={it} ghost>{it}</Chip>)}
+
+              {/* Interests pills */}
+              <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60">
+                <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
+                <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl">
+                  {interests.map(({ label, emoji }) => (
+                    <span
+                      key={label}
+                      className="h-[3.0rem] inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/40 dark:border-gray-800/60 bg-white/5 text-sm font-medium px-3 text-center"
+                    >
+                      <span aria-hidden>{emoji}</span>
+                      <span>{label}</span>
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Photo on the right (from public/downloads/...) */}
-          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border">
-            <Image
-              src={`${base}/downloads/1683206302513.jfif`}
-              alt="John Slavinskas"
-              fill
-              className="object-cover"
-              priority
-              unoptimized
-            />
-          </div>
+          {/* Right image (served from public/downloads/, allow JFIF) */}
+          <ParallaxGroup>
+            <figure data-parallax="0.12" className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50">
+              <Image
+                src={`${base}/downloads/1683206302513.jfif`}
+                alt="John Slavinskas"
+                fill
+                className="object-cover"
+                priority
+                unoptimized
+              />
+            </figure>
+          </ParallaxGroup>
         </div>
       </Section>
 
-      {/* Experience — green timeline */}
-      <Section title={t("sections.recent_experience")}>
-        <GreenTimeline items={exp} />
+      {/* FEATURED PROJECTS (3-up) */}
+      <Section id="projects" title="Featured projects" subtitle="Hands-on tools & experiments.">
+        <div className="grid md:grid-cols-3 gap-6">
+          <ProjectCard
+            title="Lignin Solvent Helper"
+            subtitle="Estimate HSP proximity and suggest candidate solvents/ratios"
+            kpi="Faster solvent screening"
+            tags={["Lignin", "HSP", "Python"]}
+            href="/projects#lignin-solvent-helper"
+            cta="View project"
+          />
+          <ProjectCard
+            title="Option Pricing Demos"
+            subtitle="Greeks + Black–Scholes visualizations and sanity tests"
+            tags={["Finance", "Python", "Interactive"]}
+            href="/projects#options"
+            cta="Open demo"
+          />
+          <ProjectCard
+            title="Efficient Frontier App"
+            subtitle="Mean–variance portfolios with factor tilts & constraints"
+            tags={["Portfolio", "Python", "Data"]}
+            href="/projects#frontier"
+            cta="Open app"
+          />
+        </div>
       </Section>
 
-      {/* Education & Research (two-up) */}
-      <Section title="Education & Research">
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="card p-5">
+      {/* EXPERIENCE (timeline + automation showcase) */}
+      <Section title="Experience">
+        <div className="grid md:grid-cols-12 gap-6">
+          <div className="md:col-span-8">
+            <GreenTimeline items={exp} />
+          </div>
+          <aside className="md:col-span-4">
+            <AutomationShowcase />
+          </aside>
+        </div>
+      </Section>
+
+      {/* EDUCATION & RESEARCH (two-up cards like hers) */}
+      <Section title="Education & Leadership">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="card">
             <h3 className="font-semibold">Education</h3>
-            <ul className="mt-2 text-sm space-y-2">
+            <ul className="mt-3 space-y-2 text-sm">
               <li>
-                <strong>WorldQuant University</strong> — MS Financial Engineering, <em>Jan 2024 – Dec 2025</em> (DEAC).<br />
-                <span className="text-gray-500">Financial Markets · Financial Data · Econometrics · Derivative Pricing · Stochastic Modeling · ML/DL in Finance · Portfolio & Risk · Capstone</span>
+                <div className="font-medium">MEng Paper Technology</div>
+                <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025</div>
+                <div className="text-gray-500">Thesis: Solubility Evaluation of Technical Lignins…</div>
               </li>
               <li>
-                <strong>Hochschule München (HM)</strong> — MEng Paper Technology, <em>Oct 2023 – Jul 2025</em> (ZEvA).<br />
-                Thesis: <em>Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract</em>.
+                <div className="font-medium">MS Financial Engineering</div>
+                <div className="text-gray-500">WorldQuant University · Jan 2024 – Dec 2025</div>
               </li>
               <li>
-                <strong>University of the People</strong> — BS Computer Science, <em>Jun 2023 – Jun 2025</em> (WASC).<br />
-                Concentrations: Data Science; Network & Application Security.
+                <div className="font-medium">BS Computer Science</div>
+                <div className="text-gray-500">University of the People · Jun 2023 – Jun 2025</div>
               </li>
               <li>
-                <strong>SUNY ESF</strong> — BS Paper Engineering, <em>Aug 2020 – Aug 2023</em> (ABET).<br />
-                Minors: Management, Physics. Skills: MATLAB · VBA · Python · ChemCAD.
+                <div className="font-medium">BS Paper Engineering</div>
+                <div className="text-gray-500">SUNY ESF · Aug 2020 – Aug 2023</div>
               </li>
             </ul>
-            <div className="mt-4">
-              <h4 className="font-medium">Certifications</h4>
-              <ul className="mt-1 text-sm space-y-1">
-                <li>Strascheg Center for Entrepreneurship — Incubator: Founding Your Own Startup (<em>Feb 2024 – Feb 2025</em>).</li>
-                <li>DeepLearning.AI — Professional Certificate in TensorFlow Development (<em>Nov 2023</em>).</li>
-                <li>IBM — Professional Certificate in AI Engineering (<em>Sep 2023</em>).</li>
-              </ul>
-            </div>
           </div>
-
-          <div className="card p-5">
-            <h3 className="font-semibold">Research & Publications</h3>
-            <ul className="mt-2 text-sm space-y-2">
-              <li>
-                Slavinskas, J.; Andrew, D. M. (2025). <em>Lignin-Derived Carbon Fibres: Opportunities and Challenges</em>. <strong>JMSRR</strong> 8(3):571–580.
-              </li>
-              <li>
-                Slavinskas, J. (2025). <em>Lignin Derived Chemicals and Aromatics: A Review</em>. <strong>ChemRxiv</strong>, Apr 24, 2025. doi:10.26434/chemrxiv-2025-cprrn.
-              </li>
-              <li>
-                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2024). <em>Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</em>. <strong>J. Eng. Research & Reports</strong>.
-              </li>
-              <li>
-                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2023). <em>Characterization of Recycled Fiber Material…</em> <strong>JMSRR</strong> 6(3):341–353.
-              </li>
-              <li>
-                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2022). <em>Upgrading of OCC with Aseptic Packaging…</em> <strong>JMSRR</strong> 5(4):42–[…].</li>
-              <li>
-                Dölle, K. <em>et al.</em> incl. J. Slavinskas (2022). <em>A Global Look at the Market Potential of Liquid Container Board…</em> <strong>J. Eng. Research & Reports</strong> 23(12):223–235.
-              </li>
+          <div className="card">
+            <h3 className="font-semibold">Leadership & Research</h3>
+            <ul className="mt-3 space-y-2 text-sm">
+              <li>Co-author on 4+ peer-reviewed papers: fiber recycling &amp; sustainable packaging.</li>
+              <li>Sensor deployments (Parcview/Everactive) for real-time QC dashboards.</li>
+              <li>Incubator participant (SCE), and ML/AI certs (DeepLearning.AI, IBM).</li>
             </ul>
           </div>
         </div>
