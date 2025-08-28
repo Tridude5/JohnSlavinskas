@@ -1,10 +1,11 @@
 // app/resume/page.tsx
-import Link from "next/link";
 import EmailLink from "@/components/EmailLink";
 
 export const metadata = { title: "Resume — John Slavinskas" };
 
 export default function ResumePage() {
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
   return (
     <div className="container py-12 print:py-0">
       <div className="card max-w-4xl mx-auto">
@@ -12,13 +13,21 @@ export default function ResumePage() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h1 className="text-2xl font-bold tracking-tight">John Slavinskas</h1>
             <div className="flex gap-2">
-              {/* Use Link so GitHub Pages basePath is handled automatically */}
-              <Link href="/downloads/Resume%20P.pdf" className="btn-outline">
+              {/* Force download with suggested filenames */}
+              <a
+                href={`${base}/downloads/Resume%20P.pdf`}
+                download="John_Slavinskas_Resume_1p.pdf"
+                className="btn-outline"
+              >
                 Download 1-page (PDF)
-              </Link>
-              <Link href="/downloads/CV-P.pdf" className="btn">
+              </a>
+              <a
+                href={`${base}/downloads/CV-P.pdf`}
+                download="John_Slavinskas_CV.pdf"
+                className="btn"
+              >
                 Download CV (PDF)
-              </Link>
+              </a>
             </div>
           </div>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
@@ -29,10 +38,10 @@ export default function ResumePage() {
         <section className="mt-6">
           <h2 className="text-lg font-semibold">Qualifications Summary</h2>
           <ul className="mt-2 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
-            <li>Research in lignin chemistry, biopolymers & sustainable materials</li>
+            <li>Research in lignin chemistry, biopolymers &amp; sustainable materials</li>
             <li>Python, TensorFlow/Keras, SQL, Java, HTML/CSS/JS, PHP, Kotlin, Swift</li>
-            <li>Lab & pilot-scale experience: GC, VOC analysis, optimization</li>
-            <li>Co-author on peer-reviewed publications in fiber recycling & packaging</li>
+            <li>Lab &amp; pilot-scale experience: GC, VOC analysis, optimization</li>
+            <li>Co-author on peer-reviewed publications in fiber recycling &amp; packaging</li>
           </ul>
         </section>
 
@@ -49,7 +58,7 @@ export default function ResumePage() {
               <strong>University of the People</strong> — B.S. Computer Science, Data Science (Jun 2023 – Jun 2025)
             </li>
             <li>
-              <strong>SUNY-ESF</strong> — B.S. Paper Engineering; minors in Management & Physics (Aug 2020 – Aug 2023)
+              <strong>SUNY-ESF</strong> — B.S. Paper Engineering; minors in Management &amp; Physics (Aug 2020 – Aug 2023)
             </li>
           </ul>
         </section>
@@ -69,7 +78,7 @@ export default function ResumePage() {
               <div className="font-medium">Master Thesis — Lignin Solubility for Cosmetics</div>
               <div className="text-gray-500">Nov 2024 – Jun 2025</div>
               <ul className="list-disc pl-5 mt-1 space-y-1">
-                <li>Solvent selection & optimization (temperature, ratios, surfactants); HSP estimation.</li>
+                <li>Solvent selection &amp; optimization (temperature, ratios, surfactants); HSP estimation.</li>
                 <li>Evaluated functional changes of lignin during dissolution.</li>
               </ul>
             </div>
@@ -96,7 +105,7 @@ export default function ResumePage() {
           <h2 className="text-lg font-semibold">Publications</h2>
           <ul className="mt-2 space-y-1 text-sm">
             <li>
-              Slavinskas, J., & Andrew, D. M. (2025). <em>Lignin-Derived Carbon Fibres: Opportunities and Challenges</em>.
+              Slavinskas, J., &amp; Andrew, D. M. (2025). <em>Lignin-Derived Carbon Fibres: Opportunities and Challenges</em>.
             </li>
             <li>
               Slavinskas, J. (2025). <em>Lignin Derived Chemicals and Aromatics: A Review</em>. ChemRxiv.
