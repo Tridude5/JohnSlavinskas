@@ -1,29 +1,22 @@
 name: Deploy static Next.js to GitHub Pages
 
 on:
-  push:
-    branches: [ main ]
+  push: { branches: [ main ] }
   workflow_dispatch:
   schedule:
     - cron: '0 6 * * *'   # optional nightly refresh
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: "pages", cancel-in-progress: true }
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Make envs available to ALL steps (including npm prebuild)
+    # Make vars visible to ALL steps (incl. npm prebuild)
     env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}     # <-- must exist in Settings → Secrets → Actions
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
       GH_USER: Tridude5
-      NEXT_PUBLIC_BASE_PATH: "/JohnSlavinskas"  # repo name, for asset paths
+      NEXT_PUBLIC_BASE_PATH: "/JohnSlavinskas"   # repo name for GH Pages
     steps:
       - uses: actions/checkout@v4
 
@@ -34,13 +27,25 @@ jobs:
 
       - run: npm ci
 
-      # prebuild (node scripts/fetch-contrib.mjs) runs automatically here
+      # sanity check (won’t print the token, just presence)
+      - name: Check GH_TOKEN presence
+        run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "GH_TOKEN is EMPTY"; exit 1;
+          else
+            echo "GH_TOKEN is present";
+          fi
+
+      # prebuild runs here; we ALSO set env on the step for extra safety
       - name: Build (export static site)
         run: npm run build
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_USER: Tridude5
+          NEXT_PUBLIC_BASE_PATH: "/JohnSlavinskas"
 
       - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./out
+        with: { path: ./out }
 
   deploy:
     needs: build
