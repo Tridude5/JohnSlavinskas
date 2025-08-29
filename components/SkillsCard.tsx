@@ -2,7 +2,7 @@
 
 import React from "react";
 
-/* ============ DATA (same as before, incl. extra Paper skill) ============ */
+/* ============ DATA ============ */
 const SKILLS = {
   paper: [
     "Lignin valorization",
@@ -36,30 +36,33 @@ type DomainKey = keyof typeof SKILLS;
 
 const META: Record<
   DomainKey,
-  { title: string; tagline: string; chipGradient: string; ringGradient: string }
+  { title: string; tagline: string; chipGradient: string; ringGradient: string; arrowGradient: string }
 > = {
   paper: {
     title: "Paper Engineering",
     tagline: "materials • processes",
     chipGradient: "from-emerald-400/25 to-lime-400/25",
     ringGradient: "from-emerald-500/35 via-lime-400/25 to-teal-400/25",
+    arrowGradient: "from-emerald-400/60 to-lime-400/60",
   },
   csai: {
     title: "Computer Science / AI",
     tagline: "software • data",
     chipGradient: "from-cyan-400/25 to-indigo-400/25",
     ringGradient: "from-cyan-500/35 via-sky-400/25 to-indigo-500/25",
+    arrowGradient: "from-cyan-400/60 to-indigo-400/60",
   },
   finance: {
     title: "Financial Engineering",
     tagline: "models • markets",
     chipGradient: "from-amber-400/25 to-fuchsia-400/25",
     ringGradient: "from-amber-500/35 via-orange-400/25 to-fuchsia-500/25",
+    arrowGradient: "from-amber-400/60 to-fuchsia-400/60",
   },
 };
 
 /* ============ UI bits ============ */
-function Chip({ text, gradient }: { text: string; gradient: string }) {
+function Chip({ text, gradient, i, animate }: { text: string; gradient: string; i: number; animate: boolean }) {
   return (
     <span
       className={[
@@ -68,7 +71,9 @@ function Chip({ text, gradient }: { text: string; gradient: string }) {
         gradient,
         "shadow-[0_0_0_1px_rgba(255,255,255,0.05)_inset,0_8px_20px_-10px_rgba(0,0,0,0.6)]",
         "backdrop-blur hover:scale-[1.06] transition-transform duration-200",
+        animate ? "animate-[chipIn_.45s_both]" : "",
       ].join(" ")}
+      style={animate ? { animationDelay: `${i * 45}ms` } : undefined}
     >
       {text}
     </span>
@@ -78,9 +83,11 @@ function Chip({ text, gradient }: { text: string; gradient: string }) {
 function ArrowBtn({
   dir,
   onClick,
+  gradient,
 }: {
   dir: "left" | "right";
   onClick: () => void;
+  gradient: string;
 }) {
   const icon =
     dir === "left" ? (
@@ -95,16 +102,16 @@ function ArrowBtn({
     <button
       aria-label={dir === "left" ? "Previous" : "Next"}
       onClick={onClick}
-      className="relative group rounded-full p-2 md:p-2.5 border border-white/15 bg-white/10 backdrop-blur shadow transition hover:bg-white/20"
+      className="relative pointer-events-auto rounded-full p-2 md:p-2.5 border border-white/15 bg-white/10 backdrop-blur shadow transition hover:bg-white/20"
     >
-      {/* glow ring */}
-      <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-cyan-400/40 to-fuchsia-400/40 opacity-0 blur group-hover:opacity-30 transition" />
+      {/* domain-colored glow ring */}
+      <span className={`pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br ${gradient} opacity-0 blur group-hover:opacity-40`} />
       {icon}
     </button>
   );
 }
 
-function Slide({ domain, active }: { domain: DomainKey; active: boolean }) {
+function Slide({ domain, active, reduceMotion }: { domain: DomainKey; active: boolean; reduceMotion: boolean }) {
   const { title, tagline, chipGradient, ringGradient } = META[domain];
   const items = SKILLS[domain];
 
@@ -130,9 +137,9 @@ function Slide({ domain, active }: { domain: DomainKey; active: boolean }) {
           </div>
           <div className="text-xs text-gray-300">{tagline}</div>
         </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {items.map((t) => (
-            <Chip key={t} text={t} gradient={chipGradient} />
+        <div key={String(active)} className="mt-4 flex flex-wrap gap-2">
+          {items.map((t, i) => (
+            <Chip key={t} text={t} gradient={chipGradient} i={i} animate={active && !reduceMotion} />
           ))}
         </div>
       </div>
@@ -140,21 +147,42 @@ function Slide({ domain, active }: { domain: DomainKey; active: boolean }) {
   );
 }
 
-/* ============ Main (isolated, fancy arrows, full-width tabs) ============ */
+/* ============ Main ============ */
 export default function SkillsShowcaseCardFancy() {
   const domains: DomainKey[] = ["paper", "csai", "finance"];
   const [index, setIndex] = React.useState(0);
   const [auto, setAuto] = React.useState(true);
+  const containerRef = React.useRef<HTMLElement>(null);
 
-  const prefersReducedMotion =
+  const reduceMotion =
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
+  // Auto-advance
   React.useEffect(() => {
-    if (!auto || prefersReducedMotion) return;
+    if (!auto || reduceMotion) return;
     const id = setInterval(() => setIndex((i) => (i + 1) % domains.length), 5200);
     return () => clearInterval(id);
-  }, [auto, prefersReducedMotion]);
+  }, [auto, reduceMotion]);
+
+  // Pause when tab hidden
+  React.useEffect(() => {
+    const onVis = () => setAuto(document.visibilityState === "visible");
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+
+  // Pause when card off-screen
+  React.useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => setAuto(e.isIntersecting),
+      { threshold: 0.2 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const onKey = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight") {
@@ -185,8 +213,12 @@ export default function SkillsShowcaseCardFancy() {
     touchRef.current = null;
   };
 
+  const activeDomain = domains[index];
+  const arrowGrad = META[activeDomain].arrowGradient;
+
   return (
     <aside
+      ref={containerRef as any}
       className="relative isolate min-w-0 w-full max-w-[720px] rounded-3xl border border-white/10 bg-black/30 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur overflow-hidden"
       onMouseEnter={() => setAuto(false)}
       onMouseLeave={() => setAuto(true)}
@@ -218,23 +250,25 @@ export default function SkillsShowcaseCardFancy() {
             style={{ transform: `translateX(-${index * 100}%)` }}
           >
             {domains.map((d, i) => (
-              <Slide key={d} domain={d} active={i === index} />
+              <Slide key={d} domain={d} active={i === index} reduceMotion={reduceMotion} />
             ))}
           </div>
 
-          {/* Fancy arrows */}
-          <div className="absolute inset-y-0 left-1 flex items-center">
+          {/* Fancy arrows — moved OUTSIDE with offsets + non-blocking wrappers */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center -translate-x-2 sm:-translate-x-3 md:-translate-x-4">
             <ArrowBtn
               dir="left"
+              gradient={arrowGrad}
               onClick={() => {
                 setIndex((i) => (i - 1 + domains.length) % domains.length);
                 setAuto(false);
               }}
             />
           </div>
-          <div className="absolute inset-y-0 right-1 flex items-center">
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center translate-x-2 sm:translate-x-3 md:translate-x-4">
             <ArrowBtn
               dir="right"
+              gradient={arrowGrad}
               onClick={() => {
                 setIndex((i) => (i + 1) % domains.length);
                 setAuto(false);
@@ -243,7 +277,7 @@ export default function SkillsShowcaseCardFancy() {
           </div>
         </div>
 
-        {/* Full-width segmented tabs (no extra bars/dots) */}
+        {/* Full-width segmented tabs */}
         <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-1 grid grid-cols-3 gap-1">
           {domains.map((d, i) => (
             <button
@@ -265,11 +299,15 @@ export default function SkillsShowcaseCardFancy() {
         </div>
       </div>
 
-      {/* shimmer keyframes */}
+      {/* keyframes */}
       <style jsx>{`
         @keyframes shimmer {
           0% { transform: translateX(0) rotate(6deg); }
           100% { transform: translateX(160%) rotate(6deg); }
+        }
+        @keyframes chipIn {
+          from { opacity: 0; transform: translateY(6px) scale(0.98); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
         }
       `}</style>
     </aside>
