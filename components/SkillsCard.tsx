@@ -2,11 +2,11 @@
 
 import React from "react";
 
-/* ============ DATA (edit freely) ============ */
+/* ============ DATA (same as before, incl. extra Paper skill) ============ */
 const SKILLS = {
   paper: [
     "Lignin valorization",
-    "Biopolymer & fiber composites",          // ← new
+    "Biopolymer & fiber composites",
     "Barrier coatings & surface chemistry",
     "Wet-end chemistry",
     "Fiber morphology & testing",
@@ -63,16 +63,44 @@ function Chip({ text, gradient }: { text: string; gradient: string }) {
   return (
     <span
       className={[
-        "inline-flex items-center rounded-full border px-3 py-1 text-xs leading-none whitespace-nowrap",
+        "inline-flex items-center rounded-full border px-3 py-1 text-xs whitespace-nowrap leading-none",
         "border-white/15 bg-white/5 bg-gradient-to-r",
         gradient,
         "shadow-[0_0_0_1px_rgba(255,255,255,0.05)_inset,0_8px_20px_-10px_rgba(0,0,0,0.6)]",
-        "backdrop-blur",
-        "hover:scale-[1.06] transition-transform duration-200",
+        "backdrop-blur hover:scale-[1.06] transition-transform duration-200",
       ].join(" ")}
     >
       {text}
     </span>
+  );
+}
+
+function ArrowBtn({
+  dir,
+  onClick,
+}: {
+  dir: "left" | "right";
+  onClick: () => void;
+}) {
+  const icon =
+    dir === "left" ? (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    ) : (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    );
+
+  return (
+    <button
+      aria-label={dir === "left" ? "Previous" : "Next"}
+      onClick={onClick}
+      className="relative group rounded-full p-2 md:p-2.5 border border-white/15 bg-white/10 backdrop-blur shadow transition hover:bg-white/20"
+    >
+      {/* glow ring */}
+      <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-cyan-400/40 to-fuchsia-400/40 opacity-0 blur group-hover:opacity-30 transition" />
+      {icon}
+    </button>
   );
 }
 
@@ -83,9 +111,8 @@ function Slide({ domain, active }: { domain: DomainKey; active: boolean }) {
   return (
     <div className="shrink-0 w-full px-1" aria-hidden={!active} role="group">
       <div className="relative rounded-2xl border border-white/10 bg-white/[0.035] p-5 backdrop-blur overflow-hidden">
-        {/* Inner glow (clipped to card) */}
+        {/* Clipped inner glow */}
         <div className={`absolute inset-0 -z-10 bg-gradient-to-br ${ringGradient} opacity-20`} />
-        {/* Soft radial highlight, clipped */}
         <div
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
@@ -97,14 +124,12 @@ function Slide({ domain, active }: { domain: DomainKey; active: boolean }) {
               "radial-gradient(closest-side, rgba(255,255,255,0.08), transparent 70%)",
           }}
         />
-
         <div className="flex items-baseline justify-between">
           <div className="text-lg font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
             {title}
           </div>
           <div className="text-xs text-gray-300">{tagline}</div>
         </div>
-
         <div className="mt-4 flex flex-wrap gap-2">
           {items.map((t) => (
             <Chip key={t} text={t} gradient={chipGradient} />
@@ -115,7 +140,7 @@ function Slide({ domain, active }: { domain: DomainKey; active: boolean }) {
   );
 }
 
-/* ============ Main (carousel-only, isolated) ============ */
+/* ============ Main (isolated, fancy arrows, full-width tabs) ============ */
 export default function SkillsShowcaseCardFancy() {
   const domains: DomainKey[] = ["paper", "csai", "finance"];
   const [index, setIndex] = React.useState(0);
@@ -169,7 +194,7 @@ export default function SkillsShowcaseCardFancy() {
       role="region"
       aria-label="Skills showcase"
     >
-      {/* Subtle clipped shimmer inside the card only */}
+      {/* clipped shimmer */}
       <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent rotate-6 blur-sm animate-[shimmer_3.6s_ease-in-out_infinite]" />
 
       <div className="relative z-[1] flex items-center justify-between gap-2">
@@ -197,60 +222,46 @@ export default function SkillsShowcaseCardFancy() {
             ))}
           </div>
 
-          {/* Arrows */}
+          {/* Fancy arrows */}
           <div className="absolute inset-y-0 left-1 flex items-center">
-            <button
-              aria-label="Previous"
-              className="rounded-full border border-white/15 bg-white/10 p-2 hover:bg-white/20 transition shadow"
+            <ArrowBtn
+              dir="left"
               onClick={() => {
                 setIndex((i) => (i - 1 + domains.length) % domains.length);
                 setAuto(false);
               }}
-            >
-              ‹
-            </button>
+            />
           </div>
           <div className="absolute inset-y-0 right-1 flex items-center">
-            <button
-              aria-label="Next"
-              className="rounded-full border border-white/15 bg-white/10 p-2 hover:bg-white/20 transition shadow"
+            <ArrowBtn
+              dir="right"
               onClick={() => {
                 setIndex((i) => (i + 1) % domains.length);
                 setAuto(false);
               }}
-            >
-              ›
-            </button>
+            />
           </div>
         </div>
 
-        {/* Tabs + dots */}
-        <div className="mt-3 flex items-center justify-between">
-          <div className="flex gap-2">
-            {domains.map((d, i) => (
-              <button
-                key={d}
-                className={`text-xs px-2 py-1 rounded-md border transition ${
-                  i === index ? "border-white/25 bg-white/15" : "border-white/10 hover:bg-white/10"
-                }`}
-                onClick={() => {
-                  setIndex(i);
-                  setAuto(false);
-                }}
-              >
-                {META[d].title}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-1">
-            {domains.map((_, i) => (
-              <span
-                key={i}
-                className={`h-1.5 w-4 rounded-full transition-all ${i === index ? "bg-white/80" : "bg-white/25"}`}
-                aria-hidden="true"
-              />
-            ))}
-          </div>
+        {/* Full-width segmented tabs (no extra bars/dots) */}
+        <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-1 grid grid-cols-3 gap-1">
+          {domains.map((d, i) => (
+            <button
+              key={d}
+              className={[
+                "text-xs px-3 py-2 rounded-lg border transition w-full",
+                i === index
+                  ? "border-white/25 bg-white/15"
+                  : "border-white/10 hover:bg-white/10",
+              ].join(" ")}
+              onClick={() => {
+                setIndex(i);
+                setAuto(false);
+              }}
+            >
+              {META[d].title}
+            </button>
+          ))}
         </div>
       </div>
 
