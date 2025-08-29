@@ -4,8 +4,8 @@ export async function GET(req: NextRequest) {
   const user = req.nextUrl.searchParams.get("user");
   if (!user) return NextResponse.json({ error: "user required" }, { status: 400 });
 
-  const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
-  if (!token) return NextResponse.json({ error: "no token" }, { status: 401 });
+  const token = process.env.GH_TOKEN;
+  if (!token) return NextResponse.json({ error: "GH_TOKEN missing" }, { status: 500 });
 
   const to = new Date();
   const from = new Date(to);
@@ -22,25 +22,28 @@ export async function GET(req: NextRequest) {
       }
     }
   `;
-  const body = JSON.stringify({
-    query,
-    variables: { login: user, from: from.toISOString(), to: to.toISOString() },
-  });
 
   const r = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `bearer ${token}` },
-    body,
-    next: { revalidate: 3600 }, // cache 1h
+    body: JSON.stringify({
+      query,
+      variables: { login: user, from: from.toISOString(), to: to.toISOString() },
+    }),
+    // Cache for 1 hour
+    next: { revalidate: 3600 },
   });
 
-  if (!r.ok) return NextResponse.json({ error: "github error" }, { status: 502 });
-  const data = await r.json();
+  if (!r.ok) {
+    const text = await r.text();
+    return NextResponse.json({ error: "github error", text }, { status: 502 });
+  }
 
-  const weeks = data?.data?.user?.contributionsCollection?.contributionCalendar?.weeks ?? [];
-  const bars: number[] = weeks.map((w: any) =>
-    (w.contributionDays || []).reduce((s: number, d: any) => s + (d?.contributionCount || 0), 0)
+  const data = await r.json();
+  const weeksRaw = data?.data?.user?.contributionsCollection?.contributionCalendar?.weeks ?? [];
+  const weeks: number[] = weeksRaw.map((w: any) =>
+    (w?.contributionDays ?? []).reduce((s: number, d: any) => s + (d?.contributionCount || 0), 0)
   );
 
-  return NextResponse.json({ weeks: bars });
+  return NextResponse.json({ weeks: weeks.slice(-52) });
 }
