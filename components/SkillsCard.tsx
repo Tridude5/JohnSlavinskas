@@ -2,9 +2,7 @@
 
 import React from "react";
 
-/* =========================
-   DATA — your chosen skills
-   ========================= */
+/** ========= DATA (edit freely) ========= */
 const SKILLS = {
   paper: [
     "Lignin valorization",
@@ -35,171 +33,227 @@ const SKILLS = {
 
 type DomainKey = keyof typeof SKILLS;
 
-const DOMAIN_META: Record<
-  DomainKey,
-  { label: string; startDeg: number; endDeg: number }
-> = {
-  paper:   { label: "Paper Engineering",         startDeg: 150, endDeg: 255 },
-  csai:    { label: "Computer Science / AI",     startDeg: -75, endDeg:  35 },
-  finance: { label: "Financial Engineering",     startDeg:  15, endDeg: 165 },
+const META: Record<DomainKey, { title: string; tagline: string }> = {
+  paper:   { title: "Paper Engineering",       tagline: "materials • processes" },
+  csai:    { title: "Computer Science / AI",   tagline: "software • data" },
+  finance: { title: "Financial Engineering",   tagline: "models • markets" },
 };
 
-/* =========================
-   UTIL
-   ========================= */
-const toRad = (d: number) => (d * Math.PI) / 180;
-const polar = (cx: number, cy: number, r: number, deg: number) => {
-  const t = toRad(deg);
-  return { x: cx + r * Math.cos(t), y: cy + r * Math.sin(t) };
-};
-const arc = (cx: number, cy: number, r: number, a0: number, a1: number) => {
-  const p0 = polar(cx, cy, r, a0);
-  const p1 = polar(cx, cy, r, a1);
-  const large = Math.abs(a1 - a0) > 180 ? 1 : 0;
-  const sweep = a1 > a0 ? 1 : 0;
-  return `M ${p0.x} ${p0.y} A ${r} ${r} 0 ${large} ${sweep} ${p1.x} ${p1.y}`;
-};
-
+/** ========= SMALL BITS ========= */
 function Chip({ text }: { text: string }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-xs whitespace-nowrap leading-none shadow-sm hover:scale-[1.04] transition">
+    <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-xs leading-none whitespace-nowrap hover:scale-[1.05] transition">
       {text}
     </span>
   );
 }
 
-/* ResizeObserver hook so the SVG scales with the card */
-function useContainerWidth<T extends HTMLElement>(initial = 480) {
-  const ref = React.useRef<T>(null);
-  const [w, setW] = React.useState(initial);
-  React.useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const ro = new ResizeObserver((entries) => {
-      for (const e of entries) setW(e.contentRect.width);
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-  return { ref, width: w };
-}
-
-/* =========================
-   SMALL-SCREEN TRI-CARDS
-   ========================= */
-function TriCards() {
-  const groups: { k: DomainKey; title: string; items: readonly string[] }[] = [
-    { k: "paper", title: DOMAIN_META.paper.label, items: SKILLS.paper },
-    { k: "csai", title: DOMAIN_META.csai.label, items: SKILLS.csai },
-    { k: "finance", title: DOMAIN_META.finance.label, items: SKILLS.finance },
-  ];
+function Slide({
+  domain,
+  active,
+}: {
+  domain: DomainKey;
+  active: boolean;
+}) {
+  const { title, tagline } = META[domain];
+  const items = SKILLS[domain];
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-      {groups.map(({ k, title, items }) => (
-        <div key={k} className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
-          <div className="text-sm font-semibold mb-2">{title}</div>
-          <div className="flex flex-wrap gap-2">
-            {items.map((t) => (
-              <Chip key={t} text={t} />
-            ))}
-          </div>
+    <div
+      className="shrink-0 w-full px-1"
+      aria-hidden={!active}
+      role="group"
+      aria-roledescription="slide"
+    >
+      <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+        <div className="flex items-baseline justify-between">
+          <div className="text-lg font-semibold">{title}</div>
+          <div className="text-xs text-gray-400">{tagline}</div>
         </div>
-      ))}
+        <div className="mt-3 flex flex-wrap gap-2">
+          {items.map((t) => (
+            <Chip key={t} text={t} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-/* =========================
-   MAIN COMPONENT (Orbit v2)
-   ========================= */
-export default function OrbitSkillsCardV2() {
-  const { ref, width } = useContainerWidth<HTMLDivElement>(520);
+/** ========= MAIN COMPONENT ========= */
+export default function SkillsShowcaseCard() {
+  const domains: DomainKey[] = ["paper", "csai", "finance"];
+  const [index, setIndex] = React.useState(0);
+  const [auto, setAuto] = React.useState(true);
 
-  // switch to Tri-Cards under ~420px
-  const compact = width < 420;
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-  // size scales with container, capped for aesthetic
-  const size = Math.min(Math.max(width, 360), 560);
-  const cx = size / 2;
-  const cy = size / 2;
-  const orbitR = size * 0.34;  // smaller ring to keep chips well inside
-  const hubR = size * 0.15;
+  // Auto-advance (paused on hover or after manual interaction)
+  React.useEffect(() => {
+    if (!auto || prefersReducedMotion) return;
+    const id = setInterval(
+      () => setIndex((i) => (i + 1) % domains.length),
+      5200
+    );
+    return () => clearInterval(id);
+  }, [auto, prefersReducedMotion]);
 
-  const chipPositions = (k: DomainKey) => {
-    const items = SKILLS[k];
-    const { startDeg, endDeg } = DOMAIN_META[k];
-    const span = endDeg - startDeg;
-    const n = items.length;
-    const margin = 0.06 * Math.abs(span);
-    const s = span > 0 ? startDeg + margin : startDeg - margin;
-    const e = span > 0 ? endDeg - margin : endDeg + margin;
+  // Keyboard + swipe support
+  const touchRef = React.useRef<{ x: number; y: number } | null>(null);
 
-    return items.map((label, i) => {
-      const deg = s + ((e - s) * (i + 1)) / (n + 1);
-      // place chips INSIDE the ring
-      const { x, y } = polar(cx, cy, orbitR - 18, deg);
-      return { label, x, y };
-    });
+  const onKey = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowRight") {
+      setIndex((i) => (i + 1) % domains.length);
+      setAuto(false);
+    } else if (e.key === "ArrowLeft") {
+      setIndex((i) => (i - 1 + domains.length) % domains.length);
+      setAuto(false);
+    }
   };
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    touchRef.current = { x: t.clientX, y: t.clientY };
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touchRef.current;
+    if (!start) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30) {
+      setIndex((i) =>
+        dx < 0 ? (i + 1) % domains.length : (i - 1 + domains.length) % domains.length
+      );
+      setAuto(false);
+    }
+    touchRef.current = null;
+  };
+
+  // “All” view toggle
+  const [showAll, setShowAll] = React.useState(false);
+
   return (
-    <aside className="relative rounded-2xl border border-white/10 bg-black/20 backdrop-blur p-5 shadow-xl overflow-hidden">
-      <div className="flex items-center justify-between">
+    <aside
+      className="relative rounded-2xl border border-white/10 bg-black/20 backdrop-blur p-5 shadow-xl overflow-hidden"
+      onMouseEnter={() => setAuto(false)}
+      onMouseLeave={() => setAuto(true)}
+      onKeyDown={onKey}
+    >
+      <div className="flex items-center justify-between gap-2">
         <h3 className="font-semibold">Skills at a glance</h3>
-        <div className="text-xs text-gray-400">materials × data × finance</div>
+        <div className="flex items-center gap-2">
+          <button
+            className="text-xs px-2 py-1 rounded-md border border-white/10 hover:bg-white/5 transition"
+            onClick={() => setShowAll((s) => !s)}
+            aria-pressed={showAll}
+          >
+            {showAll ? "Carousel view" : "Show all"}
+          </button>
+          <div className="text-xs text-gray-400">materials × data × finance</div>
+        </div>
       </div>
 
-      <div ref={ref} className="mt-4">
-        {compact ? (
-          <TriCards />
-        ) : (
-          <div className="relative mx-auto" style={{ width: size, height: size }}>
-            <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="block">
-              {/* Center hub */}
-              <circle cx={cx} cy={cy} r={hubR} stroke="currentColor" strokeWidth={2} fill="none" />
-              <text x={cx} y={cy - 6} textAnchor="middle" className="fill-current" style={{ fontSize: 14, fontWeight: 700 }}>
-                Optimization •
-              </text>
-              <text x={cx} y={cy + 12} textAnchor="middle" className="fill-current" style={{ fontSize: 14, fontWeight: 700 }}>
-                Modeling • Data
-              </text>
+      {showAll ? (
+        // All three columns
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+          {domains.map((d) => (
+            <div key={d} className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+              <div className="text-sm font-semibold">{META[d].title}</div>
+              <div className="text-xs text-gray-400">{META[d].tagline}</div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {SKILLS[d].map((t) => (
+                  <Chip key={t} text={t} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        // Carousel
+        <div
+          className="mt-4"
+          role="region"
+          aria-label="Skills carousel"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="relative">
+            {/* Track */}
+            <div
+              className="flex transition-transform duration-500"
+              style={{ transform: `translateX(-${index * 100}%)` }}
+            >
+              {domains.map((d, i) => (
+                <Slide key={d} domain={d} active={i === index} />
+              ))}
+            </div>
 
-              {/* Orbit arcs + labels (labels now INSIDE ring) */}
-              {(Object.keys(DOMAIN_META) as DomainKey[]).map((k) => {
-                const { startDeg, endDeg, label } = DOMAIN_META[k];
-                const path = arc(cx, cy, orbitR, startDeg, endDeg);
-                const mid = (startDeg + endDeg) / 2;
-                const { x, y } = polar(cx, cy, orbitR - 44, mid);
-                return (
-                  <g key={k}>
-                    <path d={path} stroke="currentColor" strokeWidth={2} fill="none" opacity={0.9} />
-                    <text x={x} y={y} textAnchor="middle" dominantBaseline="central" className="fill-current" style={{ fontSize: 13, fontWeight: 700 }}>
-                      {label}
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
-
-            {/* Chips (HTML overlay positioned INSIDE the ring) */}
-            {(Object.keys(DOMAIN_META) as DomainKey[]).map((k) =>
-              chipPositions(k).map(({ label, x, y }) => (
-                <div
-                  key={`${k}-${label}`}
-                  className="absolute"
-                  style={{ left: x, top: y, transform: "translate(-50%, -50%)" }}
-                >
-                  <Chip text={label} />
-                </div>
-              ))
-            )}
-
-            {/* Soft shimmer */}
-            <div className="pointer-events-none absolute -left-16 top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent rotate-6 blur-sm animate-[shimmer_3.6s_ease-in-out_infinite]" />
+            {/* Arrows */}
+            <div className="absolute inset-y-0 left-0 flex items-center">
+              <button
+                aria-label="Previous"
+                className="rounded-full border border-white/15 bg-white/5 p-2 hover:bg-white/10 transition"
+                onClick={() => {
+                  setIndex((i) => (i - 1 + domains.length) % domains.length);
+                  setAuto(false);
+                }}
+              >
+                ‹
+              </button>
+            </div>
+            <div className="absolute inset-y-0 right-0 flex items-center">
+              <button
+                aria-label="Next"
+                className="rounded-full border border-white/15 bg-white/5 p-2 hover:bg-white/10 transition"
+                onClick={() => {
+                  setIndex((i) => (i + 1) % domains.length);
+                  setAuto(false);
+                }}
+              >
+                ›
+              </button>
+            </div>
           </div>
-        )}
-      </div>
 
+          {/* Tabs + dots */}
+          <div className="mt-3 flex items-center justify-between">
+            <div className="flex gap-2">
+              {domains.map((d, i) => (
+                <button
+                  key={d}
+                  className={`text-xs px-2 py-1 rounded-md border ${
+                    i === index
+                      ? "border-white/20 bg-white/10"
+                      : "border-white/10 hover:bg-white/5"
+                  } transition`}
+                  onClick={() => {
+                    setIndex(i);
+                    setAuto(false);
+                  }}
+                >
+                  {META[d].title}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-1">
+              {domains.map((_, i) => (
+                <span
+                  key={i}
+                  className={`h-1.5 w-1.5 rounded-full ${
+                    i === index ? "bg-white/80" : "bg-white/25"
+                  }`}
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* subtle shimmer accent */}
+      <div className="pointer-events-none absolute -left-20 top-0 h-full w-24 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent rotate-6 blur-sm animate-[shimmer_3.6s_ease-in-out_infinite]" />
       <style jsx>{`
         @keyframes shimmer {
           0% { transform: translateX(0) rotate(6deg); }
