@@ -82,7 +82,11 @@ function GroupCard({ title, items, level }: { title: string; items: Item[]; leve
 }
 
 /* -------- Inline 52-week GitHub graph (reads static JSON) ---- */
-function GitHubYearGraphInline({ githubUser = "Tridude5", heightRem = 10, rounded = true }:{
+function GitHubYearGraphInline({
+  githubUser = "Tridude5",
+  heightRem = 10,
+  rounded = true
+}: {
   githubUser?: string; heightRem?: number; rounded?: boolean;
 }) {
   const [weeks, setWeeks] = React.useState<number[] | null>(null);
@@ -92,26 +96,32 @@ function GitHubYearGraphInline({ githubUser = "Tridude5", heightRem = 10, rounde
 
   React.useEffect(() => {
     let alive = true;
+    const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+    const urls = [
+      `${base}/github-contrib.json?cb=${Date.now()}`,
+      `https://tridude5.github.io/JohnSlavinskas/github-contrib.json?cb=${Date.now()}`
+    ];
     (async () => {
-      try {
-        const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-        const res = await fetch(`${base}/github-contrib.json`, { cache: "no-store" });
-        if (!res.ok) throw new Error("not ok");
-        const data = await res.json();
-        if (alive) setWeeks(Array.isArray(data?.weeks) ? data.weeks : []);
-      } catch (e: any) {
-        if (alive) setErr(e?.message || "Failed to load");
+      for (const u of urls) {
+        try {
+          const r = await fetch(u, { cache: "no-store" });
+          if (!r.ok) continue;
+          const j = await r.json();
+          if (alive && Array.isArray(j?.weeks)) { setWeeks(j.weeks); return; }
+        } catch { /* try next */ }
       }
+      if (alive) setErr("Failed to load");
     })();
     return () => { alive = false; };
   }, []);
 
-  const total = (weeks || []).reduce((s, x) => s + x, 0);
-  const avg   = weeks && weeks.length ? Math.round((total / weeks.length) * 10) / 10 : 0;
-  const max   = weeks && weeks.length ? Math.max(...weeks) : 0;
+  if (err)    return <div className="text-xs text-red-300">Couldn’t load contributions.</div>;
+  if (!weeks) return <div className="text-xs text-gray-400">Loading contributions…</div>;
 
-  if (err)     return <div className="text-xs text-red-300">Couldn’t load commits.</div>;
-  if (!weeks)  return <div className="text-xs text-gray-400">Loading commits…</div>;
+  const total = weeks.reduce((s, x) => s + x, 0);
+  const avg   = weeks.length ? Math.round((total / weeks.length) * 10) / 10 : 0;
+  const max   = weeks.length ? Math.max(...weeks) : 0;
+  const allZero = weeks.every((n) => n === 0);
 
   return (
     <a href={`https://github.com/${githubUser}`} target="_blank" rel="noreferrer" className="block group" aria-label={`Open ${githubUser} on GitHub`}>
@@ -131,7 +141,7 @@ function GitHubYearGraphInline({ githubUser = "Tridude5", heightRem = 10, rounde
                 rounded ? "rounded-sm" : ""
               ].join(" ")}
               style={style}
-              title={`Week ${i + 1}: ${count} commit${count === 1 ? "" : "s"}`}
+              title={`Week ${i + 1}: ${count} contribution${count === 1 ? "" : "s"}`}
             />
           );
         })}
@@ -150,6 +160,11 @@ function GitHubYearGraphInline({ githubUser = "Tridude5", heightRem = 10, rounde
         </span>
         <span className="ml-auto opacity-70 group-hover:opacity-100 transition">Open GitHub →</span>
       </div>
+      {allZero && (
+        <div className="mt-2 text-[11px] text-gray-400">
+          No public contributions detected in the last year (or token/private access not enabled).
+        </div>
+      )}
     </a>
   );
 }
@@ -188,9 +203,9 @@ export default function ProgrammingShowcase() {
         <GroupCard title="Packages"  items={PACKAGES}  level={level} />
       </div>
 
-      {/* Full 52-week activity (always visible) */}
+      {/* Full 52-week contributions (always visible) */}
       <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-3">
-        <div className="text-xs text-gray-300 mb-2">GitHub Activity</div>
+        <div className="text-xs text-gray-300 mb-2">GitHub Contributions</div>
         <GitHubYearGraphInline githubUser="Tridude5" heightRem={10} />
       </div>
 
