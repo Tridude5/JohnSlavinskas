@@ -11,15 +11,16 @@ permissions:
   pages: write
   id-token: write
 
+# Avoid cancelling the latest run for the same branch
 concurrency:
-  group: "pages"
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Visible to ALL steps (incl. npm prebuild -> scripts/fetch-contrib.mjs)
     env:
+      # Used by scripts/fetch-contrib.mjs (prebuild)
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       GH_USER: Tridude5
     steps:
@@ -32,16 +33,7 @@ jobs:
 
       - run: npm ci
 
-      # sanity check (won’t print token, just confirms presence)
-      - name: Check GH_TOKEN presence
-        run: |
-          if [ -z "${GH_TOKEN}" ]; then
-            echo "GH_TOKEN is EMPTY"; exit 1;
-          else
-            echo "GH_TOKEN is present";
-          fi
-
-      # prebuild runs automatically before this (via package.json)
+      # `prebuild` runs automatically before this (writes public/github-contrib.json)
       - name: Build (static export)
         run: npm run build
 
