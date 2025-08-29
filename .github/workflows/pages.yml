@@ -5,7 +5,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'   # optional: refresh daily at 06:00 UTC
+    - cron: '0 6 * * *'   # optional nightly refresh
 
 permissions:
   contents: read
@@ -19,9 +19,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Make envs available to ALL steps (including npm prebuild)
     env:
-      # GH Pages project site is served at /<repo>; expose to the client
-      NEXT_PUBLIC_BASE_PATH: "/JohnSlavinskas"
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}     # <-- must exist in Settings → Secrets → Actions
+      GH_USER: Tridude5
+      NEXT_PUBLIC_BASE_PATH: "/JohnSlavinskas"  # repo name, for asset paths
     steps:
       - uses: actions/checkout@v4
 
@@ -32,12 +34,9 @@ jobs:
 
       - run: npm ci
 
-      # prebuild runs scripts/fetch-contrib.mjs and needs these envs
-      - name: Build (export static site and write github-contrib.json)
+      # prebuild (node scripts/fetch-contrib.mjs) runs automatically here
+      - name: Build (export static site)
         run: npm run build
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}   # add this in repo Settings → Secrets → Actions
-          GH_USER: Tridude5
 
       - uses: actions/upload-pages-artifact@v3
         with:
