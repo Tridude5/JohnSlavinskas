@@ -2,35 +2,51 @@
 
 import React from "react";
 
-/* ── Data: reorder freely ───────────────────────────── */
+/* ── Data (reordered + updated levels) ───────────────────────────── */
 type Level = "daily" | "confident" | "familiar";
 type Item  = { label: string; level: Level };
 
 const LANGUAGES: Item[] = [
-  { label: "TypeScript / JavaScript", level: "daily" },
+  // Daily
   { label: "Python",                   level: "daily" },
+  { label: "Dart",                     level: "daily" },
+
+  // Confident
+  { label: "TypeScript / JavaScript",  level: "confident" }, // moved from daily
   { label: "SQL",                      level: "confident" },
-  { label: "Dart",                     level: "confident" },
+  { label: "MATLAB",                   level: "confident" },
+  { label: "VBA",                      level: "confident" },
+
+  // Familiar (from your LinkedIn list)
+  { label: "R",                        level: "familiar" },
+  { label: "Java",                     level: "familiar" },
+  { label: "PHP",                      level: "familiar" },
   { label: "Kotlin",                   level: "familiar" },
   { label: "Swift",                    level: "familiar" },
+  { label: "HTML/CSS",                 level: "familiar" },
 ];
 
 const PACKAGES: Item[] = [
-  // data / ML
+  // Daily
   { label: "Pandas",                   level: "daily" },
   { label: "NumPy",                    level: "daily" },
+
+  // Confident
   { label: "TensorFlow / Keras",       level: "confident" },
   { label: "scikit-learn",             level: "confident" },
   { label: "SciPy",                    level: "confident" },
   { label: "statsmodels",              level: "confident" },
   { label: "Matplotlib",               level: "confident" },
   { label: "Plotly",                   level: "confident" },
-  // quant / opt
   { label: "cvxpy",                    level: "confident" },
+
+  // Familiar (extra frameworks/tools from your list)
+  { label: "PyTorch",                  level: "familiar" },
   { label: "QuantLib (basic)",         level: "familiar" },
-  // modeling families
   { label: "Transformers (HF)",        level: "familiar" },
   { label: "Bayesian networks (pgmpy)",level: "familiar" },
+  { label: "Godot",                    level: "familiar" },
+  { label: "ChemCAD",                  level: "familiar" },
 ];
 
 /* ── Visual meta (3 colors) ─────────────────────────── */
@@ -97,7 +113,7 @@ function GroupCard({
   );
 }
 
-/* ── Main ───────────────────────────────────────────── */
+/* ── Main component (same layout, updated data) ─────── */
 type Props = {
   tsSnippet?: string;
   pySnippet?: string;
@@ -124,7 +140,6 @@ print("HSP:", proximity([18,10,7],[17.8,8.5,6.8]))`,
   const [level, setLevel] = React.useState<Level>("daily");
   const [lang, setLang] = React.useState<"ts" | "py">("ts");
   const code = lang === "ts" ? tsSnippet : pySnippet;
-
   const copy = async () => { try { await navigator.clipboard.writeText(code); } catch {} };
 
   return (
@@ -153,13 +168,13 @@ print("HSP:", proximity([18,10,7],[17.8,8.5,6.8]))`,
         ))}
       </div>
 
-      {/* two simple cards that always fit */}
+      {/* two cards that always fit */}
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
         <GroupCard title="Languages" items={LANGUAGES} level={level} />
         <GroupCard title="Packages"  items={PACKAGES}  level={level} />
       </div>
 
-      {/* extras (kept compact) */}
+      {/* compact extras */}
       <details className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-3">
         <summary className="cursor-pointer text-xs text-gray-300">Activity & snippets</summary>
         <div className="mt-3">
