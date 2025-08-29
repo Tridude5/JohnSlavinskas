@@ -6,17 +6,22 @@ on:
   schedule:
     - cron: '0 6 * * *'   # optional nightly refresh
 
-permissions: { contents: read, pages: write, id-token: write }
-concurrency: { group: "pages", cancel-in-progress: true }
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Make vars visible to ALL steps (incl. npm prebuild)
+    # Visible to ALL steps (incl. npm prebuild -> scripts/fetch-contrib.mjs)
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       GH_USER: Tridude5
-      NEXT_PUBLIC_BASE_PATH: "/JohnSlavinskas"   # repo name for GH Pages
     steps:
       - uses: actions/checkout@v4
 
@@ -27,7 +32,7 @@ jobs:
 
       - run: npm ci
 
-      # sanity check (won’t print the token, just presence)
+      # sanity check (won’t print token, just confirms presence)
       - name: Check GH_TOKEN presence
         run: |
           if [ -z "${GH_TOKEN}" ]; then
@@ -36,20 +41,20 @@ jobs:
             echo "GH_TOKEN is present";
           fi
 
-      # prebuild runs here; we ALSO set env on the step for extra safety
-      - name: Build (export static site)
+      # prebuild runs automatically before this (via package.json)
+      - name: Build (static export)
         run: npm run build
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_USER: Tridude5
-          NEXT_PUBLIC_BASE_PATH: "/JohnSlavinskas"
 
       - uses: actions/upload-pages-artifact@v3
-        with: { path: ./out }
+        with:
+          path: ./out
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
