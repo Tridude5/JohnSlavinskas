@@ -2,15 +2,8 @@
 
 import React from "react";
 
-/** ──────────────────────────────────────────────────────────────────────────
- *  SKILL LEVELS (no percentages)
- *  - daily     = you use it constantly
- *  - confident = you can ship with it solo
- *  - familiar  = you’ve used it, can ramp quickly
- *  Edit freely below.
- *  ────────────────────────────────────────────────────────────────────────── */
+/* ── DATA: same pool as before, now rendered by level columns ── */
 type Level = "daily" | "confident" | "familiar";
-
 type Item = { label: string; level: Level };
 type Group = { key: string; title: string; items: Item[] };
 
@@ -66,7 +59,7 @@ const STACK: Group[] = [
       { label: "Postgres (SQL)", level: "confident" },
       { label: "Firestore (NoSQL)", level: "daily" },
       { label: "Firebase Auth/Storage", level: "daily" },
-      { label: "Caching & pagination patterns", level: "confident" },
+      { label: "Caching & pagination", level: "confident" },
       { label: "Schema design", level: "confident" },
     ],
   },
@@ -79,7 +72,7 @@ const STACK: Group[] = [
       { label: "Vercel deploys", level: "confident" },
       { label: "Docker (light)", level: "familiar" },
       { label: "Testing (jest/pytest)", level: "confident" },
-      { label: "Linting/format (ESLint/Prettier)", level: "daily" },
+      { label: "ESLint / Prettier", level: "daily" },
     ],
   },
   {
@@ -95,93 +88,90 @@ const STACK: Group[] = [
   },
 ];
 
-/** ──────────────────────────────────────────────────────────────────────────
- *  VISUALS
- *  ────────────────────────────────────────────────────────────────────────── */
-function lvlClasses(level: Level) {
-  switch (level) {
-    case "daily":
-      return "border-emerald-300/30 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20";
-    case "confident":
-      return "border-sky-300/25 bg-gradient-to-r from-sky-400/15 to-indigo-400/15";
-    default:
-      return "border-white/15 bg-white/5";
-  }
-}
-function LvlDot({ level }: { level: Level }) {
-  const fill =
-    level === "daily"
-      ? "bg-emerald-400"
-      : level === "confident"
-      ? "bg-sky-400"
-      : "bg-white/40";
-  return <span className={`inline-block h-1.5 w-1.5 rounded-full ${fill}`} />;
+/* ── VISUAL META ── */
+const LEVELS: { key: Level; title: string; note: string; chip: string; dot: string }[] = [
+  {
+    key: "daily",
+    title: "Daily",
+    note: "use all the time",
+    chip: "border-emerald-300/30 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20",
+    dot: "bg-emerald-400",
+  },
+  {
+    key: "confident",
+    title: "Confident",
+    note: "ship independently",
+    chip: "border-sky-300/25 bg-gradient-to-r from-sky-400/15 to-indigo-400/15",
+    dot: "bg-sky-400",
+  },
+  {
+    key: "familiar",
+    title: "Familiar",
+    note: "ramp fast",
+    chip: "border-white/15 bg-white/5",
+    dot: "bg-white/40",
+  },
+];
+
+function LvlHeader({ title, note }: { title: string; note: string }) {
+  return (
+    <div className="mb-3 flex items-baseline justify-between">
+      <div className="text-sm font-semibold">{title}</div>
+      <div className="text-[11px] text-gray-300">{note}</div>
+    </div>
+  );
 }
 
-function Chip({ item, i }: { item: Item; i: number }) {
+function Chip({
+  text,
+  chipClass,
+  dotClass,
+  i,
+}: {
+  text: string;
+  chipClass: string;
+  dotClass: string;
+  i: number;
+}) {
   return (
     <span
       className={[
-        "inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs whitespace-nowrap leading-none",
+        "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs whitespace-nowrap leading-none",
         "shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset,0_6px_16px_-10px_rgba(0,0,0,0.6)] backdrop-blur",
         "hover:scale-[1.05] transition-transform duration-150",
-        lvlClasses(item.level),
+        chipClass,
       ].join(" ")}
-      style={{ animation: "chipIn .35s both", animationDelay: `${i * 30}ms` }}
+      style={{ animation: "chipIn .35s both", animationDelay: `${i * 28}ms` }}
     >
-      <LvlDot level={item.level} />
-      {item.label}
+      <span className={`h-1.5 w-1.5 rounded-full ${dotClass}`} />
+      <span>{text}</span>
+      {/* subtle check on the right */}
+      <svg
+        className="ml-1 opacity-70"
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M20 6L9 17l-5-5" />
+      </svg>
     </span>
   );
 }
 
-function GroupCard({ g }: { g: Group }) {
-  const [open, setOpen] = React.useState(true); // show all by default
-  const limit = 6;
-  const items = open ? g.items : g.items.slice(0, limit);
-
-  return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.035] p-4 backdrop-blur">
-      <div className="mb-2 flex items-baseline justify-between">
-        <div className="text-sm font-semibold">{g.title}</div>
-        {g.items.length > limit && (
-          <button
-            onClick={() => setOpen((s) => !s)}
-            className="text-[11px] rounded-md border border-white/10 px-2 py-0.5 hover:bg-white/10 transition"
-          >
-            {open ? "Collapse" : "Show all"}
-          </button>
-        )}
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {items.map((it, i) => (
-          <Chip key={it.label} item={it} i={i} />
-        ))}
-      </div>
-    </div>
-  );
+/* group items by level */
+function groupsFor(level: Level): { title: string; labels: string[] }[] {
+  return STACK.map((g) => ({
+    title: g.title,
+    labels: g.items.filter((it) => it.level === level).map((it) => it.label),
+  })).filter((g) => g.labels.length > 0);
 }
 
-function Legend() {
-  return (
-    <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-300">
-      <span className="opacity-80">Legend:</span>
-      <span className="inline-flex items-center gap-1">
-        <LvlDot level="daily" /> Daily
-      </span>
-      <span className="inline-flex items-center gap-1">
-        <LvlDot level="confident" /> Confident
-      </span>
-      <span className="inline-flex items-center gap-1">
-        <LvlDot level="familiar" /> Familiar
-      </span>
-    </div>
-  );
-}
-
-/** ──────────────────────────────────────────────────────────────────────────
- *  MAIN
- *  ────────────────────────────────────────────────────────────────────────── */
+/* ── MAIN ── */
 type Props = {
   tsSnippet?: string;
   pySnippet?: string;
@@ -209,23 +199,40 @@ print("HSP:", proximity([18,10,7],[17.8,8.5,6.8]))`,
   const code = lang === "ts" ? tsSnippet : pySnippet;
 
   const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-    } catch {}
+    try { await navigator.clipboard.writeText(code); } catch {}
   };
 
   return (
     <aside className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur p-5 shadow-xl overflow-hidden">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold">Programming Showcase</h3>
-        <Legend />
+        <div className="flex items-center gap-3 text-[11px] text-gray-300">
+          <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Daily</span>
+          <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-sky-400" /> Confident</span>
+          <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-white/40" /> Familiar</span>
+        </div>
       </div>
 
-      {/* Stack matrix */}
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
-        {STACK.map((g) => (
-          <GroupCard key={g.key} g={g} />
-        ))}
+      {/* Level columns */}
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3 min-w-0">
+        {LEVELS.map(({ key, title, note, chip, dot }) => {
+          const gs = groupsFor(key as Level);
+          return (
+            <div key={key} className="rounded-xl border border-white/10 bg-white/[0.035] p-4 backdrop-blur">
+              <LvlHeader title={title} note={note} />
+              {gs.map((g) => (
+                <div key={g.title} className="mb-3 last:mb-0">
+                  <div className="text-[11px] text-gray-400 mb-1">{g.title}</div>
+                  <div className="flex flex-wrap gap-2">
+                    {g.labels.map((label, i) => (
+                      <Chip key={label} text={label} chipClass={chip} dotClass={dot} i={i} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })}
       </div>
 
       {/* activity sparkline */}
@@ -247,30 +254,23 @@ print("HSP:", proximity([18,10,7],[17.8,8.5,6.8]))`,
         <div className="flex items-center gap-2">
           <button
             onClick={() => setLang("ts")}
-            className={`px-2 py-1 text-xs rounded border ${
-              lang === "ts" ? "bg-emerald-500/20 border-emerald-500/40" : "border-white/10 hover:bg-white/10"
-            }`}
+            className={`px-2 py-1 text-xs rounded border ${lang === "ts" ? "bg-emerald-500/20 border-emerald-500/40" : "border-white/10 hover:bg-white/10"}`}
           >
             TypeScript
           </button>
           <button
             onClick={() => setLang("py")}
-            className={`px-2 py-1 text-xs rounded border ${
-              lang === "py" ? "bg-emerald-500/20 border-emerald-500/40" : "border-white/10 hover:bg-white/10"
-            }`}
+            className={`px-2 py-1 text-xs rounded border ${lang === "py" ? "bg-emerald-500/20 border-emerald-500/40" : "border-white/10 hover:bg-white/10"}`}
           >
             Python
           </button>
-
-          <div className="ml-auto">
-            <button
-              onClick={copy}
-              className="text-xs rounded-md border border-white/10 px-2 py-1 hover:bg-white/10 transition"
-              aria-label="Copy code"
-            >
-              Copy
-            </button>
-          </div>
+          <button
+            onClick={copy}
+            className="ml-auto text-xs rounded-md border border-white/10 px-2 py-1 hover:bg-white/10 transition"
+            aria-label="Copy code"
+          >
+            Copy
+          </button>
         </div>
         <pre className="mt-2 font-mono text-xs whitespace-pre-wrap leading-relaxed">
 {code}
