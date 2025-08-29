@@ -2,131 +2,239 @@
 
 import React from "react";
 
-/** Picked, relevant skills */
-const TOP_SKILLS = [
-  { label: "Python", pct: 90, emoji: "🐍" },
-  { label: "TypeScript / JS", pct: 88, emoji: "🧩" },
-  { label: "TensorFlow / Keras", pct: 84, emoji: "🧠" },
-] as const;
+/** =========================
+ *  DATA — EDIT FREELY
+ *  ========================= */
+const SKILLS = {
+  paper: [
+    "Lignin valorization",
+    "Barrier coatings & surface chemistry",
+    "Wet-end chemistry",
+    "Fiber morphology & testing",
+    "Paper physics & mechanical testing",
+  ],
+  csai: [
+    "Python",
+    "TensorFlow / Keras",
+    "Flutter / Dart",
+    "SQL / NoSQL",
+    "Firebase (Auth/Firestore)",
+    "Web development (Next.js/TS)",
+  ],
+  finance: [
+    "Factor models (CAPM, Fama-French)",
+    "Quadratic programming (portfolio)",
+    "ML-driven modeling (AI-integrated)",
+    "Python data science stack",
+    "Backtesting pipelines",
+    "Risk assessment (VaR/CVaR)",
+    "Monte Carlo simulation",
+    "Bayesian networks & transformers",
+  ],
+} as const;
 
-const BARS = [
-  { label: "Data & ML (Py)", pct: 85 },
-  { label: "Web (Next.js/TS)", pct: 82 },
-  { label: "Databases (SQL/NoSQL)", pct: 78 },
-  { label: "Quant & Tools (MATLAB/VBA)", pct: 70 },
-];
+type DomainKey = keyof typeof SKILLS;
 
-const BADGES = [
-  "TensorFlow", "Keras", "PyTorch", "Pandas", "NumPy",
-  "Next.js", "Node", "Tailwind", "HTML/CSS", "GitHub Actions",
-  "SQL", "NoSQL",
-  "MATLAB", "VBA", "ChemCAD",
-  "Kotlin", "Swift",
-  "Wireshark",
-];
+const DOMAIN_META: Record<
+  DomainKey,
+  { label: string; startDeg: number; endDeg: number }
+> = {
+  // Angles define the arc along a ring around the center (clockwise, degrees)
+  paper: { label: "Paper Engineering", startDeg: 140, endDeg: 260 },
+  csai: { label: "Computer Science / AI", startDeg: -80, endDeg: 40 },
+  finance: { label: "Financial Engineering", startDeg: 20, endDeg: 160 },
+};
 
-function Radial({ pct, size = 56 }: { pct: number; size?: number }) {
-  const r = (size - 8) / 2;
-  const c = 2 * Math.PI * r;
-  const progress = Math.max(0, Math.min(100, pct)) / 100;
+/** =========================
+ *  UTIL
+ *  ========================= */
+function degToRad(d: number) {
+  return (d * Math.PI) / 180;
+}
+function polarToXY(
+  cx: number,
+  cy: number,
+  r: number,
+  deg: number
+): { x: number; y: number } {
+  const t = degToRad(deg);
+  return { x: cx + r * Math.cos(t), y: cy + r * Math.sin(t) };
+}
+function arcPath(
+  cx: number,
+  cy: number,
+  r: number,
+  startDeg: number,
+  endDeg: number
+) {
+  const largeArc = Math.abs(endDeg - startDeg) > 180 ? 1 : 0;
+  const sweep = endDeg > startDeg ? 1 : 0;
+  const p0 = polarToXY(cx, cy, r, startDeg);
+  const p1 = polarToXY(cx, cy, r, endDeg);
+  return `M ${p0.x} ${p0.y} A ${r} ${r} 0 ${largeArc} ${sweep} ${p1.x} ${p1.y}`;
+}
 
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
-
+/** =========================
+ *  CHIP
+ *  ========================= */
+function Chip({ text }: { text: string }) {
   return (
-    <svg width={size} height={size} className="block">
-      <circle cx={size/2} cy={size/2} r={r} stroke="currentColor" className="text-white/10" strokeWidth="6" fill="none" />
-      <circle
-        cx={size/2} cy={size/2} r={r} stroke="currentColor"
-        className="text-emerald-400"
-        strokeWidth="6" fill="none" strokeLinecap="round"
-        style={{
-          transform: "rotate(-90deg)", transformOrigin: "50% 50%",
-          strokeDasharray: c,
-          strokeDashoffset: mounted ? c * (1 - progress) : c,
-          transition: "stroke-dashoffset 900ms cubic-bezier(.22,.8,.22,1)",
-        }}
-      />
-    </svg>
+    <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-xs leading-none whitespace-nowrap hover:scale-[1.05] transition-transform">
+      {text}
+    </span>
   );
 }
 
-function Bar({ label, pct }: { label: string; pct: number }) {
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
-  return (
-    <div>
-      <div className="flex items-baseline justify-between text-xs text-gray-400">
-        <span>{label}</span><span>{pct}%</span>
-      </div>
-      <div className="mt-1 h-2 w-full rounded-full bg-white/10 overflow-hidden">
-        <div
-          className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-300"
-          style={{ width: mounted ? `${pct}%` : 0, transition: "width 800ms ease-out" }}
-        />
-      </div>
-    </div>
-  );
-}
+/** =========================
+ *  MAIN CARD
+ *  ========================= */
+export default function OrbitSkillsCard() {
+  // Canvas size (px). Scales responsively via CSS but keeps a stable internal coordinate system.
+  const size = 420; // tweak if you want it larger
+  const cx = size / 2;
+  const cy = size / 2;
+  const orbitR = size * 0.38; // orbit ring radius
+  const hubR = size * 0.14; // center hub radius
 
-export default function SkillsCard() {
-  const [start, setStart] = React.useState(0);
-  React.useEffect(() => {
-    const id = setInterval(() => setStart((s) => (s + 3) % BADGES.length), 2600);
-    return () => clearInterval(id);
-  }, []);
-  const visible = [...BADGES, ...BADGES].slice(start, start + 10);
+  // For each domain, compute even angles along its arc (skip endpoints slightly)
+  function chipPositions(domain: DomainKey) {
+    const items = SKILLS[domain];
+    const { startDeg, endDeg } = DOMAIN_META[domain];
+    const span = endDeg - startDeg;
+    const n = items.length;
+    // leave small margins (5%) on each end of the arc
+    const margin = 0.05 * Math.abs(span);
+    const s = span > 0 ? startDeg + margin : startDeg - margin;
+    const e = span > 0 ? endDeg - margin : endDeg + margin;
+
+    return items.map((label, i) => {
+      const t = i + 1;
+      const T = n + 1;
+      const deg = s + ((e - s) * t) / T;
+      const { x, y } = polarToXY(cx, cy, orbitR, deg);
+      // Pull chips slightly outward so they don't sit on the line
+      const { x: xOut, y: yOut } = polarToXY(cx, cy, orbitR + 14, deg);
+      return { label, x: xOut, y: yOut };
+    });
+  }
 
   return (
     <aside className="relative rounded-2xl border border-white/10 bg-black/20 backdrop-blur p-5 shadow-xl overflow-hidden">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold">Skills at a glance</h3>
-        <div className="text-xs text-gray-400">materials × data × web</div>
+        <div className="text-xs text-gray-400">materials × data × finance</div>
       </div>
 
-      {/* Top meters */}
-      <div className="mt-4 grid grid-cols-3 gap-3">
-        {TOP_SKILLS.map(({ label, pct, emoji }) => (
-          <div key={label} className="group relative rounded-xl border border-white/10 bg-white/[0.04] p-3 hover:-translate-y-0.5 transition-transform">
-            <div className="flex items-center justify-between text-xs text-gray-400">
-              <span>{emoji}</span><span>{pct}%</span>
-            </div>
-            <div className="mt-2 flex items-center gap-2">
-              <Radial pct={pct} size={52} />
-              <div className="text-sm font-medium">{label}</div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <div className="mt-4 relative w-full">
+        {/* SVG canvas (square) */}
+        <div className="mx-auto" style={{ width: "100%", maxWidth: size }}>
+          <div
+            className="relative"
+            style={{ width: size, height: size, margin: "0 auto" }}
+          >
+            <svg
+              width={size}
+              height={size}
+              viewBox={`0 0 ${size} ${size}`}
+              className="block"
+            >
+              {/* Hub circle */}
+              <circle
+                cx={cx}
+                cy={cy}
+                r={hubR}
+                className="fill-transparent"
+                stroke="currentColor"
+                strokeWidth={2}
+                opacity={0.9}
+              />
+              {/* Hub label */}
+              <text
+                x={cx}
+                y={cy}
+                textAnchor="middle"
+                dominantBaseline="central"
+                className="fill-current"
+                style={{ fontSize: 14, fontWeight: 700 }}
+              >
+                {"Optimization •"}
+              </text>
+              <text
+                x={cx}
+                y={cy + 16}
+                textAnchor="middle"
+                dominantBaseline="central"
+                className="fill-current"
+                style={{ fontSize: 14, fontWeight: 700 }}
+              >
+                {"Modeling • Data"}
+              </text>
 
-      {/* Bars */}
-      <div className="mt-4 space-y-3">
-        {BARS.map((b) => <Bar key={b.label} {...b} />)}
-      </div>
+              {/* Orbit rings (three arcs) */}
+              {(Object.keys(DOMAIN_META) as DomainKey[]).map((k) => {
+                const { startDeg, endDeg, label } = DOMAIN_META[k];
+                const path = arcPath(cx, cy, orbitR, startDeg, endDeg);
+                // Arc title position (midpoint of arc + small offset outward)
+                const mid = (startDeg + endDeg) / 2;
+                const { x, y } = polarToXY(cx, cy, orbitR + 42, mid);
 
-      {/* Rotating badges */}
-      <div className="mt-4">
-        <div className="text-xs text-gray-400 mb-2">Stack highlights</div>
-        <div className="relative">
-          <div className="flex flex-wrap gap-2 transition-opacity duration-200">
-            {visible.map((b, i) => (
-              <span key={`${b}-${i}`} className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-xs hover:scale-[1.06] transition-transform">
-                {b}
-              </span>
-            ))}
+                return (
+                  <g key={k}>
+                    <path
+                      d={path}
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      fill="none"
+                      opacity={0.9}
+                    />
+                    <text
+                      x={x}
+                      y={y}
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      className="fill-current"
+                      style={{ fontSize: 13, fontWeight: 700 }}
+                    >
+                      {label}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Chips (HTML for easy styling) */}
+            {(Object.keys(DOMAIN_META) as DomainKey[]).map((k) =>
+              chipPositions(k).map(({ label, x, y }) => (
+                <div
+                  key={`${k}-${label}`}
+                  className="absolute"
+                  style={{
+                    left: x,
+                    top: y,
+                    transform: "translate(-50%, -50%)",
+                    pointerEvents: "auto",
+                  }}
+                >
+                  <Chip text={label} />
+                </div>
+              ))
+            )}
+
+            {/* Subtle shimmer accent */}
+            <div className="pointer-events-none absolute -left-16 top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent rotate-6 blur-sm animate-[shimmer_3.6s_ease-in-out_infinite]" />
           </div>
         </div>
       </div>
 
-      {/* Shimmer accent */}
-      <div className="pointer-events-none absolute -left-10 top-0 h-full w-24 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent rotate-6 blur-sm" />
-      <div className="pointer-events-none absolute -left-20 top-0 h-full w-24 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent rotate-6 blur-sm animate-[shimmer_3.6s_ease-in-out_infinite]" />
-
       {/* inline keyframes */}
       <style jsx>{`
         @keyframes shimmer {
-          0% { transform: translateX(0) rotate(6deg); }
-          100% { transform: translateX(160%) rotate(6deg); }
+          0% {
+            transform: translateX(0) rotate(6deg);
+          }
+          100% {
+            transform: translateX(160%) rotate(6deg);
+          }
         }
       `}</style>
     </aside>
