@@ -1,4 +1,4 @@
-"use client";
+"use client"; 
 
 import React from "react";
 import Link from "next/link";
@@ -6,7 +6,8 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 
 import Section from "@/components/Section";
-import KPIs from "@/components/KPIs";
+// ⬇️ swap KPIs for the dynamic wrapper
+import DynamicHeroKpis from "@/components/DynamicHeroKpis";
 import BlueprintFX from "@/components/BlueprintFX";
 import ParallaxGroup from "@/components/ParallaxGroup";
 import SkillsCard from "@/components/SkillsCard";
@@ -294,7 +295,8 @@ export default function Page() {
             </p>
 
             <div className="mt-6 max-w-xl">
-              <KPIs items={heroKpis} />
+              {/* Swap static KPIs for the dynamic commits component */}
+              <DynamicHeroKpis basePath={base} publicationsCount={6} />
             </div>
 
             {/* CTAs — symmetric; centered labels; GitHub/LinkedIn on row 2 */}
