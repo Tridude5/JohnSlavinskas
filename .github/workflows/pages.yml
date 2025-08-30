@@ -41,6 +41,27 @@ jobs:
           GH_USER: Tridude5
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      # Inspect authorship of the last 10 commits (email must be verified on your account)
+      - name: Inspect last 10 commits (authorship)
+        run: |
+          node - <<'NODE'
+          const url = 'https://api.github.com/repos/Tridude5/JohnSlavinskas/commits?per_page=10';
+          fetch(url, { headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` } })
+            .then(r => r.json())
+            .then(list => {
+              for (const c of list) {
+                console.log({
+                  sha: c.sha,
+                  commitEmail: c?.commit?.author?.email,
+                  apiAuthorLogin: c?.author?.login || null,
+                });
+              }
+            })
+            .catch(console.error);
+          NODE
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
       # Who is this token?
       - name: Who am I? (viewer login)
         run: |
@@ -71,7 +92,10 @@ jobs:
             method:"POST",
             headers:{ "Content-Type":"application/json", Authorization:`bearer ${process.env.GH_TOKEN}` },
             body: JSON.stringify(body)
-          }).then(r=>r.json()).then(j=>console.log(JSON.stringify(j,null,2))).catch(e=>console.error(e));
+          })
+          .then(r=>r.json())
+          .then(j=>console.log(JSON.stringify(j,null,2)))
+          .catch(e=>console.error(e));
           NODE
         env:
           GH_USER: Tridude5
