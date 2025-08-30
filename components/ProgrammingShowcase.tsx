@@ -7,36 +7,36 @@ type Level = "daily" | "confident" | "familiar";
 type Item  = { label: string; level: Level };
 
 const LANGUAGES: Item[] = [
-  { label: "Python",                   level: "daily" },
-  { label: "Dart",                     level: "daily" },
-  { label: "TypeScript / JavaScript",  level: "confident" },
-  { label: "SQL",                      level: "confident" },
-  { label: "MATLAB",                   level: "confident" },
-  { label: "VBA",                      level: "familiar" },
-  { label: "R",                        level: "familiar" },
-  { label: "Java",                     level: "familiar" },
-  { label: "PHP",                      level: "familiar" },
-  { label: "Kotlin",                   level: "familiar" },
-  { label: "Swift",                    level: "familiar" },
-  { label: "HTML/CSS",                 level: "familiar" }
+  { label: "Python", level: "daily" },
+  { label: "Dart", level: "daily" },
+  { label: "TypeScript / JavaScript", level: "confident" },
+  { label: "SQL", level: "confident" },
+  { label: "MATLAB", level: "confident" },
+  { label: "VBA", level: "familiar" },
+  { label: "R", level: "familiar" },
+  { label: "Java", level: "familiar" },
+  { label: "PHP", level: "familiar" },
+  { label: "Kotlin", level: "familiar" },
+  { label: "Swift", level: "familiar" },
+  { label: "HTML/CSS", level: "familiar" }
 ];
 
 const PACKAGES: Item[] = [
-  { label: "Pandas",                   level: "daily" },
-  { label: "NumPy",                    level: "daily" },
-  { label: "TensorFlow / Keras",       level: "daily" },
-  { label: "Matplotlib",               level: "daily" },
-  { label: "scikit-learn",             level: "confident" },
-  { label: "SciPy",                    level: "confident" },
-  { label: "statsmodels",              level: "confident" },
-  { label: "Plotly",                   level: "confident" },
-  { label: "cvxpy",                    level: "confident" },
-  { label: "PyTorch",                  level: "familiar" },
-  { label: "QuantLib (basic)",         level: "familiar" },
-  { label: "Transformers (HF)",        level: "familiar" },
-  { label: "Bayesian networks (pgmpy)",level: "familiar" },
-  { label: "Godot",                    level: "familiar" },
-  { label: "ChemCAD",                  level: "familiar" }
+  { label: "Pandas", level: "daily" },
+  { label: "NumPy", level: "daily" },
+  { label: "TensorFlow / Keras", level: "daily" },
+  { label: "Matplotlib", level: "daily" },
+  { label: "scikit-learn", level: "confident" },
+  { label: "SciPy", level: "confident" },
+  { label: "statsmodels", level: "confident" },
+  { label: "Plotly", level: "confident" },
+  { label: "cvxpy", level: "confident" },
+  { label: "PyTorch", level: "familiar" },
+  { label: "QuantLib (basic)", level: "familiar" },
+  { label: "Transformers (HF)", level: "familiar" },
+  { label: "Bayesian networks (pgmpy)", level: "familiar" },
+  { label: "Godot", level: "familiar" },
+  { label: "ChemCAD", level: "familiar" }
 ];
 
 /* ---------------------- Styling --------------------- */
@@ -85,7 +85,7 @@ export default function ProgrammingShowcase() {
   const [level, setLevel] = React.useState<Level>("daily");
 
   return (
-    <aside className="relative isolate min-w-0 w-full max-w-[520px] rounded-3xl border border-white/10 bg-black/30 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur overflow-hidden">
+    <aside className="relative isolate min-w-0 w-full max-w-none rounded-3xl border border-white/10 bg-black/30 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur overflow-hidden">
       <h3 className="font-semibold">Programming Showcase</h3>
 
       {/* Level tabs */}
