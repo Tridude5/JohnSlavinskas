@@ -17,7 +17,7 @@ const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ss
 
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* Single-line timeline with centered dots */
+/* ---- Timeline used for Experience ---- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
     <ol className="relative pl-9 space-y-5 before:absolute before:left-3 before:top-0 before:bottom-0 before:w-[2px] before:bg-emerald-500/40 before:content-['']">
@@ -49,6 +49,7 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
   );
 }
 
+/* ---- Publications stays as-is ---- */
 function Publications() {
   return (
     <ul className="mt-3 divide-y divide-white/10">
@@ -252,15 +253,14 @@ export default function Page() {
               <KPIs items={heroKpis} />
             </div>
 
-            {/* CTAs — single grid keeps everything symmetrical */}
+            {/* CTAs — symmetric grid; top 4 labels centered */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
-              {/* Row 1 */}
-              <MagneticButton href="/resume" className="btn w-full">Resume</MagneticButton>
-              <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline w-full">Download 1-pager</MagneticButton>
-              <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline w-full">Download CV</MagneticButton>
-              <Link href="/projects" className="btn-outline w-full">View Projects</Link>
+              <MagneticButton href="/resume" className="btn w-full text-center justify-center">See Resume</MagneticButton>
+              <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline w-full text-center justify-center">Download 1-pager</MagneticButton>
+              <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline w-full text-center justify-center">Download CV</MagneticButton>
+              <Link href="/projects" className="btn-outline w-full text-center justify-center">View Projects</Link>
 
-              {/* Row 2 (each spans two columns -> centered, equal width) */}
+              {/* Social row (centered, equal width) */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
@@ -273,7 +273,6 @@ export default function Page() {
                 </svg>
                 <span>GitHub</span>
               </a>
-
               <a
                 href="https://www.linkedin.com/in/john-slavinskas/"
                 target="_blank"
@@ -289,7 +288,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: Skills at a glance (component) */}
+          {/* Right: Skills at a glance */}
           <div className="md:col-span-5">
             <div className="card card-gradient">
               <SkillsCard />
@@ -308,16 +307,24 @@ export default function Page() {
                 Comfortable moving between lab trials, pilot scale, and code: Python/TensorFlow/Keras, SQL, Java/TypeScript, and lightweight mobile (Kotlin/Swift). I like building practical tools—from solvent-selection helpers to option-pricing and portfolio demos.
               </p>
 
-              <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60">
+              <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60 text-center">
                 <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
 
-                {/* 4×2 on md+, 2×N on small; allow wrapping; never clip */}
-                <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {interests.map(({ label, emoji }) => (
+                {/* 4×2 on md+, centered, wraps (no clipping) */}
+                <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto">
+                  {[
+                    { label: "Triathlon (swim • bike • run)", emoji: "🏊🚴🏃" },
+                    { label: "Ultimate", emoji: "🥏" },
+                    { label: "Programming & Making", emoji: "💻" },
+                    { label: "Entrepreneurship", emoji: "🚀" },
+                    { label: "Travel", emoji: "✈️" },
+                    { label: "Birdwatching", emoji: "🪶" },
+                    { label: "Fishing", emoji: "🎣" },
+                    { label: "Geocaching", emoji: "📍" },
+                  ].map(({ label, emoji }) => (
                     <span
                       key={label}
-                      title={label}
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/40 dark:border-gray-800/60 bg-white/5 px-3 py-2 text-sm font-medium text-center leading-tight whitespace-normal break-words min-h-16"
+                      className="w-full h-[3.5rem] inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/40 dark:border-gray-800/60 bg-white/5 text-sm font-medium px-3 text-center whitespace-normal break-words leading-snug"
                     >
                       <span aria-hidden className="shrink-0">{emoji}</span>
                       <span className="block">{label}</span>
@@ -345,14 +352,14 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* EXPERIENCE */}
+      {/* EXPERIENCE — like the other site: 8/4 split, sticky right */}
       <Section title="Experience">
-        <div className="grid md:grid-cols-12 items-start gap-6">
-          <div className="md:col-span-9 lg:col-span-10">
+        <div className="grid md:grid-cols-12 gap-6">
+          <div className="md:col-span-8">
             <GreenTimeline items={exp} />
           </div>
-          <aside className="md:col-span-3 lg:col-span-2">
-            <div className="max-w-[460px] ml-auto">
+          <aside className="md:col-span-4">
+            <div className="sticky top-24">
               <ProgrammingShowcase />
             </div>
           </aside>
