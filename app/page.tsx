@@ -21,7 +21,7 @@ type TLItem = { role: string; org: string; period: string; loc?: string; bullets
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
     // shift rail right a smidge: ml-[10px] (≈10px). Tweak to taste.
-    <ol className="relative ml-[10px] pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
+    <ol className="relative ml-[8px] pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
       {items.map((it, i) => (
         <li key={i} className="relative pb-8 last:pb-0">
           {/* larger green dot, perfectly centered on the 2px rail */}
