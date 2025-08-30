@@ -1,10 +1,9 @@
+"use client";
 import React from "react";
 
-export const metadata = { title: "Projects — John Slavinskas" };
-
-type Link = { label: string; href: string };
-
-type Project = {
+// Types
+export type Link = { label: string; href: string };
+export type Project = {
   title: string;
   subtitle?: string;
   period?: string;
@@ -15,6 +14,7 @@ type Project = {
   links?: Link[];
 };
 
+// Data
 const projects: Project[] = [
   {
     title: "Eagle Scout — Helmet & Bat Racks for John Glenn High School",
@@ -66,6 +66,7 @@ const projects: Project[] = [
   },
 ];
 
+// UI helpers
 function StatusBadge({ status }: { status: Project["status"] }) {
   const styles: Record<Project["status"], string> = {
     Completed: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
@@ -137,84 +138,21 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
       </div>
     </div>
   );
-}({ p }: { p: Project }) {
-  return (
-    <div className="card p-6 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-zinc-900 shadow-sm">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h3 className="text-lg font-semibold tracking-tight">{p.title}</h3>
-          {p.subtitle && (
-            <p className="text-sm text-gray-500 dark:text-gray-400">{p.subtitle}</p>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          {p.period && (
-            <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{p.period}</span>
-          )}
-          <StatusBadge status={p.status} />
-        </div>
-      </div>
-
-      <p className="mt-3 text-sm text-gray-700 dark:text-gray-200 leading-6">{p.summary}</p>
-
-      {p.bullets && p.bullets.length > 0 && (
-        <ul className="mt-3 list-disc pl-5 space-y-1 text-sm">
-          {p.bullets.map((b, i) => (
-            <li key={i}>{b}</li>
-          ))}
-        </ul>
-      )}
-
-      {p.tags && p.tags.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {p.tags.map((t) => (
-            <span
-              key={t}
-              className="rounded-full border border-gray-200 dark:border-gray-700 px-2 py-0.5 text-xs text-gray-600 dark:text-gray-300"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {p.links && p.links.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {p.links.map((l) => (
-            <a key={l.href} href={l.href} className="btn-outline text-sm">
-              {l.label}
-            </a>
-          ))}
-        </div>
-      )}
-    </div>
-  );
 }
 
-export default function ProjectsPage() {
+export default function ProjectsClient() {
   const accents = [
     "from-emerald-400 via-teal-400 to-emerald-500",
     "from-violet-400 via-fuchsia-400 to-pink-500",
     "from-amber-400 via-orange-400 to-yellow-500",
     "from-sky-400 via-cyan-400 to-blue-500",
   ];
-  return (
-    <div className="container py-12">
-      <header className="mb-6 flex items-center gap-3">
-        <h1 className="text-2xl font-bold tracking-tight">Projects</h1>
-        <div className="h-px flex-1 bg-gradient-to-r from-emerald-400/60 via-sky-400/60 to-fuchsia-400/60" />
-      </header>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {projects.map((p, i) => (
-          <ProjectCard key={p.title} p={p} accentClass={accents[i % accents.length]} />
-        ))}
-      </div>
-    </div>
-  );
-} p={p} />
-        ))}
-      </div>
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      {projects.map((p, i) => (
+        <ProjectCard key={p.title} p={p} accentClass={accents[i % accents.length]} />
+      ))}
     </div>
   );
 }
