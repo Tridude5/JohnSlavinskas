@@ -175,7 +175,7 @@ function FeaturedCard({
   };
 
   return (
-    <a
+    <Link
       href={href}
       onMouseMove={onMove}
       className="group relative block overflow-hidden rounded-2xl border border-gray-200/70 dark:border-gray-800/70 bg-white dark:bg-zinc-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
@@ -200,12 +200,11 @@ function FeaturedCard({
           </span>
         </div>
         <p className="mt-3 text-sm leading-6 text-gray-700 dark:text-gray-200">{blurb}</p>
-        <div className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-300">
-          <span>Open</span>
-          <span aria-hidden className="transition-transform group-hover:translate-x-0.5">↗</span>
+        <div className="mt-4 text-sm font-medium text-emerald-600 dark:text-emerald-300">
+          View project
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 
@@ -300,7 +299,7 @@ export default function Page() {
 
             {/* CTAs — symmetric; centered labels; GitHub/LinkedIn on row 2 */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
-              <MagneticButton href="/resume" className="btn w-full inline-flex justify-center text-center">
+              <MagneticButton href={`${base}/resume`} className="btn w-full inline-flex justify-center text-center">
                 See Resume
               </MagneticButton>
               <MagneticButton
@@ -317,7 +316,7 @@ export default function Page() {
               >
                 Download CV
               </MagneticButton>
-              <Link href="/projects" className="btn-outline w-full inline-flex justify-center text-center">
+              <Link href={`${base}/projects`} className="btn-outline w-full inline-flex justify-center text-center">
                 View Projects
               </Link>
 
@@ -422,21 +421,21 @@ export default function Page() {
           <FeaturedCard
             title="Eagle Scout Project"
             blurb="Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers — built to last, delivered on time."
-            href="/projects#eagle-scout"
+            href={`${base}/projects#eagle-scout`}
             accent="from-emerald-400 via-teal-400 to-emerald-500"
           />
 
           <FeaturedCard
             title="Prazise"
-            blurb="Recovery‑aware training engine. Reads HR/HRV, sleep, and recent load to auto‑calibrate targets and adjust sessions — private by design. In active development."
-            href="/projects#prazise"
+            blurb="Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions — private by design. In active development."
+            href={`${base}/projects#prazise`}
             accent="from-amber-400 via-orange-400 to-yellow-500"
           />
 
           <FeaturedCard
             title="Efficient Frontier App"
-            blurb="Interactive mean‑variance explorer with factor tilts, constraints, and stress tests — compare to benchmarks and export in one click."
-            href="/projects#frontier"
+            blurb="Interactive mean-variance explorer with factor tilts, constraints, and stress tests — compare to benchmarks and export in one click."
+            href={`${base}/projects`}
             accent="from-violet-400 via-fuchsia-400 to-pink-500"
           />
         </div>
