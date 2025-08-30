@@ -1,10 +1,9 @@
+# .github/workflows/pages.yml
 name: Deploy static Next.js to GitHub Pages
 
 on:
   push: { branches: [ main ] }
   workflow_dispatch:
-  schedule:
-    - cron: '0 6 * * *'   # nightly refresh (UTC)
 
 permissions:
   contents: read
@@ -20,26 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-
       - run: npm ci
-
-      # IMPORTANT: Inject secrets here so `prebuild` sees them during `npm run build`
       - name: Build (static export)
-        env:
-          GH_USER: Tridude5
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}        # ← your PAT for Tridude5 (needed for private contribs)
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # ← optional fallback (public-only)
+        # If you use GitHub Pages project site, keep output: 'export' in next.config.mjs
         run: npm run build
-
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
