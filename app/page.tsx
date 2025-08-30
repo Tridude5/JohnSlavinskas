@@ -20,15 +20,15 @@ type TLItem = { role: string; org: string; period: string; loc?: string; bullets
 /* ---------- Experience timeline (gray line, bigger dot, closer to text) ---------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
-    // closer to content (pl-8), gray rail (light & dark)
-    <ol className="relative pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
+    // shift rail right a smidge: ml-[10px] (≈10px). Tweak to taste.
+    <ol className="relative ml-[10px] pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
       {items.map((it, i) => (
         <li key={i} className="relative pb-8 last:pb-0">
-          {/* larger green dot, centered on the 2px rail */}
+          {/* larger green dot, perfectly centered on the 2px rail */}
           <span
             aria-hidden
             className="absolute top-1 h-4 w-4 rounded-full bg-emerald-500 ring-[3px] ring-emerald-500/25"
-            style={{ left: 0, transform: "translateX(calc(-50% - 47px))" }}
+            style={{ left: 0, transform: "translateX(calc(-50% - 1px))" }}
           />
           <div className="pt-0.5">
             <h3 className="font-semibold">
