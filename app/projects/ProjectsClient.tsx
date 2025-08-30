@@ -4,7 +4,7 @@ import React from "react";
 // Types
 export type Link = { label: string; href: string };
 export type Project = {
-  id?: string; // <-- added for anchor links
+  id?: string; // anchor id for deep-links like /projects#eagle-scout
   title: string;
   subtitle?: string;
   period?: string;
@@ -19,7 +19,7 @@ export type Project = {
 // Data
 const projects: Project[] = [
   {
-    id: "eagle-scout", // <-- anchor target for /projects#eagle-scout
+    id: "eagle-scout", // /projects#eagle-scout
     title: "Eagle Scout — Helmet & Bat Racks for John Glenn High School",
     subtitle: "Boy Scouts of America • Rank awarded Mar 2020",
     period: "2019–2020",
@@ -35,7 +35,7 @@ const projects: Project[] = [
     tags: ["leadership", "community", "operations", "fabrication"],
   },
   {
-    id: "hsp-toolkit",
+    id: "hsp-toolkit", // /projects#hsp-toolkit (optional to link)
     title: "Hansen Solubility Parameter Toolkit",
     subtitle: "Estimate HSPs for a specific lignin from bench solubility screens",
     status: "Private",
@@ -46,7 +46,7 @@ const projects: Project[] = [
     tags: ["materials", "HSP", "lignin", "python", "ui"],
   },
   {
-    id: "prazise", // <-- anchor target for /projects#prazise
+    id: "prazise", // /projects#prazise
     title: "Prazise",
     subtitle: "Precision training micro-tool",
     status: "In development",
@@ -62,7 +62,7 @@ const projects: Project[] = [
     tags: ["software", "sports", "modeling", "product"],
   },
   {
-    id: "wqu-capstone",
+    id: "wqu-capstone", // /projects#wqu-capstone (optional to link)
     title: "WorldQuant University Capstone",
     subtitle: "M.S. Financial Engineering",
     status: "Planned",
@@ -131,9 +131,9 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
               <p className="text-sm text-gray-500 dark:text-gray-400">{p.subtitle}</p>
             )}
           </div>
-            {p.period && (
-              <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{p.period}</span>
-            )}
+          {p.period && (
+            <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{p.period}</span>
+          )}
         </div>
 
         <p className="mt-3 text-sm text-gray-700 dark:text-gray-200 leading-6">{p.summary}</p>
@@ -185,7 +185,11 @@ export default function ProjectsClient() {
   return (
     <div className="columns-1 md:columns-2 gap-6 [column-fill:_balance]">
       {projects.map((p, i) => (
-        <div key={p.title} id={p.id} className="mb-6 break-inside-avoid">
+        <div
+          key={p.id ?? p.title}
+          id={p.id}                      // anchor target lives here
+          className="mb-6 break-inside-avoid scroll-mt-24"
+        >
           <ProjectCard p={p} accentClass={accents[i % accents.length]} />
         </div>
       ))}
