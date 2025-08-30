@@ -17,15 +17,15 @@ const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ss
 
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---- Timeline used for Experience ---- */
+/* ---------------- Timeline (aligned dot + line) ---------------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
-    <ol className="relative pl-9 space-y-5 before:absolute before:left-3 before:top-0 before:bottom-0 before:w-[2px] before:bg-emerald-500/40 before:content-['']">
+    <ol className="relative pl-10 space-y-5 before:absolute before:left-4 before:top-0 before:bottom-0 before:w-[2px] before:bg-emerald-500/40 before:content-['']">
       {items.map((it, i) => (
         <li key={i} className="relative">
           <span
             aria-hidden
-            className="absolute left-3 -translate-x-1/2 top-1 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"
+            className="absolute left-4 -translate-x-1/2 top-1 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"
           />
           <div className="pt-1">
             <div className="flex flex-wrap items-baseline gap-2">
@@ -49,7 +49,7 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
   );
 }
 
-/* ---- Publications stays as-is ---- */
+/* ---------------- Publications ---------------- */
 function Publications() {
   return (
     <ul className="mt-3 divide-y divide-white/10">
@@ -70,6 +70,7 @@ function Publications() {
           <span>2025</span>
         </div>
       </li>
+
       <li className="py-4">
         <a
           href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80"
@@ -87,6 +88,7 @@ function Publications() {
           <span>Apr 24, 2025</span>
         </div>
       </li>
+
       <li className="py-4">
         <a
           href="https://journaljerr.com/index.php/JERR/article/view/1174"
@@ -106,6 +108,7 @@ function Publications() {
           <span>2024</span>
         </div>
       </li>
+
       <li className="py-4">
         <a
           href="https://journaljmsrr.com/index.php/JMSRR/article/view/251"
@@ -125,6 +128,7 @@ function Publications() {
           <span>2023</span>
         </div>
       </li>
+
       <li className="py-4">
         <a
           href="https://journaljmsrr.com/index.php/JMSRR/article/view/225"
@@ -142,6 +146,7 @@ function Publications() {
           <span>2022</span>
         </div>
       </li>
+
       <li className="py-4">
         <a
           href="https://journaljerr.com/index.php/JERR/article/view/780"
@@ -165,6 +170,7 @@ function Publications() {
   );
 }
 
+/* ---------------- Page ---------------- */
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -173,16 +179,15 @@ export default function Page() {
     { label: "Pilot/Lab Projects", value: 12, spark: [2, 3, 5, 7, 10, 12] },
   ];
 
-  // 8 items -> 4×2 on md+, wraps gracefully on small
   const interests = [
-    { label: "Triathlon (swim • bike • run)", emoji: "🏊🚴🏃" },
+    { label: "Triathlon", emoji: "🏊🚴🏃" },
     { label: "Ultimate", emoji: "🥏" },
-    { label: "Programming & Making", emoji: "💻" },
+    { label: "Programming", emoji: "💻" },
     { label: "Entrepreneurship", emoji: "🚀" },
     { label: "Travel", emoji: "✈️" },
     { label: "Birdwatching", emoji: "🪶" },
     { label: "Fishing", emoji: "🎣" },
-    { label: "Geocaching", emoji: "📍" }
+    { label: "Geocaching", emoji: "📍" },
   ];
 
   const exp: TLItem[] = [
@@ -246,21 +251,22 @@ export default function Page() {
             </h1>
 
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
-              Researcher and builder at the intersection of lignin &amp; biobased materials, Python/ML data pipelines, and small interactive quant apps.
+              Strong research background in lignin chemistry, biopolymers, and sustainable materials.
+              Comfortable moving between lab trials, pilot scale, and code: Python/TensorFlow/Keras, SQL, Java/TypeScript, and lightweight mobile (Kotlin/Swift). I like building practical tools—from solvent-selection helpers to option-pricing and portfolio demos.
             </p>
 
             <div className="mt-6 max-w-xl">
               <KPIs items={heroKpis} />
             </div>
 
-            {/* CTAs — symmetric grid; top 4 labels centered */}
+            {/* CTAs — symmetric & centered labels */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
-              <MagneticButton href="/resume" className="btn w-full text-center justify-center">See Resume</MagneticButton>
-              <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline w-full text-center justify-center">Download 1-pager</MagneticButton>
-              <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline w-full text-center justify-center">Download CV</MagneticButton>
-              <Link href="/projects" className="btn-outline w-full text-center justify-center">View Projects</Link>
+              <MagneticButton href="/resume" className="btn w-full inline-flex justify-center text-center">See Resume</MagneticButton>
+              <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline w-full inline-flex justify-center text-center">Download 1-pager</MagneticButton>
+              <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline w-full inline-flex justify-center text-center">Download CV</MagneticButton>
+              <Link href="/projects" className="btn-outline w-full inline-flex justify-center text-center">View Projects</Link>
 
-              {/* Social row (centered, equal width) */}
+              {/* Social row */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
@@ -288,7 +294,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: Skills at a glance */}
+          {/* Right: Skills card */}
           <div className="md:col-span-5">
             <div className="card card-gradient">
               <SkillsCard />
@@ -310,21 +316,12 @@ export default function Page() {
               <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60 text-center">
                 <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
 
-                {/* 4×2 on md+, centered, wraps (no clipping) */}
+                {/* 4×2 on md+, centered; wraps without clipping */}
                 <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto">
-                  {[
-                    { label: "Triathlon (swim • bike • run)", emoji: "🏊🚴🏃" },
-                    { label: "Ultimate", emoji: "🥏" },
-                    { label: "Programming & Making", emoji: "💻" },
-                    { label: "Entrepreneurship", emoji: "🚀" },
-                    { label: "Travel", emoji: "✈️" },
-                    { label: "Birdwatching", emoji: "🪶" },
-                    { label: "Fishing", emoji: "🎣" },
-                    { label: "Geocaching", emoji: "📍" },
-                  ].map(({ label, emoji }) => (
+                  {interests.map(({ label, emoji }) => (
                     <span
                       key={label}
-                      className="w-full h-[3.5rem] inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/40 dark:border-gray-800/60 bg-white/5 text-sm font-medium px-3 text-center whitespace-normal break-words leading-snug"
+                      className="w-full h-[3.25rem] inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/40 dark:border-gray-800/60 bg-white/5 px-3 text-[13px] sm:text-sm font-medium text-center whitespace-normal break-words leading-snug"
                     >
                       <span aria-hidden className="shrink-0">{emoji}</span>
                       <span className="block">{label}</span>
@@ -343,7 +340,7 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* FEATURED PROJECTS */}
+      {/* PROJECTS */}
       <Section id="projects" title="Featured projects" subtitle="Hands-on tools & experiments.">
         <div className="grid md:grid-cols-3 gap-6">
           <ProjectCard title="Lignin Solvent Helper" subtitle="Estimate HSP proximity and suggest candidate solvents/ratios" kpi="Faster solvent screening" tags={["Lignin", "HSP", "Python"]} href="/projects#lignin-solvent-helper" cta="View project" />
@@ -352,7 +349,7 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* EXPERIENCE — like the other site: 8/4 split, sticky right */}
+      {/* EXPERIENCE — 8/4 split, sticky right */}
       <Section title="Experience">
         <div className="grid md:grid-cols-12 gap-6">
           <div className="md:col-span-8">
@@ -369,7 +366,6 @@ export default function Page() {
       {/* EDUCATION & RESEARCH */}
       <Section title="Education & Research">
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Education */}
           <div className="card">
             <h3 className="font-semibold">Education</h3>
             <ul className="mt-3 space-y-4 text-sm">
@@ -404,7 +400,6 @@ export default function Page() {
             </ul>
           </div>
 
-          {/* Research & Publications */}
           <div className="card">
             <h3 className="font-semibold">Research & Publications</h3>
             <Publications />
