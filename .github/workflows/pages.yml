@@ -25,7 +25,7 @@ jobs:
           cache: npm
       - run: npm ci
 
-      # --- DEBUG: confirm envs are present (token not printed) ---
+      # Debug env presence (won't print token)
       - name: Debug env
         run: |
           node -e "console.log('GH_USER =', process.env.GH_USER); console.log('GH_TOKEN set =', Boolean(process.env.GH_TOKEN));"
@@ -33,43 +33,33 @@ jobs:
           GH_USER: Tridude5
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      # --- DEBUG: verify token identity (prints viewer login) ---
-      - name: Who am I? (token viewer)
-        run: |
-          curl -s -H "Authorization: bearer $GH_TOKEN" -H "Content-Type: application/json" \
-            -d '{"query":"query{viewer{login}}"}' https://api.github.com/graphql
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      # Run the fetcher explicitly (in addition to prebuild) so we can see its logs
+      # Generate the JSON (make sure the path exists: scripts/fetch-contrib.mjs)
       - name: Fetch GitHub contributions
         run: node scripts/fetch-contrib.mjs
         env:
           GH_USER: Tridude5
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      # --- DEBUG: show generated JSON before build/export ---
+      # Show the generated file before build
       - name: Show contrib json (pre-build)
         run: |
-          echo "public/github-contrib.json:"
-          cat public/github-contrib.json || true
-          echo "----"
-          echo "Listing public/"
-          ls -la public || true
+          echo "public/github-contrib.json:" && cat public/github-contrib.json || true
+          echo "----" && ls -la public || true
 
       - name: Build (static export)
-        run: npm run build            # runs prebuild -> fetch-contrib.mjs
+        run: npm run build
         env:
-          GH_USER: Tridude5           # must match the PAT owner
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # your PAT (classic) from repo secrets
+          GH_USER: Tridude5
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      # --- DEBUG: confirm file made it into the export folder ---
-      - name: Show exported files (post-build)
+      # Safety copy to ensure it lands in out/
+      - name: Ensure contrib in export (safety copy)
         run: |
-          echo "Listing out/"
+          mkdir -p out
+          cp -f public/github-contrib.json out/github-contrib.json || true
+          echo "---- out listing ----"
           ls -la out || true
-          echo "out/github-contrib.json:"
-          cat out/github-contrib.json || true
+          echo "out/github-contrib.json:" && cat out/github-contrib.json || true
 
       - uses: actions/upload-pages-artifact@v3
         with:
