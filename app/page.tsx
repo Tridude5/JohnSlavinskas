@@ -17,30 +17,27 @@ const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ss
 
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---------------- Timeline (aligned dot + line) ---------------- */
+/* ---------- Experience timeline (perfectly aligned line + dot) ---------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
-    <ol className="relative pl-10 space-y-5 before:absolute before:left-4 before:top-0 before:bottom-0 before:w-[2px] before:bg-emerald-500/40 before:content-['']">
+    <ol className="relative pl-10 border-l-2 border-emerald-500/40">
       {items.map((it, i) => (
-        <li key={i} className="relative">
+        <li key={i} className="relative pb-8 last:pb-0">
+          {/* Dot is centered on the 2px border (center at 1px) */}
           <span
             aria-hidden
-            className="absolute left-4 -translate-x-1/2 top-1 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"
+            className="absolute left-[1px] -translate-x-1/2 top-1 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"
           />
-          <div className="pt-1">
-            <div className="flex flex-wrap items-baseline gap-2">
-              <h3 className="font-semibold">
-                {it.role} — <span className="text-emerald-400">{it.org}</span>
-              </h3>
-              <span className="text-xs text-gray-400">
-                · {it.period}
-                {it.loc ? ` · ${it.loc}` : ""}
-              </span>
+          <div className="pt-0.5">
+            <h3 className="font-semibold">
+              {it.role} — <span className="text-emerald-400">{it.org}</span>
+            </h3>
+            {/* Meta line like your reference example */}
+            <div className="mt-1 text-sm text-gray-400">
+              {it.period}{it.loc ? ` · ${it.loc}` : ""}
             </div>
             <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
-              {it.bullets.map((b, j) => (
-                <li key={j}>{b}</li>
-              ))}
+              {it.bullets.map((b, j) => <li key={j}>{b}</li>)}
             </ul>
           </div>
         </li>
@@ -49,120 +46,67 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
   );
 }
 
-/* ---------------- Publications ---------------- */
+/* ---------- Publications ---------- */
 function Publications() {
   return (
     <ul className="mt-3 divide-y divide-white/10">
       <li className="py-4">
-        <a
-          href="https://journaljmsrr.com/index.php/JMSRR/article/view/425"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/425" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
           <span className="font-medium">Lignin-Derived Carbon Fibres: Opportunities and Challenges</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
-            JMSRR
-          </span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
           <span>2025</span>
         </div>
       </li>
-
       <li className="py-4">
-        <a
-          href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
           <span className="font-medium">Lignin Derived Chemicals and Aromatics: A Review</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
-            ChemRxiv
-          </span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">ChemRxiv</span>
           <span>Apr 24, 2025</span>
         </div>
       </li>
-
       <li className="py-4">
-        <a
-          href="https://journaljerr.com/index.php/JERR/article/view/1174"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="font-medium">
-            Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine
-          </span>
+        <a href="https://journaljerr.com/index.php/JERR/article/view/1174" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+          <span className="font-medium">Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
-            J. Engineering Research & Reports
-          </span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
           <span>2024</span>
         </div>
       </li>
-
       <li className="py-4">
-        <a
-          href="https://journaljmsrr.com/index.php/JMSRR/article/view/251"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="font-medium">
-            Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study
-          </span>
+        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/251" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+          <span className="font-medium">Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
-            JMSRR
-          </span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
           <span>2023</span>
         </div>
       </li>
-
       <li className="py-4">
-        <a
-          href="https://journaljmsrr.com/index.php/JMSRR/article/view/225"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/225" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
           <span className="font-medium">Upgrading of OCC with Aseptic Packaging for Paper Board Applications</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
-            JMSRR
-          </span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
           <span>2022</span>
         </div>
       </li>
-
       <li className="py-4">
-        <a
-          href="https://journaljerr.com/index.php/JERR/article/view/780"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="font-medium">
-            A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review
-          </span>
+        <a href="https://journaljerr.com/index.php/JERR/article/view/780" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+          <span className="font-medium">A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
-            J. Engineering Research & Reports
-          </span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
           <span>2022</span>
         </div>
       </li>
@@ -170,7 +114,7 @@ function Publications() {
   );
 }
 
-/* ---------------- Page ---------------- */
+/* ---------- Page ---------- */
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -259,14 +203,13 @@ export default function Page() {
               <KPIs items={heroKpis} />
             </div>
 
-            {/* CTAs — symmetric & centered labels */}
+            {/* CTAs — symmetric; centered labels; GitHub/LinkedIn on row 2 */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
               <MagneticButton href="/resume" className="btn w-full inline-flex justify-center text-center">See Resume</MagneticButton>
               <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline w-full inline-flex justify-center text-center">Download 1-pager</MagneticButton>
               <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline w-full inline-flex justify-center text-center">Download CV</MagneticButton>
               <Link href="/projects" className="btn-outline w-full inline-flex justify-center text-center">View Projects</Link>
 
-              {/* Social row */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
@@ -294,7 +237,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: Skills card */}
+          {/* Right: Skills at a glance */}
           <div className="md:col-span-5">
             <div className="card card-gradient">
               <SkillsCard />
@@ -315,8 +258,7 @@ export default function Page() {
 
               <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60 text-center">
                 <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
-
-                {/* 4×2 on md+, centered; wraps without clipping */}
+                {/* 4×2 on md+, centered, no clipping */}
                 <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto">
                   {interests.map(({ label, emoji }) => (
                     <span
@@ -349,13 +291,13 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* EXPERIENCE — 8/4 split, sticky right */}
+      {/* EXPERIENCE — smaller text column (7) / wider showcase (5) */}
       <Section title="Experience">
         <div className="grid md:grid-cols-12 gap-6">
-          <div className="md:col-span-8">
+          <div className="md:col-span-7">
             <GreenTimeline items={exp} />
           </div>
-          <aside className="md:col-span-4">
+          <aside className="md:col-span-5">
             <div className="sticky top-24">
               <ProgrammingShowcase />
             </div>
