@@ -289,13 +289,34 @@ export default function Page() {
       </Section>
 
       {/* PROJECTS */}
-      <Section id="projects" title="Featured projects" subtitle="Hands-on tools and experiments.">
-        <div className="grid md:grid-cols-3 gap-6">
-          <ProjectCard title="Lignin Solvent Helper" subtitle="Estimate HSP proximity and suggest candidate solvents/ratios" kpi="Faster solvent screening" tags={["Lignin", "HSP", "Python"]} href="/projects#lignin-solvent-helper" cta="View project" />
-          <ProjectCard title="Option Pricing Demos" subtitle="Greeks and Black–Scholes visuals and sanity tests" tags={["Finance", "Python", "Interactive"]} href="/projects#options" cta="Open demo" />
-          <ProjectCard title="Efficient Frontier App" subtitle="Mean–variance portfolios with factor tilts and constraints" tags={["Portfolio", "Python", "Data"]} href="/projects#frontier" cta="Open app" />
-        </div>
-      </Section>
+<Section id="projects" title="Featured projects" subtitle="Hands-on tools and experiments.">
+  <div className="grid md:grid-cols-3 gap-6">
+    <ProjectCard
+      title="Eagle Scout Project"
+      subtitle="Custom helmet & bat racks for John Glenn High School dugouts — planning, fundraising, volunteers, delivery"
+      tags={["Leadership", "Community", "Operations", "Fabrication"]}
+      href="/projects#eagle-scout"
+      cta="See details"
+    />
+
+    <ProjectCard
+      title="Prazise"
+      subtitle="Precision training micro-tool — HR/HRV, sleep, & workouts → adaptive plans (in development)"
+      tags={["Software", "Sports", "Modeling", "Product"]}
+      href="/projects#prazise"
+      cta="Learn more"
+    />
+
+    <ProjectCard
+      title="Efficient Frontier App"
+      subtitle="Mean–variance portfolios with factor tilts and constraints"
+      tags={["Finance", "Python", "Data"]}
+      href="/projects#frontier"
+      cta="Open app"
+    />
+  </div>
+</Section>
+
 
       {/* EXPERIENCE */}
       <Section title="Experience">
