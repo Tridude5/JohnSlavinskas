@@ -1,11 +1,13 @@
+// scripts/fetch-contrib.mjs
 import fs from "node:fs/promises";
 import path from "node:path";
 
 const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
+
 const outPath = path.join(process.cwd(), "public", "github-contrib.json");
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 
-const zero = { weeks: Array(52).fill(0), total: 0, source: "none", viewer: null, restricted: 0 };
+const zero = { weeks: Array(52).fill(0), total: 0 };
 const write = async (data, note = "") => {
   await fs.writeFile(outPath, JSON.stringify(data, null, 2));
   console.log(`✅ Wrote ${outPath} ${note ? `(${note})` : ""}`);
@@ -50,11 +52,12 @@ const sumWeeks = (weeks) =>
     : Array(52).fill(0);
 
 try {
+  // Try with private
   const priv = await call(Q(true));
-  const viewer = priv?.data?.viewer?.login ?? null;
+  const viewer = priv?.data?.viewer?.login;
   const coll1 = priv?.data?.viewer?.contributionsCollection;
   const total1 = Number(coll1?.totalCommitContributions) || 0;
-  const restr  = Number(coll1?.restrictedContributionsCount) || 0;
+  const restr = Number(coll1?.restrictedContributionsCount) || 0;
   const weeks1 = sumWeeks(coll1?.contributionCalendar?.weeks);
 
   console.log("viewer =", viewer);
@@ -63,10 +66,11 @@ try {
   console.log("totalCommitContributions (private) =", total1);
 
   if (total1 > 0) {
-    await write({ weeks: weeks1, total: total1, source: "private", viewer, restricted: restr }, "private");
+    await write({ weeks: weeks1, total: total1 }, "private");
     process.exit(0);
   }
 
+  // Fallback: public-only
   const pub = await call(Q(false));
   const coll2 = pub?.data?.viewer?.contributionsCollection;
   const total2 = Number(coll2?.totalCommitContributions) || 0;
@@ -75,7 +79,7 @@ try {
   console.log("includePrivateContributions = false");
   console.log("totalCommitContributions (public) =", total2);
 
-  await write({ weeks: weeks2, total: total2, source: "public", viewer, restricted: restr }, "public");
+  await write({ weeks: weeks2, total: total2 }, "public");
 } catch (e) {
   console.error("❌ fetch-contrib error:", e);
   await write(zero, "error");
