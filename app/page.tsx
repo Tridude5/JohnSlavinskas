@@ -316,7 +316,7 @@ export default function Page() {
               >
                 Download CV
               </MagneticButton>
-              <Link href={`${base}/projects`} className="btn-outline w-full inline-flex justify-center text-center">
+              <Link href="/projects" className="btn-outline w-full inline-flex justify-center text-center">
                 View Projects
               </Link>
 
@@ -421,21 +421,21 @@ export default function Page() {
           <FeaturedCard
             title="Eagle Scout Project"
             blurb="Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers — built to last, delivered on time."
-            href={`${base}/projects#eagle-scout`}
+            href="/projects#eagle-scout"
             accent="from-emerald-400 via-teal-400 to-emerald-500"
           />
 
           <FeaturedCard
             title="Prazise"
             blurb="Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions — private by design. In active development."
-            href={`${base}/projects#prazise`}
+            href="/projects#prazise"
             accent="from-amber-400 via-orange-400 to-yellow-500"
           />
 
           <FeaturedCard
             title="Efficient Frontier App"
             blurb="Interactive mean-variance explorer with factor tilts, constraints, and stress tests — compare to benchmarks and export in one click."
-            href={`${base}/projects`}
+            href="/projects"
             accent="from-violet-400 via-fuchsia-400 to-pink-500"
           />
         </div>
