@@ -17,18 +17,16 @@ const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ss
 
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---------- Experience timeline (gray line, bigger dot, closer to text) ---------- */
+/* ---------- Experience timeline (gray line, bigger dot, close to text, shifted right) ---------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
-    // shift rail right a smidge: ml-[10px] (≈10px). Tweak to taste.
-    <ol className="relative ml-[20px] pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
+    <ol className="relative ml-[14px] pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
       {items.map((it, i) => (
         <li key={i} className="relative pb-8 last:pb-0">
-          {/* larger green dot, perfectly centered on the 2px rail */}
           <span
             aria-hidden
             className="absolute top-1 h-4 w-4 rounded-full bg-emerald-500 ring-[3px] ring-emerald-500/25"
-            style={{ left: 0, transform: "translateX(calc(-50% - 47px))" }}
+            style={{ left: 0, transform: "translateX(calc(-50% - 1px))" }}
           />
           <div className="pt-0.5">
             <h3 className="font-semibold">
@@ -180,8 +178,8 @@ export default function Page() {
 
   return (
     <>
-      {/* HERO */}
-      <header className="container pt-14 pb-10 relative overflow-hidden">
+      {/* HERO — shorter intro with intl experience */}
+      <header className="container pt-10 pb-6 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-70">
           <BlueprintFX />
         </div>
@@ -191,13 +189,13 @@ export default function Page() {
           <div className="md:col-span-7">
             <p className="text-sm uppercase tracking-widest text-gray-500">Materials × Software × Finance</p>
 
-            <h1 className="mt-2 text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight bg-gradient-to-r from-emerald-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent">
+            <h1 className="mt-1 text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight bg-gradient-to-r from-emerald-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent">
               John (Jack) Slavinskas
             </h1>
 
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
-              Strong research background in lignin chemistry, biopolymers, and sustainable materials.
-              Comfortable moving between lab trials, pilot scale, and code: Python/TensorFlow/Keras, SQL, Java/TypeScript, and lightweight mobile (Kotlin/Swift). I like building practical tools—from solvent-selection helpers to option-pricing and portfolio demos.
+              I work at the overlap of materials and software. International experience (Europe & North America).
+              I turn lignin and other biobased research into clean data, simple models, and small tools that help teams decide faster.
             </p>
 
             <div className="mt-6 max-w-xl">
@@ -247,19 +245,23 @@ export default function Page() {
         </div>
       </header>
 
-      {/* ABOUT */}
-      <Section id="about" title="About" subtitle="Who I am and what I bring to materials + data + finance.">
+      {/* ABOUT — friendlier voice, extra paragraph, no long dashes */}
+      <Section id="about" title="About" subtitle="Materials, data, and a big soft spot for useful tools.">
         <div className="grid gap-6 md:grid-cols-2 items-center">
           <div className="card">
             <div className="space-y-3 text-gray-700 dark:text-gray-300">
               <p>
-                Strong research background in lignin chemistry, biopolymers, and sustainable materials.
-                Comfortable moving between lab trials, pilot scale, and code: Python/TensorFlow/Keras, SQL, Java/TypeScript, and lightweight mobile (Kotlin/Swift). I like building practical tools—from solvent-selection helpers to option-pricing and portfolio demos.
+                I spent the last couple of years in Germany and loved it. New labs, new teams, new grocery labels to translate. It taught me to settle in fast, listen first, then build what actually helps.
+              </p>
+              <p>
+                On the technical side I move between lignin and other biobased materials, small Python and ML pipelines, and little interactive apps that make decisions easier. Give me a fuzzy problem, a pile of notes, and a deadline and I am happy.
+              </p>
+              <p>
+                I care about clear results. Clean data. Simple notebooks. Buttons that do what they say. If a teammate can pick up my work without asking me a dozen questions, that is a win.
               </p>
 
               <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60 text-center">
                 <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
-                {/* 4×2 on md+, centered, no clipping */}
                 <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto">
                   {interests.map(({ label, emoji }) => (
                     <span
@@ -284,15 +286,15 @@ export default function Page() {
       </Section>
 
       {/* PROJECTS */}
-      <Section id="projects" title="Featured projects" subtitle="Hands-on tools & experiments.">
+      <Section id="projects" title="Featured projects" subtitle="Hands-on tools and experiments.">
         <div className="grid md:grid-cols-3 gap-6">
           <ProjectCard title="Lignin Solvent Helper" subtitle="Estimate HSP proximity and suggest candidate solvents/ratios" kpi="Faster solvent screening" tags={["Lignin", "HSP", "Python"]} href="/projects#lignin-solvent-helper" cta="View project" />
-          <ProjectCard title="Option Pricing Demos" subtitle="Greeks + Black–Scholes visualizations and sanity tests" tags={["Finance", "Python", "Interactive"]} href="/projects#options" cta="Open demo" />
-          <ProjectCard title="Efficient Frontier App" subtitle="Mean–variance portfolios with factor tilts & constraints" tags={["Portfolio", "Python", "Data"]} href="/projects#frontier" cta="Open app" />
+          <ProjectCard title="Option Pricing Demos" subtitle="Greeks and Black–Scholes visuals and sanity tests" tags={["Finance", "Python", "Interactive"]} href="/projects#options" cta="Open demo" />
+          <ProjectCard title="Efficient Frontier App" subtitle="Mean–variance portfolios with factor tilts and constraints" tags={["Portfolio", "Python", "Data"]} href="/projects#frontier" cta="Open app" />
         </div>
       </Section>
 
-      {/* EXPERIENCE — smaller text column (7) / wider showcase (5) */}
+      {/* EXPERIENCE */}
       <Section title="Experience">
         <div className="grid md:grid-cols-12 gap-6">
           <div className="md:col-span-7">
