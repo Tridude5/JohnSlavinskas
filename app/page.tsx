@@ -17,17 +17,18 @@ const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ss
 
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---------- Experience timeline (true border + perfectly centered dot) ---------- */
+/* ---------- Experience timeline (gray line, bigger dot, closer to text) ---------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
-    <ol className="relative pl-10 border-l-2 border-emerald-500/40">
+    // closer to content (pl-8), gray rail (light & dark)
+    <ol className="relative pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
       {items.map((it, i) => (
         <li key={i} className="relative pb-8 last:pb-0">
-          {/* dot centered on the 2px border (center is 1px from the padding edge) */}
+          {/* larger green dot, centered on the 2px rail */}
           <span
             aria-hidden
-            className="absolute top-1 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"
-            style={{ left: 0, transform: "translateX(calc(-50% - 47px))" }}
+            className="absolute top-1 h-4 w-4 rounded-full bg-emerald-500 ring-[3px] ring-emerald-500/25"
+            style={{ left: 0, transform: "translateX(calc(-50% - 1px))" }}
           />
           <div className="pt-0.5">
             <h3 className="font-semibold">
