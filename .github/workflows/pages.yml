@@ -25,10 +25,54 @@ jobs:
           cache: npm
       - run: npm ci
 
+      # Guard: show repo root & confirm script exists
+      - name: Verify script path
+        run: |
+          echo "repo root:"
+          ls -la
+          echo "scripts/:"
+          ls -la scripts || true
+
       # Debug env presence (won't print token)
       - name: Debug env
         run: |
           node -e "console.log('GH_USER =', process.env.GH_USER); console.log('GH_TOKEN set =', Boolean(process.env.GH_TOKEN));"
+        env:
+          GH_USER: Tridude5
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      # Who is this token?
+      - name: Who am I? (viewer login)
+        run: |
+          curl -s -H "Authorization: bearer $GH_TOKEN" -H "Content-Type: application/json" \
+            -d '{"query":"query{viewer{login}}"}' https://api.github.com/graphql
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      # Direct GraphQL sanity check for last 12 months
+      - name: Direct GraphQL check (commit total, 12 mo)
+        run: |
+          node - <<'NODE'
+          const to = new Date();
+          const from = new Date(to); from.setFullYear(to.getFullYear() - 1);
+          const body = {
+            query: `
+              query($login:String!,$from:DateTime!,$to:DateTime!){
+                viewer{login}
+                user(login:$login){
+                  contributionsCollection(from:$from,to:$to,includePrivateContributions:true){
+                    totalCommitContributions
+                  }
+                }
+              }`,
+            variables: { login: process.env.GH_USER, from: from.toISOString(), to: to.toISOString() }
+          };
+          fetch("https://api.github.com/graphql", {
+            method:"POST",
+            headers:{ "Content-Type":"application/json", Authorization:`bearer ${process.env.GH_TOKEN}` },
+            body: JSON.stringify(body)
+          }).then(r=>r.json()).then(j=>console.log(JSON.stringify(j,null,2))).catch(e=>console.error(e));
+          NODE
         env:
           GH_USER: Tridude5
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
