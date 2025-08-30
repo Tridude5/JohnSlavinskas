@@ -1,19 +1,44 @@
-// app/resume/page.tsx
 import EmailLink from "@/components/EmailLink";
 
 export const metadata = { title: "Resume — John Slavinskas" };
+
+// Small helper to match the screenshot's heading-with-line style
+function SectionHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-3">
+      <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">
+        {children}
+      </h2>
+      <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+    </div>
+  );
+}
+
+function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-[140px,1fr] gap-x-4">
+      <dt className="text-gray-500 dark:text-gray-400 text-sm">{label}</dt>
+      <dd className="text-gray-900 dark:text-gray-100 text-sm">{value}</dd>
+    </div>
+  );
+}
 
 export default function ResumePage() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   return (
     <div className="container py-12 print:py-0">
-      <div className="card max-w-4xl mx-auto">
-        <header>
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h1 className="text-2xl font-bold tracking-tight">John Slavinskas</h1>
-            <div className="flex gap-2">
-              {/* Force download with suggested filenames */}
+      <div className="mx-auto max-w-5xl rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-zinc-900 shadow-sm print:shadow-none">
+        {/* Header */}
+        <div className="p-6 sm:p-8">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">John Slavinskas</h1>
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                Lissi Kaeser Straße 8 · 80797 München · +49 1575 4805360 · <EmailLink />
+              </p>
+            </div>
+            <div className="flex gap-2 print:hidden">
               <a
                 href={`${base}/downloads/Resume%20P.pdf`}
                 download="John_Slavinskas_Resume_1p.pdf"
@@ -30,103 +55,126 @@ export default function ResumePage() {
               </a>
             </div>
           </div>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-            Lissi Kaeser Straße 8 · 80797 München · +49 1575 4805360 · <EmailLink />
-          </p>
-        </header>
 
-        <section className="mt-6">
-          <h2 className="text-lg font-semibold">Qualifications Summary</h2>
-          <ul className="mt-2 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
-            <li>Research in lignin chemistry, biopolymers &amp; sustainable materials</li>
-            <li>Python, TensorFlow/Keras, SQL, Java, HTML/CSS/JS, PHP, Kotlin, Swift</li>
-            <li>Lab &amp; pilot-scale experience: GC, VOC analysis, optimization</li>
-            <li>Co-author on peer-reviewed publications in fiber recycling &amp; packaging</li>
-          </ul>
-        </section>
+          {/* Personal details */}
+          <section className="mt-8">
+            <SectionHeading>Personal Details</SectionHeading>
+            <dl className="mt-4 space-y-3">
+              <DetailRow label="Name" value="John Slavinskas" />
+              {/* <DetailRow label="Date of birth" value="DD.MM.YYYY" /> */}
+              {/* <DetailRow label="Place of birth" value="City, Country" /> */}
+              {/* <DetailRow label="Nationality" value="" /> */}
+              <DetailRow label="Phone" value={"+49 1575 4805360"} />
+              <DetailRow label="Email" value={<EmailLink />} />
+              <DetailRow label="Location" value="Munich, Germany (EU work-authorized)" />
+            </dl>
+          </section>
 
-        <section className="mt-6">
-          <h2 className="text-lg font-semibold">Education</h2>
-          <ul className="mt-2 space-y-2 text-sm">
-            <li>
-              <strong>WorldQuant University</strong> — M.S. Financial Engineering (Jan 2024 – Nov 2025)
-            </li>
-            <li>
-              <strong>HM Hochschule München</strong> — M.Eng. Paper Technology (Oct 2023 – Jul 2025)
-            </li>
-            <li>
-              <strong>University of the People</strong> — B.S. Computer Science, Data Science (Jun 2023 – Jun 2025)
-            </li>
-            <li>
-              <strong>SUNY-ESF</strong> — B.S. Paper Engineering; minors in Management &amp; Physics (Aug 2020 – Aug 2023)
-            </li>
-          </ul>
-        </section>
+          {/* Professional Summary */}
+          <section className="mt-10">
+            <SectionHeading>Professional Summary</SectionHeading>
+            <p className="mt-4 text-sm leading-6 text-gray-700 dark:text-gray-200">
+              I work at the overlap of materials and software. I turn lignin and other biobased
+              research into clean data, simple models, and small tools that help teams decide
+              faster. Recent years in Germany taught me to settle in fast, listen first, then
+              build what actually helps.
+            </p>
+          </section>
 
-        <section className="mt-6">
-          <h2 className="text-lg font-semibold">Experience (selected)</h2>
-          <div className="mt-2 space-y-4 text-sm">
-            <div>
-              <div className="font-medium">Lignopure — Technology Development (Working Student)</div>
-              <div className="text-gray-500">Dec 2024 – Jun 2025</div>
-              <ul className="list-disc pl-5 mt-1 space-y-1">
-                <li>Developed lignin-based leather (extrusion, up to 70% lignin); optimized mechanical properties.</li>
-                <li>Explored formulations to improve compatibility and strength.</li>
-              </ul>
+          {/* Body sections */}
+          <section className="mt-12">
+            <SectionHeading>Qualifications Summary</SectionHeading>
+            <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
+              <li>Research in lignin chemistry, biopolymers & sustainable materials</li>
+              <li>Python, TensorFlow/Keras, SQL, Java, HTML/CSS/JS, PHP, Kotlin, Swift</li>
+              <li>Lab & pilot-scale experience: GC, VOC analysis, optimization</li>
+              <li>Co-author on peer-reviewed publications in fiber recycling & packaging</li>
+            </ul>
+          </section>
+
+          <section className="mt-10">
+            <SectionHeading>Education</SectionHeading>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li>
+                <strong>WorldQuant University</strong> — M.S. Financial Engineering (Jan 2024 – Nov 2025)
+              </li>
+              <li>
+                <strong>HM Hochschule München</strong> — M.Eng. Paper Technology (Oct 2023 – Jul 2025)
+              </li>
+              <li>
+                <strong>University of the People</strong> — B.S. Computer Science, Data Science (Jun 2023 – Jun 2025)
+              </li>
+              <li>
+                <strong>SUNY-ESF</strong> — B.S. Paper Engineering; minors in Management & Physics (Aug 2020 – Aug 2023)
+              </li>
+            </ul>
+          </section>
+
+          <section className="mt-10">
+            <SectionHeading>Experience (selected)</SectionHeading>
+            <div className="mt-4 space-y-6 text-sm">
+              <div>
+                <div className="font-medium">Lignopure — Technology Development (Working Student)</div>
+                <div className="text-gray-500 dark:text-gray-400">Dec 2024 – Jun 2025</div>
+                <ul className="list-disc pl-5 mt-1 space-y-1">
+                  <li>Developed lignin-based leather (extrusion, up to 70% lignin); optimized mechanical properties.</li>
+                  <li>Explored formulations to improve compatibility and strength.</li>
+                </ul>
+              </div>
+              <div>
+                <div className="font-medium">Master Thesis — Lignin Solubility for Cosmetics</div>
+                <div className="text-gray-500 dark:text-gray-400">Nov 2024 – Jun 2025</div>
+                <ul className="list-disc pl-5 mt-1 space-y-1">
+                  <li>Solvent selection & optimization (temperature, ratios, surfactants); HSP estimation.</li>
+                  <li>Evaluated functional changes of lignin during dissolution.</li>
+                </ul>
+              </div>
+              <div>
+                <div className="font-medium">Sonoco — Emerging Leader</div>
+                <div className="text-gray-500 dark:text-gray-400">May 2023 – Aug 2023</div>
+                <ul className="list-disc pl-5 mt-1 space-y-1">
+                  <li>Improved effluent treatment with cost-effective solutions; enhanced compliance.</li>
+                  <li>Used sensors for real-time visibility, improving quality control and uptime.</li>
+                </ul>
+              </div>
+              <div>
+                <div className="font-medium">Safar Partners — Intern</div>
+                <div className="text-gray-500 dark:text-gray-400">Feb 2023 – Apr 2023</div>
+                <ul className="list-disc pl-5 mt-1 space-y-1">
+                  <li>Competitive analysis of biodegradable plastics; recommended investment in Radical Plastics.</li>
+                  <li>Evaluated polymerization processes vs competitors; prepared investor materials.</li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <div className="font-medium">Master Thesis — Lignin Solubility for Cosmetics</div>
-              <div className="text-gray-500">Nov 2024 – Jun 2025</div>
-              <ul className="list-disc pl-5 mt-1 space-y-1">
-                <li>Solvent selection &amp; optimization (temperature, ratios, surfactants); HSP estimation.</li>
-                <li>Evaluated functional changes of lignin during dissolution.</li>
-              </ul>
-            </div>
-            <div>
-              <div className="font-medium">Sonoco — Emerging Leader</div>
-              <div className="text-gray-500">May 2023 – Aug 2023</div>
-              <ul className="list-disc pl-5 mt-1 space-y-1">
-                <li>Improved effluent treatment with cost-effective solutions; enhanced compliance.</li>
-                <li>Used sensors for real-time visibility, improving quality control and uptime.</li>
-              </ul>
-            </div>
-            <div>
-              <div className="font-medium">Safar Partners — Intern</div>
-              <div className="text-gray-500">Feb 2023 – Apr 2023</div>
-              <ul className="list-disc pl-5 mt-1 space-y-1">
-                <li>Competitive analysis of biodegradable plastics; recommended investment in Radical Plastics.</li>
-                <li>Evaluated polymerization processes vs competitors; prepared investor materials.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="mt-6">
-          <h2 className="text-lg font-semibold">Publications</h2>
-          <ul className="mt-2 space-y-1 text-sm">
-            <li>
-              Slavinskas, J., &amp; Andrew, D. M. (2025). <em>Lignin-Derived Carbon Fibres: Opportunities and Challenges</em>.
-            </li>
-            <li>
-              Slavinskas, J. (2025). <em>Lignin Derived Chemicals and Aromatics: A Review</em>. ChemRxiv.
-            </li>
-            <li>
-              Dölle, K., et al. (2024). <em>Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</em>.
-            </li>
-            <li>
-              Dölle, K., et al. (2023). <em>Characterization of Recycled Fiber Material...</em>
-            </li>
-          </ul>
-        </section>
+          <section className="mt-10">
+            <SectionHeading>Publications</SectionHeading>
+            <ul className="mt-4 space-y-1 text-sm">
+              <li>
+                Slavinskas, J., & Andrew, D. M. (2025). <em>Lignin-Derived Carbon Fibres: Opportunities and Challenges</em>.
+              </li>
+              <li>
+                Slavinskas, J. (2025). <em>Lignin Derived Chemicals and Aromatics: A Review</em>. ChemRxiv.
+              </li>
+              <li>
+                Dölle, K., et al. (2024). <em>Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</em>.
+              </li>
+              <li>
+                Dölle, K., et al. (2023). <em>Characterization of Recycled Fiber Material...</em>
+              </li>
+            </ul>
+          </section>
 
-        <section className="mt-6">
-          <h2 className="text-lg font-semibold">Certifications</h2>
-          <ul className="mt-2 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
-            <li>SCE Incubator — Founding Your Own Startup (2024–2025)</li>
-            <li>DeepLearning.AI — TensorFlow Developer (2023)</li>
-            <li>IBM — AI Engineering (2023)</li>
-          </ul>
-        </section>
+          <section className="mt-10">
+            <SectionHeading>Certifications</SectionHeading>
+            <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
+              <li>SCE Incubator — Founding Your Own Startup (2024–2025)</li>
+              <li>DeepLearning.AI — TensorFlow Developer (2023)</li>
+              <li>IBM — AI Engineering (2023)</li>
+            </ul>
+          </section>
+        </div>
       </div>
     </div>
   );
