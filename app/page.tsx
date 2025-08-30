@@ -172,7 +172,7 @@ export default function Page() {
     { label: "Pilot/Lab Projects", value: 12, spark: [2, 3, 5, 7, 10, 12] },
   ];
 
-  // 8 items exactly -> 4 x 2 grid, symmetrical tiles
+  // 8 items -> 4×2 on md+, wraps gracefully on small
   const interests = [
     { label: "Triathlon (swim • bike • run)", emoji: "🏊🚴🏃" },
     { label: "Ultimate", emoji: "🥏" },
@@ -252,43 +252,40 @@ export default function Page() {
               <KPIs items={heroKpis} />
             </div>
 
-            {/* CTAs — first row */}
-            <div className="mt-6 flex flex-wrap gap-3">
-              <MagneticButton href="/resume" className="btn inline-block">Resume</MagneticButton>
-              <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline inline-block">Download 1-pager</MagneticButton>
-              <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline inline-block">Download CV</MagneticButton>
-              <Link href="/projects" className="btn-outline">View Projects</Link>
-            </div>
+            {/* CTAs — single grid keeps everything symmetrical */}
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+              {/* Row 1 */}
+              <MagneticButton href="/resume" className="btn w-full">Resume</MagneticButton>
+              <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline w-full">Download 1-pager</MagneticButton>
+              <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline w-full">Download CV</MagneticButton>
+              <Link href="/projects" className="btn-outline w-full">View Projects</Link>
 
-            {/* CTAs — second row (centered, even width) */}
-            <div className="mt-4 w-full">
-              <div className="mx-auto grid max-w-[420px] grid-cols-2 gap-3">
-                <a
-                  href="https://github.com/Tridude5"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-outline w-full inline-flex items-center justify-center gap-2 px-4 py-2.5"
-                  aria-label="Open my GitHub profile in a new tab"
-                >
-                  <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.83 1.32 3.52 1 .11-.79.42-1.32.76-1.62-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.24-3.23-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.64-5.49 5.95.44.38.83 1.12.83 2.26v3.35c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/>
-                  </svg>
-                  <span>GitHub</span>
-                </a>
+              {/* Row 2 (each spans two columns -> centered, equal width) */}
+              <a
+                href="https://github.com/Tridude5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline w-full col-span-2 inline-flex items-center justify-center gap-2 px-4 py-2.5"
+                aria-label="Open my GitHub profile in a new tab"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.83 1.32 3.52 1 .11-.79.42-1.32.76-1.62-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.24-3.23-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.64-5.49 5.95.44.38.83 1.12.83 2.26v3.35c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/>
+                </svg>
+                <span>GitHub</span>
+              </a>
 
-                <a
-                  href="https://www.linkedin.com/in/john-slavinskas/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-outline w-full inline-flex items-center justify-center gap-2 px-4 py-2.5"
-                  aria-label="Open my LinkedIn profile in a new tab"
-                >
-                  <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.47-.9 1.62-1.85 3.33-1.85 3.56 0 4.22 2.34 4.22 5.39v6.35ZM5.34 7.44A2.06 2.06 0 1 1 5.33 3.3a2.06 2.06 0 0 1 .01 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"/>
-                  </svg>
-                  <span>LinkedIn</span>
-                </a>
-              </div>
+              <a
+                href="https://www.linkedin.com/in/john-slavinskas/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline w-full col-span-2 inline-flex items-center justify-center gap-2 px-4 py-2.5"
+                aria-label="Open my LinkedIn profile in a new tab"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.47-.9 1.62-1.85 3.33-1.85 3.56 0 4.22 2.34 4.22 5.39v6.35ZM5.34 7.44A2.06 2.06 0 1 1 5.33 3.3a2.06 2.06 0 0 1 .01 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"/>
+                </svg>
+                <span>LinkedIn</span>
+              </a>
             </div>
           </div>
 
@@ -314,16 +311,16 @@ export default function Page() {
               <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60">
                 <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
 
-                {/* Symmetric 4×2 grid; equal-sized tiles; long labels truncate but keep tooltip */}
-                <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl">
+                {/* 4×2 on md+, 2×N on small; allow wrapping; never clip */}
+                <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3">
                   {interests.map(({ label, emoji }) => (
                     <span
                       key={label}
                       title={label}
-                      className="h-12 w-full inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/40 dark:border-gray-800/60 bg-white/5 text-sm font-medium px-3 whitespace-nowrap truncate"
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/40 dark:border-gray-800/60 bg-white/5 px-3 py-2 text-sm font-medium text-center leading-tight whitespace-normal break-words min-h-16"
                     >
-                      <span aria-hidden>{emoji}</span>
-                      <span className="truncate">{label}</span>
+                      <span aria-hidden className="shrink-0">{emoji}</span>
+                      <span className="block">{label}</span>
                     </span>
                   ))}
                 </div>
@@ -350,7 +347,6 @@ export default function Page() {
 
       {/* EXPERIENCE */}
       <Section title="Experience">
-        {/* Wider text column; slimmer widget column; top-aligned */}
         <div className="grid md:grid-cols-12 items-start gap-6">
           <div className="md:col-span-9 lg:col-span-10">
             <GreenTimeline items={exp} />
