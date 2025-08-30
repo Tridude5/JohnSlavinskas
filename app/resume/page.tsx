@@ -1,22 +1,7 @@
-import React, { type ReactNode } from "react";
+import React from "react";
 import EmailLink from "@/components/EmailLink";
 
 export const metadata = { title: "Resume — John Slavinskas" };
-
-// Heading with a horizontal line to the right
-const SectionHeading = ({ children }: { children: ReactNode }) => (
-  <div className="flex items-center gap-3">
-    <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">{children}</h2>
-    <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
-  </div>
-);
-
-const DetailRow = ({ label, value }: { label: string; value: ReactNode }) => (
-  <div className="grid grid-cols-[140px,1fr] gap-x-4">
-    <dt className="text-gray-500 dark:text-gray-400 text-sm">{label}</dt>
-    <dd className="text-gray-900 dark:text-gray-100 text-sm">{value}</dd>
-  </div>
-);
 
 export default function ResumePage() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -48,18 +33,36 @@ export default function ResumePage() {
 
           {/* Personal details */}
           <section className="mt-8">
-            <SectionHeading>Personal Details</SectionHeading>
+            <div className="flex items-center gap-3">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Personal Details</h2>
+              <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
+            </div>
             <dl className="mt-4 space-y-3">
-              <DetailRow label="Name" value="John Slavinskas" />
-              <DetailRow label="Phone" value={"+49 1575 4805360"} />
-              <DetailRow label="Email" value={<EmailLink />} />
-              <DetailRow label="Location" value="Munich, Germany (EU work-authorized)" />
+              <div className="grid grid-cols-[140px,1fr] gap-x-4">
+                <dt className="text-gray-500 dark:text-gray-400 text-sm">Name</dt>
+                <dd className="text-gray-900 dark:text-gray-100 text-sm">John Slavinskas</dd>
+              </div>
+              <div className="grid grid-cols-[140px,1fr] gap-x-4">
+                <dt className="text-gray-500 dark:text-gray-400 text-sm">Phone</dt>
+                <dd className="text-gray-900 dark:text-gray-100 text-sm">+49 1575 4805360</dd>
+              </div>
+              <div className="grid grid-cols-[140px,1fr] gap-x-4">
+                <dt className="text-gray-500 dark:text-gray-400 text-sm">Email</dt>
+                <dd className="text-gray-900 dark:text-gray-100 text-sm"><EmailLink /></dd>
+              </div>
+              <div className="grid grid-cols-[140px,1fr] gap-x-4">
+                <dt className="text-gray-500 dark:text-gray-400 text-sm">Location</dt>
+                <dd className="text-gray-900 dark:text-gray-100 text-sm">Munich, Germany (EU work-authorized)</dd>
+              </div>
             </dl>
           </section>
 
           {/* Qualifications */}
           <section className="mt-12">
-            <SectionHeading>Qualifications Summary</SectionHeading>
+            <div className="flex items-center gap-3">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Qualifications Summary</h2>
+              <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
+            </div>
             <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
               <li>Research in lignin chemistry, biopolymers & sustainable materials</li>
               <li>Python, TensorFlow/Keras, SQL, Java, HTML/CSS/JS, PHP, Kotlin, Swift</li>
@@ -70,7 +73,10 @@ export default function ResumePage() {
 
           {/* Education */}
           <section className="mt-10">
-            <SectionHeading>Education</SectionHeading>
+            <div className="flex items-center gap-3">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Education</h2>
+              <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
+            </div>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <strong>WorldQuant University</strong> — M.S. Financial Engineering (Jan 2024 – Nov 2025)
@@ -89,7 +95,10 @@ export default function ResumePage() {
 
           {/* Experience */}
           <section className="mt-10">
-            <SectionHeading>Experience (selected)</SectionHeading>
+            <div className="flex items-center gap-3">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Experience (selected)</h2>
+              <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
+            </div>
             <div className="mt-4 space-y-6 text-sm">
               <div>
                 <div className="font-medium">Lignopure — Technology Development (Working Student)</div>
@@ -127,21 +136,27 @@ export default function ResumePage() {
           </section>
 
           {/* Publications */}
-          <section className=\"mt-10\">
-            <SectionHeading>Publications<\/SectionHeading>
-            <ul className=\"mt-4 space-y-2 text-sm leading-6\">
-              <li>Slavinskas, John, and Donald M Andrew. 2025. “Lignin-Derived Carbon Fibres: Opportunities and Challenges”. <em>Journal of Materials Science Research and Reviews<\/em> 8 (3):571–80.<\/li>
-              <li>Slavinskas, John. 2025. “Lignin Derived Chemicals and Aromatics: A Review.” <em>ChemRxiv<\/em>. April 24, 2025. doi:10.26434\/chemrxiv-2025-cprrn<\/li>
-              <li>Dölle, Klaus, <em>et al.<\/em> 2024. “Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine”. <em>Journal of Engineering Research and Reports<\/em> 26 (6):198–211.<\/li>
-              <li>Dölle, K., <em>et al.<\/em> (2023). Characterization of Recycled Fiber Material Made from Liquid Containerboard (LCB) and\/or Old Corrugated Containers (OCC) – Evaluation of its Use by a Handsheet Study. <em>Journal of Materials Science Research and Reviews<\/em>, 6(3), 341–353.<\/li>
-              <li>Dölle, K., <em>et al.<\/em> (2022). Upgrading of Old Corrugated Container Board with Aseptic Packaging Container for Paper Board Applications – A Laboratory Handsheet Study. <em>Journal of Materials Science Research and Reviews<\/em>, 5(4), 42–.<\/li>
-              <li>Dölle, K., <em>et al.<\/em> (2022). A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review. <em>Journal of Engineering Research and Reports<\/em>, 23(12), 223–235.<\/li>
-            <\/ul>
-          <\/section>
+          <section className="mt-10">
+            <div className="flex items-center gap-3">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Publications</h2>
+              <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
+            </div>
+            <ul className="mt-4 space-y-2 text-sm leading-6">
+              <li>Slavinskas, John, and Donald M Andrew. 2025. “Lignin-Derived Carbon Fibres: Opportunities and Challenges”. <em>Journal of Materials Science Research and Reviews</em> 8 (3):571–80.</li>
+              <li>Slavinskas, John. 2025. “Lignin Derived Chemicals and Aromatics: A Review.” <em>ChemRxiv</em>. April 24, 2025. doi:10.26434/chemrxiv-2025-cprrn</li>
+              <li>Dölle, Klaus, <em>et al.</em> 2024. “Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine”. <em>Journal of Engineering Research and Reports</em> 26 (6):198–211.</li>
+              <li>Dölle, K., <em>et al.</em> (2023). Characterization of Recycled Fiber Material Made from Liquid Containerboard (LCB) and/or Old Corrugated Containers (OCC) – Evaluation of its Use by a Handsheet Study. <em>Journal of Materials Science Research and Reviews</em>, 6(3), 341–353.</li>
+              <li>Dölle, K., <em>et al.</em> (2022). Upgrading of Old Corrugated Container Board with Aseptic Packaging Container for Paper Board Applications – A Laboratory Handsheet Study. <em>Journal of Materials Science Research and Reviews</em>, 5(4), 42–.</li>
+              <li>Dölle, K., <em>et al.</em> (2022). A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review. <em>Journal of Engineering Research and Reports</em>, 23(12), 223–235.</li>
+            </ul>
+          </section>
 
           {/* Certifications */}
           <section className="mt-10">
-            <SectionHeading>Certifications</SectionHeading>
+            <div className="flex items-center gap-3">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Certifications</h2>
+              <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
+            </div>
             <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
               <li>SCE Incubator — Founding Your Own Startup (2024–2025)</li>
               <li>DeepLearning.AI — TensorFlow Developer (2023)</li>
