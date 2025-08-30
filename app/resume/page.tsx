@@ -34,9 +34,6 @@ export default function ResumePage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">John Slavinskas</h1>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                Lissi Kaeser Straße 8 · 80797 München · +49 1575 4805360 · <EmailLink />
-              </p>
             </div>
             <div className="flex gap-2 print:hidden">
               <a
@@ -71,15 +68,6 @@ export default function ResumePage() {
           </section>
 
           {/* Professional Summary */}
-          <section className="mt-10">
-            <SectionHeading>Professional Summary</SectionHeading>
-            <p className="mt-4 text-sm leading-6 text-gray-700 dark:text-gray-200">
-              I work at the overlap of materials and software. I turn lignin and other biobased
-              research into clean data, simple models, and small tools that help teams decide
-              faster. Recent years in Germany taught me to settle in fast, listen first, then
-              build what actually helps.
-            </p>
-          </section>
 
           {/* Body sections */}
           <section className="mt-12">
