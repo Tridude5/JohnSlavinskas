@@ -2,7 +2,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const user  = process.env.GH_USER || "Tridude5";
 const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
 
 const outPath = path.join(process.cwd(), "public", "github-contrib.json");
@@ -18,13 +17,16 @@ const to = new Date();
 const from = new Date(to);
 from.setFullYear(to.getFullYear() - 1);
 
+// Use the *viewer* (the token owner) so private contributions are included when possible.
 const query = `
-  query($login:String!, $from:DateTime!, $to:DateTime!) {
-    viewer { login }
-    user(login:$login) {
+  query($from:DateTime!, $to:DateTime!) {
+    viewer {
+      login
       contributionsCollection(from:$from, to:$to, includePrivateContributions:true) {
         totalCommitContributions
-        contributionCalendar { weeks { contributionDays { contributionCount } } }
+        contributionCalendar {
+          weeks { contributionDays { contributionCount } }
+        }
       }
     }
   }
@@ -34,31 +36,23 @@ async function run() {
   const resp = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `bearer ${token}` },
-    body: JSON.stringify({ query, variables: { login: user, from: from.toISOString(), to: to.toISOString() } }),
+    body: JSON.stringify({ query, variables: { from: from.toISOString(), to: to.toISOString() } }),
   });
 
   if (!resp.ok) {
     const text = await resp.text();
     console.error("❌ GitHub GraphQL HTTP error:", resp.status, text);
+    // Write zeros so the site still builds
+    await fs.writeFile(outPath, JSON.stringify({ weeks: Array(52).fill(0), total: 0 }, null, 2));
     process.exit(1);
   }
 
   const json = await resp.json();
-  if (json.errors?.length) {
-    console.error("❌ GraphQL errors:", JSON.stringify(json.errors, null, 2));
-  }
-
   const viewer = json?.data?.viewer?.login;
-  if (viewer && viewer !== user) {
-    console.warn(`⚠ GH_USER (${user}) != token owner (${viewer}). Private contributions may be excluded.`);
-  }
+  const coll = json?.data?.viewer?.contributionsCollection;
 
-  const coll = json?.data?.user?.contributionsCollection;
-  if (!coll) {
-    await fs.writeFile(outPath, JSON.stringify({ weeks: Array(52).fill(0), total: 0 }, null, 2));
-    console.log(`✅ Wrote ${outPath} (total=0)`);
-    return;
-  }
+  console.log("viewer =", viewer);
+  console.log("API totalCommitContributions =", coll?.totalCommitContributions);
 
   const weeks = Array.isArray(coll?.contributionCalendar?.weeks)
     ? coll.contributionCalendar.weeks.map(
