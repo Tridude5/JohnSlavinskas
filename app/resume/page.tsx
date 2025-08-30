@@ -1,9 +1,10 @@
+import type { ReactNode } from "react";
 import EmailLink from "@/components/EmailLink";
 
 export const metadata = { title: "Resume — John Slavinskas" };
 
 // Small helper to match the screenshot's heading-with-line style
-function SectionHeading({ children }: { children: React.ReactNode }) {
+function SectionHeading({ children }: { children: ReactNode }) {
   return (
     <div className="flex items-center gap-3">
       <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">
@@ -14,7 +15,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
-function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {
+function DetailRow({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div className="grid grid-cols-[140px,1fr] gap-x-4">
       <dt className="text-gray-500 dark:text-gray-400 text-sm">{label}</dt>
@@ -29,12 +30,10 @@ export default function ResumePage() {
   return (
     <div className="container py-12 print:py-0">
       <div className="mx-auto max-w-5xl rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-zinc-900 shadow-sm print:shadow-none">
-        {/* Header */}
         <div className="p-6 sm:p-8">
+          {/* Header */}
           <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">John Slavinskas</h1>
-            </div>
+            <h1 className="text-3xl font-bold tracking-tight">John Slavinskas</h1>
             <div className="flex gap-2 print:hidden">
               <a
                 href={`${base}/downloads/Resume%20P.pdf`}
@@ -58,18 +57,13 @@ export default function ResumePage() {
             <SectionHeading>Personal Details</SectionHeading>
             <dl className="mt-4 space-y-3">
               <DetailRow label="Name" value="John Slavinskas" />
-              {/* <DetailRow label="Date of birth" value="DD.MM.YYYY" /> */}
-              {/* <DetailRow label="Place of birth" value="City, Country" /> */}
-              {/* <DetailRow label="Nationality" value="" /> */}
               <DetailRow label="Phone" value={"+49 1575 4805360"} />
               <DetailRow label="Email" value={<EmailLink />} />
               <DetailRow label="Location" value="Munich, Germany (EU work-authorized)" />
             </dl>
           </section>
 
-          {/* Professional Summary */}
-
-          {/* Body sections */}
+          {/* Qualifications */}
           <section className="mt-12">
             <SectionHeading>Qualifications Summary</SectionHeading>
             <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
@@ -80,6 +74,7 @@ export default function ResumePage() {
             </ul>
           </section>
 
+          {/* Education */}
           <section className="mt-10">
             <SectionHeading>Education</SectionHeading>
             <ul className="mt-4 space-y-2 text-sm">
@@ -98,6 +93,7 @@ export default function ResumePage() {
             </ul>
           </section>
 
+          {/* Experience */}
           <section className="mt-10">
             <SectionHeading>Experience (selected)</SectionHeading>
             <div className="mt-4 space-y-6 text-sm">
@@ -136,18 +132,20 @@ export default function ResumePage() {
             </div>
           </section>
 
-          <section className=\"mt-10\">
-            <SectionHeading>Publications<\/SectionHeading>
-            <ul className=\"mt-4 space-y-1 text-sm\">
-              <li><em>Lignin-Derived Carbon Fibres: Opportunities and Challenges<\/em> — JMSRR (2025)<\/li>
-              <li><em>Lignin Derived Chemicals and Aromatics: A Review<\/em> — ChemRxiv (Apr 24, 2025)<\/li>
-              <li><em>Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine<\/em> — Journal of Engineering Research & Reports (2024)<\/li>
-              <li><em>Characterization of Recycled Fiber Material Made from LCB and\/or OCC – Handsheet Study<\/em> — JMSRR (2023)<\/li>
-              <li><em>Upgrading of OCC with Aseptic Packaging for Paper Board Applications<\/em> — JMSRR (2022)<\/li>
-              <li><em>A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review<\/em> — Journal of Engineering Research & Reports (2022)<\/li>
-            <\/ul>
-          <\/section>
+          {/* Publications */}
+          <section className="mt-10">
+            <SectionHeading>Publications</SectionHeading>
+            <ul className="mt-4 space-y-1 text-sm">
+              <li><em>Lignin-Derived Carbon Fibres: Opportunities and Challenges</em> — JMSRR (2025)</li>
+              <li><em>Lignin Derived Chemicals and Aromatics: A Review</em> — ChemRxiv (Apr 24, 2025)</li>
+              <li><em>Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</em> — Journal of Engineering Research & Reports (2024)</li>
+              <li><em>Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study</em> — JMSRR (2023)</li>
+              <li><em>Upgrading of OCC with Aseptic Packaging for Paper Board Applications</em> — JMSRR (2022)</li>
+              <li><em>A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review</em> — Journal of Engineering Research & Reports (2022)</li>
+            </ul>
+          </section>
 
+          {/* Certifications */}
           <section className="mt-10">
             <SectionHeading>Certifications</SectionHeading>
             <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
