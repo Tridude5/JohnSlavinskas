@@ -252,39 +252,41 @@ export default function Page() {
               <KPIs items={heroKpis} />
             </div>
 
+            {/* CTAs */}
             <div className="mt-6 flex flex-wrap gap-3">
               <MagneticButton href="/resume" className="btn inline-block">Resume</MagneticButton>
               <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline inline-block">Download 1-pager</MagneticButton>
               <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline inline-block">Download CV</MagneticButton>
               <Link href="/projects" className="btn-outline">View Projects</Link>
 
-              {/* External brand buttons */}
+              {/* Force wrap to next line */}
+              <div className="basis-full h-0" />
+
+              {/* Outline social buttons (logo-only, no arrow) */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 bg-[#24292F] text-white font-medium shadow-md ring-1 ring-black/10 hover:shadow-lg hover:-translate-y-0.5 transition"
+                className="btn-outline inline-flex items-center gap-2"
                 aria-label="Open my GitHub profile in a new tab"
               >
-                <svg className="h-5 w-5 -mt-px" viewBox="0 0 24 24" aria-hidden="true">
+                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
                   <path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.83 1.32 3.52 1 .11-.79.42-1.32.76-1.62-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.24-3.23-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.64-5.49 5.95.44.38.83 1.12.83 2.26v3.35c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/>
                 </svg>
                 <span>GitHub</span>
-                <span aria-hidden>↗</span>
               </a>
 
               <a
                 href="https://www.linkedin.com/in/john-slavinskas/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 bg-[#0A66C2] text-white font-medium shadow-md ring-1 ring-black/10 hover:shadow-lg hover:-translate-y-0.5 transition"
+                className="btn-outline inline-flex items-center gap-2"
                 aria-label="Open my LinkedIn profile in a new tab"
               >
-                <svg className="h-5 w-5 -mt-px" viewBox="0 0 24 24" aria-hidden="true">
+                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
                   <path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.47-.9 1.62-1.85 3.33-1.85 3.56 0 4.22 2.34 4.22 5.39v6.35ZM5.34 7.44A2.06 2.06 0 1 1 5.33 3.3a2.06 2.06 0 0 1 .01 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"/>
                 </svg>
                 <span>LinkedIn</span>
-                <span aria-hidden>↗</span>
               </a>
             </div>
           </div>
@@ -341,11 +343,12 @@ export default function Page() {
 
       {/* EXPERIENCE */}
       <Section title="Experience">
-        <div className="grid md:grid-cols-12 gap-6">
-          <div className="md:col-span-8">
+        {/* Give more width to text; keep columns top-aligned */}
+        <div className="grid md:grid-cols-12 items-start gap-6">
+          <div className="md:col-span-9">
             <GreenTimeline items={exp} />
           </div>
-          <aside className="md:col-span-4">
+          <aside className="md:col-span-3">
             <ProgrammingShowcase />
           </aside>
         </div>
