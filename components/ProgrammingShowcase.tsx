@@ -40,24 +40,23 @@ const PACKAGES: Item[] = [
 ];
 
 /* ---------------------- Styling --------------------- */
-const LEVELS: Record<Level, { title: string; note: string; chip: string; dot: string; glow: string }> = {
-  daily:     { title: "Daily",     note: "use all the time",  chip: "border-emerald-300/30 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20", dot: "bg-emerald-400", glow: "from-emerald-400/60 to-cyan-400/60" },
-  confident: { title: "Confident", note: "ship independently",chip: "border-sky-300/25 bg-gradient-to-r from-sky-400/15 to-indigo-400/15",      dot: "bg-sky-400",     glow: "from-sky-400/60 to-indigo-400/60" },
-  familiar:  { title: "Familiar",  note: "ramp fast",         chip: "border-white/15 bg-white/5",                                                 dot: "bg-white/40",    glow: "from-zinc-200/40 to-white/30" }
+const LEVELS: Record<Level, { title: string; note: string; chip: string; glow: string }> = {
+  daily:     { title: "Daily",     note: "use all the time",  chip: "border-emerald-300/30 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20", glow: "from-emerald-400/60 to-cyan-400/60" },
+  confident: { title: "Confident", note: "ship independently",chip: "border-sky-300/25 bg-gradient-to-r from-sky-400/15 to-indigo-400/15",      glow: "from-sky-400/60 to-indigo-400/60" },
+  familiar:  { title: "Familiar",  note: "ramp fast",         chip: "border-white/15 bg-white/5",                                                 glow: "from-zinc-200/40 to-white/30" }
 };
 
-function Chip({ text, chip, dot, i }: { text: string; chip: string; dot: string; i: number }) {
+function Chip({ text, chip, i }: { text: string; chip: string; i: number }) {
   return (
     <span
       className={[
-        "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs whitespace-nowrap leading-none",
+        "inline-flex items-center rounded-full border px-3 py-1 text-xs whitespace-nowrap leading-none",
         "shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset,0_6px_16px_-10px_rgba(0,0,0,0.6)] backdrop-blur",
         "hover:scale-[1.05] transition-transform duration-150",
         chip
       ].join(" ")}
       style={{ animation: "chipIn .35s both", animationDelay: `${i * 28}ms` }}
     >
-      <span className={`h-1.5 w-1.5 rounded-full ${dot}`} />
       {text}
     </span>
   );
@@ -75,7 +74,7 @@ function GroupCard({ title, items, level }: { title: string; items: Item[]; leve
         <div className="text-[11px] text-gray-300">{meta.note}</div>
       </div>
       <div className="flex flex-wrap gap-2">
-        {labels.map((t, i) => <Chip key={t} text={t} chip={meta.chip} dot={meta.dot} i={i} />)}
+        {labels.map((t, i) => <Chip key={t} text={t} chip={meta.chip} i={i} />)}
       </div>
     </div>
   );
@@ -87,14 +86,7 @@ export default function ProgrammingShowcase() {
 
   return (
     <aside className="relative isolate min-w-0 w-full max-w-[520px] rounded-3xl border border-white/10 bg-black/30 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur overflow-hidden">
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold">Programming Showcase</h3>
-        <div className="flex items-center gap-3 text-[11px] text-gray-300">
-          <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Daily</span>
-          <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-sky-400" /> Confident</span>
-          <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-white/40" /> Familiar</span>
-        </div>
-      </div>
+      <h3 className="font-semibold">Programming Showcase</h3>
 
       {/* Level tabs */}
       <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-1 grid grid-cols-3 gap-1">
