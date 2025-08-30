@@ -20,7 +20,7 @@ type TLItem = { role: string; org: string; period: string; loc?: string; bullets
 /* Single-line timeline with centered dots */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
-    <ol className="relative pl-9 space-y-8 before:absolute before:left-3 before:top-0 before:bottom-0 before:w-[2px] before:bg-emerald-500/40 before:content-['']">
+    <ol className="relative pl-9 space-y-5 before:absolute before:left-3 before:top-0 before:bottom-0 before:w-[2px] before:bg-emerald-500/40 before:content-['']">
       {items.map((it, i) => (
         <li key={i} className="relative">
           <span
@@ -252,22 +252,21 @@ export default function Page() {
               <KPIs items={heroKpis} />
             </div>
 
-            {/* CTAs */}
+            {/* CTAs — first row */}
             <div className="mt-6 flex flex-wrap gap-3">
               <MagneticButton href="/resume" className="btn inline-block">Resume</MagneticButton>
               <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline inline-block">Download 1-pager</MagneticButton>
               <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline inline-block">Download CV</MagneticButton>
               <Link href="/projects" className="btn-outline">View Projects</Link>
+            </div>
 
-              {/* Force wrap to next line */}
-              <div className="basis-full h-0" />
-
-              {/* Outline social buttons (logo-only, no arrow) */}
+            {/* CTAs — second row (centered, even) */}
+            <div className="mt-4 grid w-full grid-cols-2 gap-4 max-w-xs sm:max-w-sm md:max-w-md mx-auto">
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline inline-flex items-center gap-2"
+                className="btn-outline inline-flex items-center justify-center gap-2 px-5 py-3"
                 aria-label="Open my GitHub profile in a new tab"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
@@ -280,7 +279,7 @@ export default function Page() {
                 href="https://www.linkedin.com/in/john-slavinskas/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline inline-flex items-center gap-2"
+                className="btn-outline inline-flex items-center justify-center gap-2 px-5 py-3"
                 aria-label="Open my LinkedIn profile in a new tab"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
@@ -343,12 +342,13 @@ export default function Page() {
 
       {/* EXPERIENCE */}
       <Section title="Experience">
-        {/* Give more width to text; keep columns top-aligned */}
+        {/* Wider text column; slimmer widget column; top-aligned */}
         <div className="grid md:grid-cols-12 items-start gap-6">
-          <div className="md:col-span-9">
+          <div className="md:col-span-9 lg:col-span-10">
             <GreenTimeline items={exp} />
           </div>
-          <aside className="md:col-span-3">
+          <aside className="md:col-span-3 lg:col-span-2">
+            {/* ProgrammingShowcase without GitHub contributions */}
             <ProgrammingShowcase />
           </aside>
         </div>
