@@ -7,15 +7,13 @@ const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
 const outPath = path.join(process.cwd(), "public", "github-contrib.json");
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 
-const zero = { weeks: Array(52).fill(0), total: 0 };
-const write = async (data, note = "") => {
-  await fs.writeFile(outPath, JSON.stringify(data, null, 2));
-  console.log(`✅ Wrote ${outPath} ${note ? `(${note})` : ""}`);
+const writeZeros = async (why = "unknown") => {
+  console.warn(`⚠ Writing zeros (${why}).`);
+  await fs.writeFile(outPath, JSON.stringify({ weeks: Array(52).fill(0), total: 0 }, null, 2));
 };
 
 if (!token) {
-  console.warn("⚠ No GH_TOKEN found.");
-  await write(zero, "no token");
+  await writeZeros("no token");
   process.exit(0);
 }
 
@@ -23,13 +21,26 @@ const to = new Date();
 const from = new Date(to);
 from.setFullYear(to.getFullYear() - 1);
 
-const Q = (includePrivate) => `
+// Primary: includePrivateContributions for token owner (viewer)
+const QUERY_PRIVATE = `
   query($from:DateTime!, $to:DateTime!) {
     viewer {
       login
-      contributionsCollection(from:$from, to:$to, includePrivateContributions:${includePrivate ? "true" : "false"}) {
+      contributionsCollection(from:$from, to:$to, includePrivateContributions:true) {
         totalCommitContributions
-        restrictedContributionsCount
+        contributionCalendar { weeks { contributionDays { contributionCount } } }
+      }
+    }
+  }
+`;
+
+// Fallback: public-only
+const QUERY_PUBLIC = `
+  query($from:DateTime!, $to:DateTime!) {
+    viewer {
+      login
+      contributionsCollection(from:$from, to:$to) {
+        totalCommitContributions
         contributionCalendar { weeks { contributionDays { contributionCount } } }
       }
     }
@@ -46,42 +57,39 @@ async function call(query) {
   return r.json();
 }
 
-const sumWeeks = (weeks) =>
-  Array.isArray(weeks)
-    ? weeks.map((w) => (w.contributionDays || []).reduce((s, d) => s + (d?.contributionCount || 0), 0))
+function sumWeeks(weeks) {
+  return Array.isArray(weeks)
+    ? weeks.map(w => (w.contributionDays || []).reduce((s, d) => s + (d?.contributionCount || 0), 0))
     : Array(52).fill(0);
+}
 
 try {
-  // Try with private
-  const priv = await call(Q(true));
-  const viewer = priv?.data?.viewer?.login;
-  const coll1 = priv?.data?.viewer?.contributionsCollection;
+  // Try private
+  const j1 = await call(QUERY_PRIVATE);
+  const viewer = j1?.data?.viewer?.login;
+  const coll1 = j1?.data?.viewer?.contributionsCollection;
   const total1 = Number(coll1?.totalCommitContributions) || 0;
-  const restr = Number(coll1?.restrictedContributionsCount) || 0;
   const weeks1 = sumWeeks(coll1?.contributionCalendar?.weeks);
-
   console.log("viewer =", viewer);
-  console.log("includePrivateContributions = true");
-  console.log("restrictedContributionsCount =", restr);
-  console.log("totalCommitContributions (private) =", total1);
+  console.log("API totalCommitContributions (private) =", total1);
 
   if (total1 > 0) {
-    await write({ weeks: weeks1, total: total1 }, "private");
+    await fs.writeFile(outPath, JSON.stringify({ weeks: weeks1, total: total1 }, null, 2));
+    console.log(`✅ Wrote ${outPath} (total=${total1}) [private]`);
     process.exit(0);
   }
 
-  // Fallback: public-only
-  const pub = await call(Q(false));
-  const coll2 = pub?.data?.viewer?.contributionsCollection;
+  // Fallback: public only
+  const j2 = await call(QUERY_PUBLIC);
+  const coll2 = j2?.data?.viewer?.contributionsCollection;
   const total2 = Number(coll2?.totalCommitContributions) || 0;
   const weeks2 = sumWeeks(coll2?.contributionCalendar?.weeks);
+  console.log("API totalCommitContributions (public) =", total2);
 
-  console.log("includePrivateContributions = false");
-  console.log("totalCommitContributions (public) =", total2);
-
-  await write({ weeks: weeks2, total: total2 }, "public");
+  await fs.writeFile(outPath, JSON.stringify({ weeks: weeks2, total: total2 }, null, 2));
+  console.log(`✅ Wrote ${outPath} (total=${total2}) [public]`);
 } catch (e) {
   console.error("❌ fetch-contrib error:", e);
-  await write(zero, "error");
+  await writeZeros("error");
   process.exit(1);
 }
