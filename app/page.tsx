@@ -6,7 +6,6 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 
 import Section from "@/components/Section";
-import ProjectCard from "@/components/ProjectCard";
 import KPIs from "@/components/KPIs";
 import BlueprintFX from "@/components/BlueprintFX";
 import ParallaxGroup from "@/components/ParallaxGroup";
@@ -33,10 +32,13 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
               {it.role} — <span className="text-emerald-400">{it.org}</span>
             </h3>
             <div className="mt-1 text-sm text-gray-400">
-              {it.period}{it.loc ? ` · ${it.loc}` : ""}
+              {it.period}
+              {it.loc ? ` · ${it.loc}` : ""}
             </div>
             <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
-              {it.bullets.map((b, j) => <li key={j}>{b}</li>)}
+              {it.bullets.map((b, j) => (
+                <li key={j}>{b}</li>
+              ))}
             </ul>
           </div>
         </li>
@@ -50,7 +52,12 @@ function Publications() {
   return (
     <ul className="mt-3 divide-y divide-white/10">
       <li className="py-4">
-        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/425" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+        <a
+          href="https://journaljmsrr.com/index.php/JMSRR/article/view/425"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className="font-medium">Lignin-Derived Carbon Fibres: Opportunities and Challenges</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
@@ -60,7 +67,12 @@ function Publications() {
         </div>
       </li>
       <li className="py-4">
-        <a href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+        <a
+          href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className="font-medium">Lignin Derived Chemicals and Aromatics: A Review</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
@@ -70,18 +82,34 @@ function Publications() {
         </div>
       </li>
       <li className="py-4">
-        <a href="https://journaljerr.com/index.php/JERR/article/view/1174" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</span>
+        <a
+          href="https://journaljerr.com/index.php/JERR/article/view/1174"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            J. Engineering Research & Reports
+          </span>
           <span>2024</span>
         </div>
       </li>
       <li className="py-4">
-        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/251" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study</span>
+        <a
+          href="https://journaljmsrr.com/index.php/JMSRR/article/view/251"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
@@ -90,7 +118,12 @@ function Publications() {
         </div>
       </li>
       <li className="py-4">
-        <a href="https://journaljmsrr.com/index.php/JMSRR/article/view/225" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
+        <a
+          href="https://journaljmsrr.com/index.php/JMSRR/article/view/225"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className="font-medium">Upgrading of OCC with Aseptic Packaging for Paper Board Applications</span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
@@ -100,16 +133,79 @@ function Publications() {
         </div>
       </li>
       <li className="py-4">
-        <a href="https://journaljerr.com/index.php/JERR/article/view/780" className="fancy-underline group inline-flex items-start" target="_blank" rel="noreferrer">
-          <span className="font-medium">A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review</span>
+        <a
+          href="https://journaljerr.com/index.php/JERR/article/view/780"
+          className="fancy-underline group inline-flex items-start"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="font-medium">
+            A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review
+          </span>
           <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">J. Engineering Research & Reports</span>
+          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
+            J. Engineering Research & Reports
+          </span>
           <span>2022</span>
         </div>
       </li>
     </ul>
+  );
+}
+
+/* ---------- Featured helper (shimmer + blueprint grid, no pills) ---------- */
+function FeaturedCard({
+  title,
+  blurb,
+  href,
+  accent = "from-emerald-400 via-cyan-400 to-emerald-500",
+}: {
+  title: string;
+  blurb: string;
+  href: string;
+  accent?: string;
+}) {
+  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--x", `${e.clientX - r.left}px`);
+    el.style.setProperty("--y", `${e.clientY - r.top}px`);
+  };
+
+  return (
+    <a
+      href={href}
+      onMouseMove={onMove}
+      className="group relative block overflow-hidden rounded-2xl border border-gray-200/70 dark:border-gray-800/70 bg-white dark:bg-zinc-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+    >
+      {/* gradient topper */}
+      <div className={`h-1 w-full bg-gradient-to-r ${accent} opacity-80 group-hover:opacity-100`} />
+
+      {/* soft mouse glimmer */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ background: "radial-gradient(360px circle at var(--x) var(--y), rgba(255,255,255,0.12), transparent 40%)" }}
+      />
+
+      {/* faint blueprint grid */}
+      <div className="absolute inset-0 -z-10 opacity-[0.06] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:22px_22px] text-gray-700 dark:text-white" />
+
+      <div className="p-6">
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
+          <span aria-hidden className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-xs text-gray-500 dark:text-gray-300">
+            Featured
+          </span>
+        </div>
+        <p className="mt-3 text-sm leading-6 text-gray-700 dark:text-gray-200">{blurb}</p>
+        <div className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-300">
+          <span>Open</span>
+          <span aria-hidden className="transition-transform group-hover:translate-x-0.5">↗</span>
+        </div>
+      </div>
+    </a>
   );
 }
 
@@ -204,10 +300,26 @@ export default function Page() {
 
             {/* CTAs — symmetric; centered labels; GitHub/LinkedIn on row 2 */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
-              <MagneticButton href="/resume" className="btn w-full inline-flex justify-center text-center">See Resume</MagneticButton>
-              <MagneticButton href={`${base}/downloads/Resume%20P.pdf`} download="John_Slavinskas_Resume_1p.pdf" className="btn-outline w-full inline-flex justify-center text-center">Download 1-pager</MagneticButton>
-              <MagneticButton href={`${base}/downloads/CV-P.pdf`} download="John_Slavinskas_CV.pdf" className="btn-outline w-full inline-flex justify-center text-center">Download CV</MagneticButton>
-              <Link href="/projects" className="btn-outline w-full inline-flex justify-center text-center">View Projects</Link>
+              <MagneticButton href="/resume" className="btn w-full inline-flex justify-center text-center">
+                See Resume
+              </MagneticButton>
+              <MagneticButton
+                href={`${base}/downloads/Resume%20P.pdf`}
+                download="John_Slavinskas_Resume_1p.pdf"
+                className="btn-outline w-full inline-flex justify-center text-center"
+              >
+                Download 1-pager
+              </MagneticButton>
+              <MagneticButton
+                href={`${base}/downloads/CV-P.pdf`}
+                download="John_Slavinskas_CV.pdf"
+                className="btn-outline w-full inline-flex justify-center text-center"
+              >
+                Download CV
+              </MagneticButton>
+              <Link href="/projects" className="btn-outline w-full inline-flex justify-center text-center">
+                View Projects
+              </Link>
 
               <a
                 href="https://github.com/Tridude5"
@@ -217,7 +329,10 @@ export default function Page() {
                 aria-label="Open my GitHub profile in a new tab"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.83 1.32 3.52 1 .11-.79.42-1.32.76-1.62-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.24-3.23-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.64-5.49 5.95.44.38.83 1.12.83 2.26v3.35c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/>
+                  <path
+                    fill="currentColor"
+                    d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.83 1.32 3.52 1 .11-.79.42-1.32.76-1.62-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.24-3.23-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.64-5.49 5.95.44.38.83 1.12.83 2.26v3.35c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"
+                  />
                 </svg>
                 <span>GitHub</span>
               </a>
@@ -229,7 +344,10 @@ export default function Page() {
                 aria-label="Open my LinkedIn profile in a new tab"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.47-.9 1.62-1.85 3.33-1.85 3.56 0 4.22 2.34 4.22 5.39v6.35ZM5.34 7.44A2.06 2.06 0 1 1 5.33 3.3a2.06 2.06 0 0 1 .01 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"/>
+                  <path
+                    fill="currentColor"
+                    d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.47-.9 1.62-1.85 3.33-1.85 3.56 0 4.22 2.34 4.22 5.39v6.35ZM5.34 7.44A2.06 2.06 0 1 1 5.33 3.3a2.06 2.06 0 0 1 .01 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"
+                  />
                 </svg>
                 <span>LinkedIn</span>
               </a>
@@ -281,42 +399,48 @@ export default function Page() {
           </div>
 
           <ParallaxGroup>
-            <figure data-parallax="0.12" className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50">
-              <Image src={`${base}/downloads/1683206302513.jfif`} alt="John Slavinskas" fill className="object-cover" priority unoptimized />
+            <figure
+              data-parallax="0.12"
+              className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
+            >
+              <Image
+                src={`${base}/downloads/1683206302513.jfif`}
+                alt="John Slavinskas"
+                fill
+                className="object-cover"
+                priority
+                unoptimized
+              />
             </figure>
           </ParallaxGroup>
         </div>
       </Section>
 
-      {/* PROJECTS */}
-<Section id="projects" title="Featured projects" subtitle="Hands-on tools and experiments.">
-  <div className="grid md:grid-cols-3 gap-6">
-    <ProjectCard
-      title="Eagle Scout Project"
-      subtitle="Custom helmet & bat racks for John Glenn High School dugouts — planning, fundraising, volunteers, delivery"
-      tags={["Leadership", "Community", "Operations", "Fabrication"]}
-      href="/projects#eagle-scout"
-      cta="See details"
-    />
+      {/* PROJECTS — Featured */}
+      <Section id="projects" title="Featured projects" subtitle="Hands-on tools and experiments.">
+        <div className="grid md:grid-cols-3 gap-6">
+          <FeaturedCard
+            title="Eagle Scout Project"
+            blurb="Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers — built to last, delivered on time."
+            href="/projects#eagle-scout"
+            accent="from-emerald-400 via-teal-400 to-emerald-500"
+          />
 
-    <ProjectCard
-      title="Prazise"
-      subtitle="Precision training micro-tool — HR/HRV, sleep, & workouts → adaptive plans (in development)"
-      tags={["Software", "Sports", "Modeling", "Product"]}
-      href="/projects#prazise"
-      cta="Learn more"
-    />
+          <FeaturedCard
+            title="Prazise"
+            blurb="Recovery‑aware training engine. Reads HR/HRV, sleep, and recent load to auto‑calibrate targets and adjust sessions — private by design. In active development."
+            href="/projects#prazise"
+            accent="from-amber-400 via-orange-400 to-yellow-500"
+          />
 
-    <ProjectCard
-      title="Efficient Frontier App"
-      subtitle="Mean–variance portfolios with factor tilts and constraints"
-      tags={["Finance", "Python", "Data"]}
-      href="/projects#frontier"
-      cta="Open app"
-    />
-  </div>
-</Section>
-
+          <FeaturedCard
+            title="Efficient Frontier App"
+            blurb="Interactive mean‑variance explorer with factor tilts, constraints, and stress tests — compare to benchmarks and export in one click."
+            href="/projects#frontier"
+            accent="from-violet-400 via-fuchsia-400 to-pink-500"
+          />
+        </div>
+      </Section>
 
       {/* EXPERIENCE */}
       <Section title="Experience">
@@ -343,28 +467,39 @@ export default function Page() {
                   <span className="text-xl">📈</span> MS Financial Engineering
                 </div>
                 <div className="text-gray-500">WorldQuant University · Jan 2024 – Dec 2025 (DEAC)</div>
-                <div className="mt-1 text-gray-400"><span className="font-medium text-gray-300">Capstone:</span> Sustainability (TBD).</div>
+                <div className="mt-1 text-gray-400">
+                  <span className="font-medium text-gray-300">Capstone:</span> Sustainability (TBD).
+                </div>
               </li>
               <li>
                 <div className="font-medium flex items-center gap-2">
                   <span className="text-xl">🧻</span> MEng Paper Technology
                 </div>
                 <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</div>
-                <div className="mt-1 text-gray-400"><span className="font-medium text-gray-300">Thesis:</span> <em>Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract</em></div>
+                <div className="mt-1 text-gray-400">
+                  <span className="font-medium text-gray-300">Thesis:</span>{" "}
+                  <em>
+                    Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract
+                  </em>
+                </div>
               </li>
               <li>
                 <div className="font-medium flex items-center gap-2">
                   <span className="text-xl">💻</span> BS Computer Science
                 </div>
                 <div className="text-gray-500">University of the People · Jun 2023 – Jun 2025 (WASC)</div>
-                <div className="mt-1 text-gray-400"><span className="font-medium text-gray-300">Concentrations:</span> Data Science, Network & Application Security</div>
+                <div className="mt-1 text-gray-400">
+                  <span className="font-medium text-gray-300">Concentrations:</span> Data Science, Network & Application Security
+                </div>
               </li>
               <li>
                 <div className="font-medium flex items-center gap-2">
                   <span className="text-xl">📄</span> BS Paper Engineering
                 </div>
                 <div className="text-gray-500">SUNY ESF · Aug 2020 – Aug 2023 (ABET)</div>
-                <div className="mt-1 text-gray-400"><span className="font-medium text-gray-300">Minors:</span> Management, Physics</div>
+                <div className="mt-1 text-gray-400">
+                  <span className="font-medium text-gray-300">Minors:</span> Management, Physics
+                </div>
               </li>
             </ul>
           </div>
