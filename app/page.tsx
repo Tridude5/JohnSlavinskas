@@ -17,22 +17,22 @@ const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ss
 
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---------- Experience timeline (perfectly aligned line + dot) ---------- */
+/* ---------- Experience timeline (true border + perfectly centered dot) ---------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
     <ol className="relative pl-10 border-l-2 border-emerald-500/40">
       {items.map((it, i) => (
         <li key={i} className="relative pb-8 last:pb-0">
-          {/* Dot is centered on the 2px border (center at 1px) */}
+          {/* dot centered on the 2px border (center is 1px from the padding edge) */}
           <span
             aria-hidden
-            className="absolute left-[1px] -translate-x-1/2 top-1 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"
+            className="absolute top-1 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"
+            style={{ left: 0, transform: "translateX(calc(-50% - 1px))" }}
           />
           <div className="pt-0.5">
             <h3 className="font-semibold">
               {it.role} — <span className="text-emerald-400">{it.org}</span>
             </h3>
-            {/* Meta line like your reference example */}
             <div className="mt-1 text-sm text-gray-400">
               {it.period}{it.loc ? ` · ${it.loc}` : ""}
             </div>
