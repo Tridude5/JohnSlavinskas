@@ -2,31 +2,36 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const user  = process.env.GH_USER || "Tridude5";
-// Prefer your PAT (GH_TOKEN). Fallback to the repo's GITHUB_TOKEN (public only).
-const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
+const user = process.env.GH_USER || "Tridude5";
+// Use your personal PAT for private contribs. Fallback to repo token (public-only) with a warning.
+const ghPat = process.env.GH_TOKEN || "";
+const repoToken = process.env.GITHUB_TOKEN || "";
+const usingRepoToken = !ghPat && !!repoToken;
+const token = ghPat || repoToken;
 
 const outPath = path.join(process.cwd(), "public", "github-contrib.json");
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 
-// If no token at all, don't fail the build — write zeros or keep previous.
+// Require *some* token. If only repo token is present, proceed but warn (private contribs won't show).
 if (!token) {
-  console.warn("⚠ No GH_TOKEN/GITHUB_TOKEN available. Writing zeros.");
-  await fs.writeFile(outPath, JSON.stringify({ weeks: Array(52).fill(0) }, null, 2));
-  process.exit(0);
+  console.error("❌ No GH_TOKEN/GITHUB_TOKEN in the environment. Cannot fetch contributions.");
+  process.exit(1);
+}
+
+if (usingRepoToken) {
+  console.warn("⚠ Using GITHUB_TOKEN (repo token). Private contributions will NOT be included.");
 }
 
 const to = new Date();
 const from = new Date(to);
 from.setFullYear(to.getFullYear() - 1);
 
-// NOTE: includeRestrictedContributions:true asks GitHub to include private
-// contributions when the viewer == user AND the user's profile setting
-// “Include private contributions on my profile” is enabled.
-// If your token lacks permission, GitHub will just omit them.
+// Ask GitHub for contribution weeks (includeRestrictedContributions tries to include private if viewer==user)
 const query = `
   query($login:String!, $from:DateTime!, $to:DateTime!) {
+    viewer { login }
     user(login:$login) {
+      login
       contributionsCollection(from:$from, to:$to, includeRestrictedContributions:true) {
         hasAnyRestrictedContributions
         contributionCalendar {
@@ -43,7 +48,10 @@ try {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `bearer ${token}`,
+      "User-Agent": "fetch-contrib-script",
+      "Accept": "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      "Authorization": `Bearer ${token}`,
     },
     body: JSON.stringify({
       query,
@@ -52,24 +60,37 @@ try {
   });
 } catch (e) {
   console.error("❌ Network error calling GitHub GraphQL:", e?.message || e);
-  await fs.writeFile(outPath, JSON.stringify({ weeks: Array(52).fill(0) }, null, 2));
-  process.exit(0);
+  process.exit(1);
 }
 
 if (!res.ok) {
   const text = await res.text();
-  console.error("❌ GitHub GraphQL error:", text);
-  await fs.writeFile(outPath, JSON.stringify({ weeks: Array(52).fill(0) }, null, 2));
-  process.exit(0);
+  console.error("❌ GitHub GraphQL returned non-OK:", res.status, res.statusText, text);
+  process.exit(1);
 }
 
 const data = await res.json();
-const weeksRaw =
-  data?.data?.user?.contributionsCollection?.contributionCalendar?.weeks ?? [];
+
+const viewerLogin = data?.data?.viewer?.login;
+const weeksRaw = data?.data?.user?.contributionsCollection?.contributionCalendar?.weeks ?? [];
 const weeks = weeksRaw
-  .map((w) => (w?.contributionDays ?? [])
-    .reduce((s, d) => s + (d?.contributionCount || 0), 0))
+  .map(w => (w?.contributionDays ?? []).reduce((s, d) => s + (d?.contributionCount || 0), 0))
   .slice(-52);
 
 await fs.writeFile(outPath, JSON.stringify({ weeks }, null, 2));
-console.log(`✅ wrote ${outPath} for ${user} (total ${weeks.reduce((s,x)=>s+x,0)})`);
+
+const total = weeks.reduce((s, x) => s + x, 0);
+const hasRestricted = data?.data?.user?.contributionsCollection?.hasAnyRestrictedContributions;
+
+console.log(`✅ wrote ${outPath} for ${user} (total ${total})`);
+if (usingRepoToken) {
+  console.log("ℹ️ Used GITHUB_TOKEN (repo token). Only public contributions are counted.");
+} else {
+  if (viewerLogin !== user) {
+    console.warn(`⚠ PAT viewer is '${viewerLogin}', but GH_USER is '${user}'. Private contributions will NOT be included.`);
+  } else if (hasRestricted) {
+    console.log("🎉 Private contributions were included (viewer matches user and profile setting allows it).");
+  } else {
+    console.log("ℹ️ No restricted contributions detected. If you expected them, ensure your profile setting 'Include private contributions on my profile' is enabled.");
+  }
+}
