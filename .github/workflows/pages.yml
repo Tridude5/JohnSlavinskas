@@ -11,7 +11,7 @@ permissions:
   pages: write
   id-token: write
 
-# Avoid cancelling the latest run for the same branch
+# Don’t cancel the newest run on rapid pushes
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
@@ -20,12 +20,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Used by scripts/fetch-contrib.mjs (prebuild)
+      # Your PAT secret (classic, scopes: repo, read:user recommended)
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      # The viewer/user whose contributions we fetch
       GH_USER: Tridude5
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -33,7 +33,7 @@ jobs:
 
       - run: npm ci
 
-      # `prebuild` runs automatically before this (writes public/github-contrib.json)
+      # Prebuild runs automatically (package.json -> "prebuild": "node scripts/fetch-contrib.mjs")
       - name: Build (static export)
         run: npm run build
 
