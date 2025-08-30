@@ -26,7 +26,7 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
           <span
             aria-hidden
             className="absolute top-1 h-4 w-4 rounded-full bg-emerald-500 ring-[3px] ring-emerald-500/25"
-            style={{ left: 0, transform: "translateX(calc(-50% - 47px))" }}
+            style={{ left: 0, transform: "translateX(calc(-50% - 1px))" }}
           />
           <div className="pt-0.5">
             <h3 className="font-semibold">
@@ -245,19 +245,22 @@ export default function Page() {
         </div>
       </header>
 
-      {/* ABOUT — friendlier voice, extra paragraph, no long dashes */}
+      {/* ABOUT — endurance, Ironman, Europe, and translation to work (friendly, no long dashes) */}
       <Section id="about" title="About" subtitle="Materials, data, and a big soft spot for useful tools.">
         <div className="grid gap-6 md:grid-cols-2 items-center">
           <div className="card">
             <div className="space-y-3 text-gray-700 dark:text-gray-300">
               <p>
-                I spent the last couple of years in Germany and loved it. New labs, new teams, new grocery labels to translate. It taught me to settle in fast, listen first, then build what actually helps.
+                Endurance sports are a big part of my life. I train year round and finished an Ironman. Long swims, windy bike rides, and quiet miles teach patience and grit. The plan matters, but so do the small choices inside the plan. Fuel on time. Keep the cadence. Fix little problems early.
               </p>
               <p>
-                On the technical side I move between lignin and other biobased materials, small Python and ML pipelines, and little interactive apps that make decisions easier. Give me a fuzzy problem, a pile of notes, and a deadline and I am happy.
+                I came to Europe to study in Munich and work with teams building real materials, not just slides. Germany gave me new labs, bilingual meetings, and a useful kind of humility. Learn fast. Ask clear questions. Write things down so the next person does not have to guess.
               </p>
               <p>
-                I care about clear results. Clean data. Simple notebooks. Buttons that do what they say. If a teammate can pick up my work without asking me a dozen questions, that is a win.
+                That mindset shows up in my work. I break big goals into blocks I can finish this week. I keep clean notebooks and short scripts that anyone can run. I like small tools that make decisions easier for the whole team. If a teammate can pick up my work without me in the room, that is success.
+              </p>
+              <p>
+                Day to day I move between lignin and other biobased materials, Python and ML pipelines, and little interactive apps. Give me a fuzzy problem, a pile of notes, and a deadline and I am happy.
               </p>
 
               <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60 text-center">
