@@ -136,23 +136,17 @@ export default function ResumePage() {
             </div>
           </section>
 
-          <section className="mt-10">
-            <SectionHeading>Publications</SectionHeading>
-            <ul className="mt-4 space-y-1 text-sm">
-              <li>
-                Slavinskas, J., & Andrew, D. M. (2025). <em>Lignin-Derived Carbon Fibres: Opportunities and Challenges</em>.
-              </li>
-              <li>
-                Slavinskas, J. (2025). <em>Lignin Derived Chemicals and Aromatics: A Review</em>. ChemRxiv.
-              </li>
-              <li>
-                Dölle, K., et al. (2024). <em>Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine</em>.
-              </li>
-              <li>
-                Dölle, K., et al. (2023). <em>Characterization of Recycled Fiber Material...</em>
-              </li>
-            </ul>
-          </section>
+          <section className=\"mt-10\">
+            <SectionHeading>Publications<\/SectionHeading>
+            <ul className=\"mt-4 space-y-1 text-sm\">
+              <li><em>Lignin-Derived Carbon Fibres: Opportunities and Challenges<\/em> — JMSRR (2025)<\/li>
+              <li><em>Lignin Derived Chemicals and Aromatics: A Review<\/em> — ChemRxiv (Apr 24, 2025)<\/li>
+              <li><em>Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine<\/em> — Journal of Engineering Research & Reports (2024)<\/li>
+              <li><em>Characterization of Recycled Fiber Material Made from LCB and\/or OCC – Handsheet Study<\/em> — JMSRR (2023)<\/li>
+              <li><em>Upgrading of OCC with Aseptic Packaging for Paper Board Applications<\/em> — JMSRR (2022)<\/li>
+              <li><em>A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review<\/em> — Journal of Engineering Research & Reports (2022)<\/li>
+            <\/ul>
+          <\/section>
 
           <section className="mt-10">
             <SectionHeading>Certifications</SectionHeading>
