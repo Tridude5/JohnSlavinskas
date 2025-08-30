@@ -4,14 +4,13 @@ on:
   push: { branches: [ main ] }
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'   # optional nightly refresh
+    - cron: '0 6 * * *'   # nightly refresh (UTC)
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Don’t cancel the newest run on rapid pushes
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
@@ -19,13 +18,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      # Your PAT secret (classic, scopes: repo, read:user recommended)
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      # The viewer/user whose contributions we fetch
-      GH_USER: Tridude5
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -33,8 +28,13 @@ jobs:
 
       - run: npm ci
 
-      # Prebuild runs automatically (package.json -> "prebuild": "node scripts/fetch-contrib.mjs")
+      # Step-scoped secret so "prebuild" sees it during `npm run build`
       - name: Build (static export)
+        env:
+          GH_USER: Tridude5
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # <-- PAT for Tridude5 (private contribs)
+          # If you *also* want a fallback to public-only when PAT is missing:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
