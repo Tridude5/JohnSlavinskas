@@ -18,7 +18,7 @@ const LANGUAGES: Item[] = [
   { label: "PHP", level: "familiar" },
   { label: "Kotlin", level: "familiar" },
   { label: "Swift", level: "familiar" },
-  { label: "HTML/CSS", level: "familiar" }
+  { label: "HTML/CSS", level: "confident" }
 ];
 
 const PACKAGES: Item[] = [
@@ -33,10 +33,10 @@ const PACKAGES: Item[] = [
   { label: "cvxpy", level: "confident" },
   { label: "PyTorch", level: "familiar" },
   { label: "QuantLib (basic)", level: "familiar" },
-  { label: "Transformers (HF)", level: "familiar" },
-  { label: "Bayesian networks (pgmpy)", level: "familiar" },
+  { label: "Transformers (HF)", level: "confident" },
+  { label: "Bayesian networks (pgmpy)", level: "confident" },
   { label: "Godot", level: "familiar" },
-  { label: "ChemCAD", level: "familiar" }
+  { label: "ChemCAD", level: "confident" }
 ];
 
 /* ---------------------- Styling --------------------- */
