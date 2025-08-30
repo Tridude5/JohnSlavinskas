@@ -18,7 +18,7 @@ const SKILLS = {
     "Flutter / Dart",
     "SQL / NoSQL",
     "Firebase (Auth/Firestore)",
-    "Web development (Next.js/TS)",
+    "Web development (HTML/CSS/JS)",
     "Quadratic programming",
     "Transformers & Bayesian networks",
   ],
