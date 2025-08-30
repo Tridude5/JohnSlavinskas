@@ -25,7 +25,7 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
           <span
             aria-hidden
             className="absolute top-1 h-4 w-4 rounded-full bg-emerald-500 ring-[3px] ring-emerald-500/25"
-            style={{ left: 0, transform: "translateX(calc(-50% - 1px))" }}
+            style={{ left: 0, transform: "translateX(calc(-50% - 47px))" }}
           />
           <div className="pt-0.5">
             <h3 className="font-semibold">
