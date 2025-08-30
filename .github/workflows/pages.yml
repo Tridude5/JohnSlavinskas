@@ -25,8 +25,10 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Build (static export)
-        # If you use GitHub Pages project site, keep output: 'export' in next.config.mjs
-        run: npm run build
+        run: npm run build            # runs prebuild -> fetch-contrib.mjs
+        env:
+          GH_USER: Tridude5           # must match the PAT owner
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # your PAT (classic) from repo secrets
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
