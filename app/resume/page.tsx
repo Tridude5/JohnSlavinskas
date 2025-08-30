@@ -127,17 +127,17 @@ export default function ResumePage() {
           </section>
 
           {/* Publications */}
-          <section className="mt-10">
-            <SectionHeading>Publications</SectionHeading>
-            <ul className="mt-4 space-y-2 text-sm leading-6">
-              <li>Slavinskas, John, and Donald M Andrew. 2025. “Lignin-Derived Carbon Fibres: Opportunities and Challenges”. <em>Journal of Materials Science Research and Reviews</em> 8 (3):571–80.</li>
-              <li>Slavinskas, John. 2025. “Lignin Derived Chemicals and Aromatics: A Review.” <em>ChemRxiv</em>. April 24, 2025. doi:10.26434/chemrxiv-2025-cprrn</li>
-              <li>Dölle, Klaus, Helga Zoller-Croll, David Blazevic, Felix Hörl, Anna Lexa, Fabian Noss, Shyam Prasad, Gesa Richter, Erik Schmeckebier, Jack Slavinskas, and Matthias Weiß. 2024. “Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine”. <em>Journal of Engineering Research and Reports</em> 26 (6):198–211.</li>
-              <li>Dölle, K., Byrnes, N., Dristle, S., Fernandez, T., Hussein, M., Krauss, C., McCarthy, B., Sausville, P., Schoen, J., Slavinskas, J., Wilson, E., & Wojcikowski, I. (2023). Characterization of Recycled Fiber Material Made from Liquid Containerboard (LCB) and/or Old Corrugated Containers (OCC) – Evaluation of its Use by a Handsheet Study. <em>Journal of Materials Science Research and Reviews</em>, 6(3), 341–353.</li>
-              <li>Dölle, K., Byrnes, N., Dristle, S., Fernandez, T., Hussein, M., Krauss, C., McCarthy, B., Sausville, P., Schoen, J., Slavinskas, J., Wilson, E., & Wojcikowski, I. (2022). Upgrading of Old Corrugated Container Board with Aseptic Packaging Container for Paper Board Applications – A Laboratory Handsheet Study. <em>Journal of Materials Science Research and Reviews</em>, 5(4), 42–.</li>
-              <li>Dölle, K., Byrnes, N., Dristle, S., Fernandez, T., Hussein, M., Krauss, C., McCarthy, B., Sausville, P., Schoen, J., Slavinskas, J., Wilson, E., & Wojcikowski, I. (2022). A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review. <em>Journal of Engineering Research and Reports</em>, 23(12), 223–235.</li>
-            </ul>
-          </section>
+          <section className=\"mt-10\">
+            <SectionHeading>Publications<\/SectionHeading>
+            <ul className=\"mt-4 space-y-2 text-sm leading-6\">
+              <li>Slavinskas, John, and Donald M Andrew. 2025. “Lignin-Derived Carbon Fibres: Opportunities and Challenges”. <em>Journal of Materials Science Research and Reviews<\/em> 8 (3):571–80.<\/li>
+              <li>Slavinskas, John. 2025. “Lignin Derived Chemicals and Aromatics: A Review.” <em>ChemRxiv<\/em>. April 24, 2025. doi:10.26434\/chemrxiv-2025-cprrn<\/li>
+              <li>Dölle, Klaus, <em>et al.<\/em> 2024. “Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine”. <em>Journal of Engineering Research and Reports<\/em> 26 (6):198–211.<\/li>
+              <li>Dölle, K., <em>et al.<\/em> (2023). Characterization of Recycled Fiber Material Made from Liquid Containerboard (LCB) and\/or Old Corrugated Containers (OCC) – Evaluation of its Use by a Handsheet Study. <em>Journal of Materials Science Research and Reviews<\/em>, 6(3), 341–353.<\/li>
+              <li>Dölle, K., <em>et al.<\/em> (2022). Upgrading of Old Corrugated Container Board with Aseptic Packaging Container for Paper Board Applications – A Laboratory Handsheet Study. <em>Journal of Materials Science Research and Reviews<\/em>, 5(4), 42–.<\/li>
+              <li>Dölle, K., <em>et al.<\/em> (2022). A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review. <em>Journal of Engineering Research and Reports<\/em>, 23(12), 223–235.<\/li>
+            <\/ul>
+          <\/section>
 
           {/* Certifications */}
           <section className="mt-10">
