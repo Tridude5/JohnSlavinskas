@@ -45,11 +45,13 @@ const projects: Project[] = [
     subtitle: "Precision training micro‑tool",
     status: "In development",
     summary:
-      "Building a small app to turn personal/coach data into adaptive training decisions. Goal: detect when things drift (injury risk, illness, life stress), estimate overtraining risk, and suggest simple adjustments to keep progress smooth.",
+      "Prazise reads heart rate, HRV, sleep, and workouts to deliver precise training — personalized to you, not a template. It adapts sessions to recovery, explains the why, and keeps data private by design.",
     bullets: [
-      "Data ingestion pipeline for workouts and basic biometrics",
-      "Model prototypes for readiness/overtraining indicators",
-      "Interactive charts and lightweight plan adjustments (Next.js + backend)",
+      "Reads HR, HRV, sleep, and recent sessions; calibrates to the athlete",
+      "Daily precision session suggestions with targets, cues, and post‑run insights",
+      "Recovery‑aware adjustments after tough/breakthrough days; overtraining risk signals",
+      "Privacy‑first: encrypted at rest, deletable on request, never sold",
+      "Device‑friendly: Garmin, Polar, Suunto, Apple Health, Fitbit (planned)",
     ],
     tags: ["software", "sports", "modeling", "product"],
   },
@@ -68,17 +70,74 @@ function StatusBadge({ status }: { status: Project["status"] }) {
   const styles: Record<Project["status"], string> = {
     Completed: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
     "In development": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
-    Private: "bg-slate-100 text-slate-700 dark:bg-slate-800/60 dark:text-slate-200",
+    Private: "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/30 dark:text-fuchsia-300",
     Planned: "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
   };
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${styles[status]}`}>
+    <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${styles[status]}`}>
       {status}
     </span>
   );
 }
 
-function ProjectCard({ p }: { p: Project }) {
+function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-zinc-900 shadow-sm">
+      {/* colorful top bar */}
+      <div className={`h-1 w-full bg-gradient-to-r ${accentClass}`} />
+
+      <div className="p-6">
+        {/* status pill pinned top-right */}
+        <div className="absolute right-4 top-3"><StatusBadge status={p.status} /></div>
+
+        <div className="flex flex-wrap items-start justify-between gap-3 pr-28">
+          <div>
+            <h3 className="text-lg font-semibold tracking-tight">{p.title}</h3>
+            {p.subtitle && (
+              <p className="text-sm text-gray-500 dark:text-gray-400">{p.subtitle}</p>
+            )}
+          </div>
+          {p.period && (
+            <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{p.period}</span>
+          )}
+        </div>
+
+        <p className="mt-3 text-sm text-gray-700 dark:text-gray-200 leading-6">{p.summary}</p>
+
+        {p.bullets && p.bullets.length > 0 && (
+          <ul className="mt-3 list-disc pl-5 space-y-1 text-sm">
+            {p.bullets.map((b, i) => (
+              <li key={i}>{b}</li>
+            ))}
+          </ul>
+        )}
+
+        {p.tags && p.tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {p.tags.map((t) => (
+              <span
+                key={t}
+                className="rounded-full px-2 py-0.5 text-xs bg-gray-100 text-gray-700 dark:bg-zinc-800/60 dark:text-gray-200"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {p.links && p.links.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {p.links.map((l) => (
+              <a key={l.href} href={l.href} className="btn-outline text-sm">
+                {l.label}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}({ p }: { p: Project }) {
   return (
     <div className="card p-6 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-zinc-900 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -133,16 +192,27 @@ function ProjectCard({ p }: { p: Project }) {
 }
 
 export default function ProjectsPage() {
+  const accents = [
+    "from-emerald-400 via-teal-400 to-emerald-500",
+    "from-violet-400 via-fuchsia-400 to-pink-500",
+    "from-amber-400 via-orange-400 to-yellow-500",
+    "from-sky-400 via-cyan-400 to-blue-500",
+  ];
   return (
     <div className="container py-12">
       <header className="mb-6 flex items-center gap-3">
         <h1 className="text-2xl font-bold tracking-tight">Projects</h1>
-        <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+        <div className="h-px flex-1 bg-gradient-to-r from-emerald-400/60 via-sky-400/60 to-fuchsia-400/60" />
       </header>
 
       <div className="grid gap-6 md:grid-cols-2">
-        {projects.map((p) => (
-          <ProjectCard key={p.title} p={p} />
+        {projects.map((p, i) => (
+          <ProjectCard key={p.title} p={p} accentClass={accents[i % accents.length]} />
+        ))}
+      </div>
+    </div>
+  );
+} p={p} />
         ))}
       </div>
     </div>
