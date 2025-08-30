@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import React from "react";
 import Link from "next/link";
@@ -6,12 +6,12 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 
 import Section from "@/components/Section";
-// ⬇️ swap KPIs for the dynamic wrapper
-import DynamicHeroKpis from "@/components/DynamicHeroKpis";
+// (KPIs import not needed anymore on this page)
 import BlueprintFX from "@/components/BlueprintFX";
 import ParallaxGroup from "@/components/ParallaxGroup";
 import SkillsCard from "@/components/SkillsCard";
 import ProgrammingShowcase from "@/components/ProgrammingShowcase";
+import DynamicHeroKpis from "@/components/DynamicHeroKpis";
 
 const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ssr: false });
 
@@ -213,11 +213,6 @@ function FeaturedCard({
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  const heroKpis = [
-    { label: "Publications", value: 6, spark: [1, 2, 3, 4, 5, 6] },
-    { label: "Pilot/Lab Projects", value: 12, spark: [2, 3, 5, 7, 10, 12] },
-  ];
-
   const interests = [
     { label: "Triathlon", emoji: "🏊🚴🏃" },
     { label: "Ultimate", emoji: "🥏" },
@@ -295,8 +290,8 @@ export default function Page() {
             </p>
 
             <div className="mt-6 max-w-xl">
-              {/* Swap static KPIs for the dynamic commits component */}
-              <DynamicHeroKpis basePath={base} publicationsCount={6} />
+              {/* Dynamic commits KPI (no basePath prop) */}
+              <DynamicHeroKpis publicationsCount={6} />
             </div>
 
             {/* CTAs — symmetric; centered labels; GitHub/LinkedIn on row 2 */}
