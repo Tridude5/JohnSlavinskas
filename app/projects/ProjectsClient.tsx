@@ -12,6 +12,7 @@ export type Project = {
   bullets?: string[];
   tags?: string[];
   links?: Link[];
+  compact?: boolean; // smaller vertical rhythm to vary card heights
 };
 
 // Data
@@ -36,6 +37,7 @@ const projects: Project[] = [
     subtitle: "Estimate HSPs for a specific lignin from bench solubility screens",
     status: "Private",
     period: "2024–2025 (private to Lignopure)",
+    compact: true, // make this card shorter so the one beneath tucks up
     summary:
       "Ran a solvent screen (acetone, butanediol, ethanol, DMSO, etc.) and used %‑solubility data to estimate the lignin’s Hansen parameters (δD, δP, δH). The UI then matches the estimated HSP to a solvent database to rank candidate dissolvers/blends for that particular lignin (structure varies by source, so HSPs differ). Code/data are private to Lignopure.",
     tags: ["materials", "HSP", "lignin", "python", "ui"],
@@ -82,18 +84,44 @@ function StatusBadge({ status }: { status: Project["status"] }) {
 }
 
 function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
+  // track mouse position for a soft glimmer effect
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    el.style.setProperty("--x", `${x}px`);
+    el.style.setProperty("--y", `${y}px`);
+  };
+
+  const padding = p.compact ? "p-5" : "p-6";
+  const titleSize = p.compact ? "text-base" : "text-lg";
+  const gapRight = p.compact ? "pr-24" : "pr-28";
+
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-zinc-900 shadow-sm">
+    <div
+      onMouseMove={handleMouseMove}
+      className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-zinc-900 shadow-sm transition-transform duration-300 will-change-transform hover:-translate-y-1 hover:shadow-xl"
+    >
       {/* colorful top bar */}
-      <div className={`h-1 w-full bg-gradient-to-r ${accentClass}`} />
+      <div className={`h-1 w-full bg-gradient-to-r transition-opacity duration-300 group-hover:opacity-90 ${accentClass}`} />
 
-      <div className="p-6">
+      {/* soft glimmer following cursor */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(360px circle at var(--x) var(--y), rgba(255,255,255,0.12), transparent 40%)",
+        }}
+      />
+
+      <div className={`${padding} relative`}>
         {/* status pill pinned top-right */}
-        <div className="absolute right-4 top-3"><StatusBadge status={p.status} /></div>
+        <div className="absolute right-4 top-3 z-10"><StatusBadge status={p.status} /></div>
 
-        <div className="flex flex-wrap items-start justify-between gap-3 pr-28">
+        <div className={`flex flex-wrap items-start justify-between gap-3 ${gapRight}`}>
           <div>
-            <h3 className="text-lg font-semibold tracking-tight">{p.title}</h3>
+            <h3 className={`${titleSize} font-semibold tracking-tight`}>{p.title}</h3>
             {p.subtitle && (
               <p className="text-sm text-gray-500 dark:text-gray-400">{p.subtitle}</p>
             )}
@@ -106,7 +134,7 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
         <p className="mt-3 text-sm text-gray-700 dark:text-gray-200 leading-6">{p.summary}</p>
 
         {p.bullets && p.bullets.length > 0 && (
-          <ul className="mt-3 list-disc pl-5 space-y-1 text-sm">
+          <ul className={`mt-3 list-disc pl-5 space-y-1 text-sm ${p.compact ? "hidden md:block md:space-y-0 md:list-none md:pl-0" : ""}`}>
             {p.bullets.map((b, i) => (
               <li key={i}>{b}</li>
             ))}
@@ -148,10 +176,13 @@ export default function ProjectsClient() {
     "from-sky-400 via-cyan-400 to-blue-500",
   ];
 
+  // Masonry-style layout using CSS columns. Cards get natural, uneven stacking.
   return (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div className="columns-1 md:columns-2 gap-6 [column-fill:_balance]">
       {projects.map((p, i) => (
-        <ProjectCard key={p.title} p={p} accentClass={accents[i % accents.length]} />
+        <div key={p.title} className="mb-6 break-inside-avoid">
+          <ProjectCard p={p} accentClass={accents[i % accents.length]} />
+        </div>
       ))}
     </div>
   );
