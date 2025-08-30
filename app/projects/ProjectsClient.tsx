@@ -17,39 +17,41 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "Eagle Scout Project",
-    subtitle: "Community Service & Leadership",
+    title: "Eagle Scout — Helmet & Bat Racks for John Glenn High School",
+    subtitle: "Boy Scouts of America • Rank awarded Mar 2020",
+    period: "2019–2020",
     status: "Completed",
     summary:
-      "Led an Eagle Scout service project improving a local public space — planned the scope, secured materials and funding, coordinated volunteers, and delivered durable amenities for the community.",
+      "Eagle Scout is the highest rank in Scouting and requires sustained leadership, community service, and a capstone project. I proposed, planned, fundraised, and led the construction of custom helmet and bat racks for the baseball and softball dugouts at John Glenn High School.",
     bullets: [
-      "End‑to‑end planning (permits, budget, logistics)",
-      "Volunteer coordination & safety on build days",
-      "Fundraising and vendor outreach",
+      "Defined scope and design; coordinated with school staff and coaches",
+      "Raised funds, sourced materials, created a detailed bill of materials",
+      "Scheduled and led volunteer crews; safety briefing and task breakdown",
+      "Managed timeline and budget; delivered durable, finished racks on time",
     ],
-    tags: ["leadership", "operations", "community"],
+    tags: ["leadership", "community", "operations", "fabrication"],
   },
   {
     title: "Hansen Solubility Parameter Toolkit",
-    subtitle: "Lignin solvent screening & HSP estimation",
+    subtitle: "Estimate HSPs for a specific lignin from bench solubility screens",
     status: "Private",
-    period: "2024–2025",
+    period: "2024–2025 (private to Lignopure)",
     summary:
-      "Python notebooks + a small web UI that structure experimental results, fit Hansen parameters, and rank solvents/blends for lignin formulations. Code, data, and reports are private to Lignopure.",
-    tags: ["materials", "python", "data"],
+      "Ran a solvent screen (acetone, butanediol, ethanol, DMSO, etc.) and used %‑solubility data to estimate the lignin’s Hansen parameters (δD, δP, δH). The UI then matches the estimated HSP to a solvent database to rank candidate dissolvers/blends for that particular lignin (structure varies by source, so HSPs differ). Code/data are private to Lignopure.",
+    tags: ["materials", "HSP", "lignin", "python", "ui"],
   },
   {
     title: "Prazise",
-    subtitle: "Decision-support micro‑tool",
+    subtitle: "Precision training micro‑tool",
     status: "In development",
     summary:
-      "A small product I’m building to turn messy lab/ops data into tidy inputs and quick decisions. Current work: data model, authentication, CSV importers, parameter‑fit helpers, and fast interactive charts (Next.js + a lightweight backend).",
+      "Building a small app to turn personal/coach data into adaptive training decisions. Goal: detect when things drift (injury risk, illness, life stress), estimate overtraining risk, and suggest simple adjustments to keep progress smooth.",
     bullets: [
-      "Auth + role‑based access",
-      "Tidy data pipelines & quick EDA",
-      "Parameter fitting helpers and shareable reports",
+      "Data ingestion pipeline for workouts and basic biometrics",
+      "Model prototypes for readiness/overtraining indicators",
+      "Interactive charts and lightweight plan adjustments (Next.js + backend)",
     ],
-    tags: ["software", "product", "data"],
+    tags: ["software", "sports", "modeling", "product"],
   },
   {
     title: "WorldQuant University Capstone",
@@ -57,7 +59,7 @@ const projects: Project[] = [
     status: "Planned",
     period: "Target: Dec 2025",
     summary:
-      "Capstone project to be completed in December 2025. Topic TBD; likely directions include portfolio optimization, time‑series modeling, or derivatives pricing.",
+      "Capstone slated for December 2025. Topic TBD; likely directions include portfolio optimization, time‑series modeling, or derivatives pricing.",
     tags: ["finance", "ml"],
   },
 ];
