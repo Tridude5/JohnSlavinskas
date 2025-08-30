@@ -28,13 +28,12 @@ jobs:
 
       - run: npm ci
 
-      # Step-scoped secret so "prebuild" sees it during `npm run build`
+      # IMPORTANT: Inject secrets here so `prebuild` sees them during `npm run build`
       - name: Build (static export)
         env:
           GH_USER: Tridude5
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # <-- PAT for Tridude5 (private contribs)
-          # If you *also* want a fallback to public-only when PAT is missing:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}        # ← your PAT for Tridude5 (needed for private contribs)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # ← optional fallback (public-only)
         run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
