@@ -1,42 +1,91 @@
 "use client";
-import Link from "next/link";
 
-import LanguageToggle from '@/components/LanguageToggle';
-import { useI18n } from '@/components/i18n/I18nProvider';
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import LanguageToggle from "@/components/LanguageToggle";
+import Tx from "@/components/i18n/Tx";
+
+const NAV = [
+  { href: "/#about", label: "About" },
+  { href: "/resume", label: "Resume" },
+  { href: "/projects", label: "Projects" },
+];
 
 export default function Header() {
+  const [open, setOpen] = React.useState(false);
+  const pathname = usePathname();
+
+  // Close the mobile panel when the route changes
+  React.useEffect(() => setOpen(false), [pathname]);
+
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur bg-white/60 dark:bg-gray-900/60 border-b border-gray-200/40 dark:border-gray-800/50">
-      <div className="container flex items-center justify-between py-3">
-        <Link href="/" className="font-semibold tracking-tight text-lg">
-          <span className="text-emerald-600">John</span> Slavinskas
-        </Link>
+    <nav className="sticky top-0 z-50 border-b border-black/5 dark:border-white/10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-zinc-900/60">
+      <div className="container">
+        {/* Top row */}
+        <div className="flex items-center justify-between gap-3 py-3">
+          {/* Brand */}
+          <Link href="/" className="min-w-0 text-lg sm:text-xl font-semibold tracking-tight">
+            <span className="text-emerald-500">John</span> Slavinskas
+          </Link>
 
-        <details className="sm:hidden">
-          <summary className="cursor-pointer px-3 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
-            Menu
-          </summary>
-          <div className="mt-2 space-y-2">
-            <NavLinks />
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center gap-6">
+            {NAV.map((n) => (
+              <Link key={n.href} href={n.href} className="fancy-underline text-sm">
+                <Tx>{n.label}</Tx>
+              </Link>
+            ))}
           </div>
-        </details>
 
-        <div className="hidden sm:flex items-center gap-6">
-          <NavLinks />
-        </div>
+          {/* Right: language + mobile button */}
+          <div className="flex items-center gap-2">
             <LanguageToggle />
+            <button
+              type="button"
+              className="md:hidden inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-sm text-white/90 hover:bg-white/5"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              aria-label="Toggle menu"
+            >
+              <Tx>Menu</Tx>
+              <svg
+                className={`h-4 w-4 transition-transform ${open ? "rotate-90" : ""}`}
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M6.292 4.293a1 1 0 011.416 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 11-1.416-1.414L10.586 10 6.292 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile panel */}
+        <div
+          id="mobile-nav"
+          className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ${
+            open ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="flex flex-col gap-2 pb-3">
+            {NAV.map((n) => (
+              <Link
+                key={n.href}
+                href={n.href}
+                className="rounded-lg px-3 py-2 text-sm text-white/90 hover:bg-white/5"
+              >
+                <Tx>{n.label}</Tx>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </nav>
-  );
-}
-
-function NavLinks() {
-  const { t } = useI18n();
-  return (
-    <>
-      <Link href="/#about" className="fancy-underline">{t('nav.about')}</Link>
-      <Link href="/resume" className="fancy-underline">{t('nav.resume')}</Link>
-      <Link href="/projects" className="fancy-underline">{t('nav.projects')}</Link>
-    </>
   );
 }
