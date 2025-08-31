@@ -390,21 +390,26 @@ export default function Page() {
 
           {/* Right column: larger mosaic with explicit placement on md+ */}
           <ParallaxGroup>
-  {/* Simple 3-col mosaic; bigger rows = bigger photos */}
-  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4
-                  auto-rows-[180px] sm:auto-rows-[220px] md:auto-rows-[260px] lg:auto-rows-[300px]">
-
-    {/* Resume picture — tall left */}
+  <div
+    className="
+      grid gap-4
+      grid-cols-2 auto-rows-[180px]
+      sm:grid-cols-4 sm:auto-rows-[220px]
+      md:auto-rows-[260px]
+      lg:auto-rows-[300px]
+    "
+  >
+    {/* LEFT — Resume picture (now wider) */}
     <figure
       data-parallax="0.12"
-      className="relative col-span-1 row-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
+      className="relative col-span-2 row-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
     >
       <Image
         src={`${base}/downloads/1683206302513.jfif`}
         alt="Resume picture — headshot"
         fill
         className="object-cover"
-        sizes="(max-width: 768px) 50vw, 33vw"
+        sizes="(max-width: 640px) 100vw, 50vw"
         priority
         unoptimized
       />
@@ -413,7 +418,7 @@ export default function Page() {
       </figcaption>
     </figure>
 
-    {/* Christmas Market — wide across the top-right */}
+    {/* TOP RIGHT — Christmas Market (kept wide) */}
     <figure
       data-parallax="0.08"
       className="relative col-span-2 row-span-1 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
@@ -423,7 +428,7 @@ export default function Page() {
         alt="Christmas Market with friends in Munich"
         fill
         className="object-cover"
-        sizes="(max-width: 768px) 100vw, 66vw"
+        sizes="(max-width: 640px) 100vw, 50vw"
         unoptimized
       />
       <figcaption className="absolute bottom-2 left-2 rounded-md bg-black/60 text-white text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm">
@@ -431,7 +436,7 @@ export default function Page() {
       </figcaption>
     </figure>
 
-    {/* Caving — made larger (taller) */}
+    {/* BOTTOM RIGHT — Caving (kept tall) */}
     <figure
       data-parallax="0.06"
       className="relative col-span-1 row-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
@@ -441,9 +446,8 @@ export default function Page() {
         alt="Caving in Syracuse"
         fill
         className="object-cover"
-        // center the subject a touch lower to avoid harsh crop
-        style={{ objectPosition: "50% 45%" }}
-        sizes="(max-width: 768px) 50vw, 33vw"
+        style={{ objectPosition: "50% 45%" }} /* keep subject centered with minimal crop */
+        sizes="(max-width: 640px) 50vw, 25vw"
         unoptimized
       />
       <figcaption className="absolute bottom-2 left-2 rounded-md bg-black/60 text-white text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm">
@@ -451,7 +455,7 @@ export default function Page() {
       </figcaption>
     </figure>
 
-    {/* Salzburg — tall right */}
+    {/* BOTTOM FAR RIGHT — Salzburg (kept tall) */}
     <figure
       data-parallax="0.10"
       className="relative col-span-1 row-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
@@ -461,7 +465,7 @@ export default function Page() {
         alt="Salzburg, Austria"
         fill
         className="object-cover"
-        sizes="(max-width: 768px) 50vw, 33vw"
+        sizes="(max-width: 640px) 50vw, 25vw"
         unoptimized
       />
       <figcaption className="absolute bottom-2 left-2 rounded-md bg-black/60 text-white text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm">
@@ -470,6 +474,7 @@ export default function Page() {
     </figure>
   </div>
 </ParallaxGroup>
+
 
         </div>
       </Section>
