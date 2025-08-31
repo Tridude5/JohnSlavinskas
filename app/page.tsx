@@ -6,7 +6,6 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 
 import Section from "@/components/Section";
-// (KPIs import not needed anymore on this page)
 import BlueprintFX from "@/components/BlueprintFX";
 import ParallaxGroup from "@/components/ParallaxGroup";
 import SkillsCard from "@/components/SkillsCard";
@@ -282,7 +281,6 @@ export default function Page() {
             </p>
 
             <div className="mt-6 max-w-xl">
-              {/* Dynamic commits KPI */}
               <DynamicHeroKpis publicationsCount={6} />
             </div>
 
@@ -312,7 +310,6 @@ export default function Page() {
                 View Projects
               </MagneticButton>
 
-              {/* Bottom row: each spans two columns (2-button width) */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
@@ -391,13 +388,25 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right column: mosaic “puzzle” photo grid with labels */}
+          {/* Right column: larger mosaic with explicit placement on md+ */}
           <ParallaxGroup>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 auto-rows-[120px] sm:auto-rows-[140px] md:auto-rows-[160px]">
-              {/* Resume picture (portrait) */}
+            <div
+              className="
+                grid gap-4
+                grid-cols-2 auto-rows-[150px]
+                sm:auto-rows-[170px]
+                md:grid-cols-12 md:auto-rows-[200px]
+                lg:auto-rows-[220px]
+              "
+            >
+              {/* Resume picture — tall left */}
               <figure
                 data-parallax="0.12"
-                className="relative col-span-1 row-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
+                className="
+                  relative overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50
+                  col-span-1 row-span-2
+                  md:col-start-1 md:col-span-4 md:row-start-1 md:row-span-3
+                "
               >
                 <Image
                   src={`${base}/downloads/1683206302513.jfif`}
@@ -413,10 +422,14 @@ export default function Page() {
                 </figcaption>
               </figure>
 
-              {/* Christmas Market with friends (landscape, spans two cols on the right/top) */}
+              {/* Christmas Market — wide top */}
               <figure
                 data-parallax="0.08"
-                className="relative col-span-2 row-span-1 sm:col-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
+                className="
+                  relative overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50
+                  col-span-2 row-span-1
+                  md:col-start-5 md:col-span-8 md:row-start-1 md:row-span-1
+                "
               >
                 <Image
                   src={`${base}/downloads/Christmas_Market_Munich.jpg`}
@@ -431,17 +444,21 @@ export default function Page() {
                 </figcaption>
               </figure>
 
-              {/* Caving (landscape, bottom middle) */}
+              {/* Caving — made larger (wider + taller on md) */}
               <figure
                 data-parallax="0.06"
-                className="relative col-span-1 row-span-1 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
+                className="
+                  relative overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50
+                  col-span-1 row-span-1
+                  md:col-start-5 md:col-span-5 md:row-start-2 md:row-span-2
+                "
               >
                 <Image
                   src={`${base}/downloads/Caving_Syracuse.jpg`}
                   alt="Caving in Syracuse"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 50vw, 41vw"
                   unoptimized
                 />
                 <figcaption className="absolute bottom-2 left-2 rounded-md bg-black/60 text-white text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm">
@@ -449,17 +466,21 @@ export default function Page() {
                 </figcaption>
               </figure>
 
-              {/* Salzburg (portrait, stacked right) */}
+              {/* Salzburg — tall right */}
               <figure
                 data-parallax="0.10"
-                className="relative col-span-1 row-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
+                className="
+                  relative overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50
+                  col-span-1 row-span-2
+                  md:col-start-10 md:col-span-3 md:row-start-2 md:row-span-3
+                "
               >
                 <Image
                   src={`${base}/downloads/Salzburg.jpg`}
                   alt="Salzburg, Austria"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 50vw, 25vw"
                   unoptimized
                 />
                 <figcaption className="absolute bottom-2 left-2 rounded-md bg-black/60 text-white text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm">
