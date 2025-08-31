@@ -16,52 +16,66 @@ const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ss
 
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---------- Lightweight lightbox ---------- */
-function Lightbox({
+/* ---------- Reusable photo tile with gentle hover expand ---------- */
+function PhotoTile({
   src,
   alt,
-  onClose,
+  label,
+  parallax = "0.08",
+  className = "",
+  sizes,
+  objectPosition,
+  priority = false,
 }: {
   src: string;
   alt: string;
-  onClose: () => void;
+  label: string;
+  parallax?: string;
+  className?: string;
+  sizes?: string;
+  objectPosition?: string;
+  priority?: boolean;
 }) {
-  React.useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm"
-      onClick={onClose}
-      onMouseLeave={onClose}
+    <figure
+      data-parallax={parallax}
+      className={`group relative overflow-visible ${className}`}
+      tabIndex={0}
     >
-      <div className="absolute inset-0 flex items-center justify-center p-4">
-        <div className="relative w-full max-w-5xl h-[80vh]">
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            className="object-contain"
-            sizes="100vw"
-            priority
-            unoptimized
-          />
-        </div>
-      </div>
-
-      <button
-        onClick={onClose}
-        aria-label="Close preview"
-        className="absolute right-4 top-4 rounded-full bg-white/10 text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white px-3 py-1 text-sm"
+      {/* This wrapper scales up slightly on hover/focus and floats above neighbors */}
+      <div
+        className="
+          relative h-full w-full overflow-hidden rounded-2xl border
+          border-gray-200/30 dark:border-gray-800/50 bg-white/5
+          shadow-sm transition-all duration-300 ease-out
+          group-hover:scale-[1.04] group-focus-within:scale-[1.04]
+          group-hover:shadow-2xl group-focus-within:shadow-2xl
+          group-hover:z-10 group-focus-within:z-10
+        "
+        style={{ willChange: "transform" }}
       >
-        Close
-      </button>
-    </div>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes={sizes ?? "(max-width: 640px) 100vw, 33vw"}
+          priority={priority}
+          unoptimized
+          style={objectPosition ? { objectPosition } : undefined}
+        />
+        <figcaption
+          className="
+            absolute bottom-2 left-2 rounded-md bg-black/60 text-white
+            text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm
+            transition-colors duration-200
+            group-hover:bg-black/70 group-focus-within:bg-black/70
+          "
+        >
+          {label}
+        </figcaption>
+      </div>
+    </figure>
   );
 }
 
@@ -253,10 +267,6 @@ function FeaturedCard({
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  const [preview, setPreview] = React.useState<{ src: string; alt: string } | null>(null);
-  const openPreview = (src: string, alt: string) => setPreview({ src, alt });
-  const closePreview = () => setPreview(null);
-
   const interests = [
     { label: "Triathlon", emoji: "🏊🚴🏃" },
     { label: "Ultimate", emoji: "🥏" },
@@ -363,6 +373,7 @@ export default function Page() {
                 View Projects
               </MagneticButton>
 
+              {/* Bottom row: each spans two columns (2-button width) */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
@@ -441,7 +452,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right column: simple asymmetrical mosaic with hover/tap lightbox */}
+          {/* Right column: asymmetrical mosaic with subtle hover expand */}
           <ParallaxGroup>
             <div
               className="
@@ -452,87 +463,47 @@ export default function Page() {
                 lg:auto-rows-[300px]
               "
             >
-              {/* LEFT — Resume picture (wider, tall) */}
-              <figure
-                data-parallax="0.12"
-                className="relative col-span-2 row-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50 cursor-zoom-in"
-                onMouseEnter={() => openPreview(`${base}/downloads/1683206302513.jfif`, "Resume picture — headshot")}
-                onClick={() => openPreview(`${base}/downloads/1683206302513.jfif`, "Resume picture — headshot")}
-              >
-                <Image
-                  src={`${base}/downloads/1683206302513.jfif`}
-                  alt="Resume picture — headshot"
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                  priority
-                  unoptimized
-                />
-                <figcaption className="absolute bottom-2 left-2 rounded-md bg-black/60 text-white text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm">
-                  Resume picture
-                </figcaption>
-              </figure>
+              {/* LEFT — wider, tall */}
+              <PhotoTile
+                src={`${base}/downloads/1683206302513.jfif`}
+                alt="Resume picture — headshot"
+                label="Resume picture"
+                parallax="0.12"
+                className="col-span-2 row-span-2"
+                sizes="(max-width: 640px) 100vw, 50vw"
+                priority
+              />
 
-              {/* TOP RIGHT — Christmas Market (wide) */}
-              <figure
-                data-parallax="0.08"
-                className="relative col-span-2 row-span-1 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50 cursor-zoom-in"
-                onMouseEnter={() => openPreview(`${base}/downloads/Christmas_Market_Munich.jpg`, "Christmas Market with friends in Munich")}
-                onClick={() => openPreview(`${base}/downloads/Christmas_Market_Munich.jpg`, "Christmas Market with friends in Munich")}
-              >
-                <Image
-                  src={`${base}/downloads/Christmas_Market_Munich.jpg`}
-                  alt="Christmas Market with friends in Munich"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                  unoptimized
-                />
-                <figcaption className="absolute bottom-2 left-2 rounded-md bg-black/60 text-white text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm">
-                  Christmas Market — Munich
-                </figcaption>
-              </figure>
+              {/* TOP RIGHT — wide */}
+              <PhotoTile
+                src={`${base}/downloads/Christmas_Market_Munich.jpg`}
+                alt="Christmas Market with friends in Munich"
+                label="Christmas Market — Munich"
+                parallax="0.08"
+                className="col-span-2 row-span-1"
+                sizes="(max-width: 640px) 100vw, 50vw"
+              />
 
-              {/* BOTTOM RIGHT — Caving (tall) */}
-              <figure
-                data-parallax="0.06"
-                className="relative col-span-1 row-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50 cursor-zoom-in"
-                onMouseEnter={() => openPreview(`${base}/downloads/Caving_Syracuse.jpg`, "Caving in Syracuse")}
-                onClick={() => openPreview(`${base}/downloads/Caving_Syracuse.jpg`, "Caving in Syracuse")}
-              >
-                <Image
-                  src={`${base}/downloads/Caving_Syracuse.jpg`}
-                  alt="Caving in Syracuse"
-                  fill
-                  className="object-cover"
-                  style={{ objectPosition: "50% 45%" }}
-                  sizes="(max-width: 640px) 50vw, 25vw"
-                  unoptimized
-                />
-                <figcaption className="absolute bottom-2 left-2 rounded-md bg-black/60 text-white text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm">
-                  Caving — Syracuse
-                </figcaption>
-              </figure>
+              {/* BOTTOM RIGHT — tall */}
+              <PhotoTile
+                src={`${base}/downloads/Caving_Syracuse.jpg`}
+                alt="Caving in Syracuse"
+                label="Caving — Syracuse"
+                parallax="0.06"
+                className="col-span-1 row-span-2"
+                sizes="(max-width: 640px) 50vw, 25vw"
+                objectPosition="50% 45%"
+              />
 
-              {/* BOTTOM FAR RIGHT — Salzburg (tall) */}
-              <figure
-                data-parallax="0.10"
-                className="relative col-span-1 row-span-2 overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50 cursor-zoom-in"
-                onMouseEnter={() => openPreview(`${base}/downloads/Salzburg.jpg`, "Salzburg, Austria")}
-                onClick={() => openPreview(`${base}/downloads/Salzburg.jpg`, "Salzburg, Austria")}
-              >
-                <Image
-                  src={`${base}/downloads/Salzburg.jpg`}
-                  alt="Salzburg, Austria"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 50vw, 25vw"
-                  unoptimized
-                />
-                <figcaption className="absolute bottom-2 left-2 rounded-md bg-black/60 text-white text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm">
-                  Salzburg, Austria
-                </figcaption>
-              </figure>
+              {/* FAR RIGHT — tall */}
+              <PhotoTile
+                src={`${base}/downloads/Salzburg.jpg`}
+                alt="Salzburg, Austria"
+                label="Salzburg, Austria"
+                parallax="0.10"
+                className="col-span-1 row-span-2"
+                sizes="(max-width: 640px) 50vw, 25vw"
+              />
             </div>
           </ParallaxGroup>
         </div>
@@ -628,11 +599,6 @@ export default function Page() {
           </div>
         </div>
       </Section>
-
-      {/* Lightbox portal */}
-      {preview && (
-        <Lightbox src={preview.src} alt={preview.alt} onClose={closePreview} />
-      )}
     </>
   );
 }
