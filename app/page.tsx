@@ -12,6 +12,9 @@ import SkillsCard from "@/components/SkillsCard";
 import ProgrammingShowcase from "@/components/ProgrammingShowcase";
 import DynamicHeroKpis from "@/components/DynamicHeroKpis";
 
+import Tx from "@/components/i18n/Tx";
+import { useI18n } from "@/components/i18n/I18nProvider";
+
 const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ssr: false });
 
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
@@ -28,21 +31,18 @@ function PhotoTile({
   priority = false,
 }: {
   src: string;
-  alt: string;
-  label: string;
+  alt: string;   // english key
+  label: string; // english key
   parallax?: string;
   className?: string;
   sizes?: string;
   objectPosition?: string;
   priority?: boolean;
 }) {
+  const { t } = useI18n();
+
   return (
-    <figure
-      data-parallax={parallax}
-      className={`group relative overflow-visible ${className}`}
-      tabIndex={0}
-    >
-      {/* This wrapper scales up slightly on hover/focus and floats above neighbors */}
+    <figure data-parallax={parallax} className={`group relative overflow-visible ${className}`} tabIndex={0}>
       <div
         className="
           relative h-full w-full overflow-hidden rounded-2xl border
@@ -56,7 +56,7 @@ function PhotoTile({
       >
         <Image
           src={src}
-          alt={alt}
+          alt={t(alt)}
           fill
           className="object-cover"
           sizes={sizes ?? "(max-width: 640px) 100vw, 33vw"}
@@ -72,7 +72,7 @@ function PhotoTile({
             group-hover:bg-black/70 group-focus-within:bg-black/70
           "
         >
-          {label}
+          <Tx>{label}</Tx>
         </figcaption>
       </div>
     </figure>
@@ -81,6 +81,7 @@ function PhotoTile({
 
 /* ---------- Experience timeline ---------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
+  const { t } = useI18n();
   return (
     <ol className="relative ml-[14px] pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
       {items.map((it, i) => (
@@ -92,15 +93,15 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
           />
           <div className="pt-0.5">
             <h3 className="font-semibold">
-              {it.role} — <span className="text-emerald-400">{it.org}</span>
+              {t(it.role)} — <span className="text-emerald-400">{t(it.org)}</span>
             </h3>
             <div className="mt-1 text-sm text-gray-400">
-              {it.period}
-              {it.loc ? ` · ${it.loc}` : ""}
+              {t(it.period)}
+              {it.loc ? ` · ${t(it.loc)}` : ""}
             </div>
             <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
               {it.bullets.map((b, j) => (
-                <li key={j}>{b}</li>
+                <li key={j}>{t(b)}</li>
               ))}
             </ul>
           </div>
@@ -112,6 +113,7 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
 
 /* ---------- Publications ---------- */
 function Publications() {
+  // Titles/journals left as-is
   return (
     <ul className="mt-3 divide-y divide-white/10">
       <li className="py-4">
@@ -225,8 +227,8 @@ function FeaturedCard({
   href,
   accent = "from-emerald-400 via-cyan-400 to-emerald-500",
 }: {
-  title: string;
-  blurb: string;
+  title: string; // english key
+  blurb: string; // english key
   href: string;
   accent?: string;
 }) {
@@ -251,13 +253,13 @@ function FeaturedCard({
       <div className="absolute inset-0 -z-10 opacity-[0.06] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:22px_22px] text-gray-700 dark:text-white" />
       <div className="p-6">
         <div className="flex items-start justify-between gap-4">
-          <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
+          <h3 className="text-lg font-semibold tracking-tight"><Tx>{title}</Tx></h3>
           <span aria-hidden className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-xs text-gray-500 dark:text-gray-300">
-            Featured
+            <Tx>Featured</Tx>
           </span>
         </div>
-        <p className="mt-3 text-sm leading-6 text-gray-700 dark:text-gray-200">{blurb}</p>
-        <div className="mt-4 text-sm font-medium text-emerald-600 dark:text-emerald-300">View project</div>
+        <p className="mt-3 text-sm leading-6 text-gray-700 dark:text-gray-200"><Tx>{blurb}</Tx></p>
+        <div className="mt-4 text-sm font-medium text-emerald-600 dark:text-emerald-300"><Tx>View project</Tx></div>
       </div>
     </Link>
   );
@@ -266,6 +268,7 @@ function FeaturedCard({
 /* ---------- Page ---------- */
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const { t } = useI18n();
 
   const interests = [
     { label: "Triathlon", emoji: "🏊🚴🏃" },
@@ -332,15 +335,19 @@ export default function Page() {
         <div className="grid gap-8 md:grid-cols-12 items-center relative">
           {/* Left */}
           <div className="md:col-span-7">
-            <p className="text-sm uppercase tracking-widest text-gray-500">Materials × Software × Finance</p>
+            <p className="text-sm uppercase tracking-widest text-gray-500">
+              <Tx>Materials × Software × Finance</Tx>
+            </p>
 
             <h1 className="mt-1 text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight bg-gradient-to-r from-emerald-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent">
               John (Jack) Slavinskas
             </h1>
 
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
-              I work at the overlap of materials and software. International experience (Europe & North America).
-              I turn lignin and other biobased research into clean data, simple models, and small tools that help teams decide faster.
+              <Tx>
+                I work at the overlap of materials and software. International experience (Europe & North America).
+                I turn lignin and other biobased research into clean data, simple models, and small tools that help teams decide faster.
+              </Tx>
             </p>
 
             <div className="mt-6 max-w-xl">
@@ -350,7 +357,7 @@ export default function Page() {
             {/* CTAs — symmetrical, space-filling */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
               <MagneticButton href={`${base}/resume`} className="btn w-full h-full inline-flex justify-center text-center">
-                See Resume
+                <Tx>See Resume</Tx>
               </MagneticButton>
 
               <MagneticButton
@@ -358,7 +365,7 @@ export default function Page() {
                 download="John_Slavinskas_Resume_1p.pdf"
                 className="btn-outline w-full h-full inline-flex justify-center text-center"
               >
-                Download 1-pager
+                <Tx>Download 1-pager</Tx>
               </MagneticButton>
 
               <MagneticButton
@@ -366,11 +373,11 @@ export default function Page() {
                 download="John_Slavinskas_CV.pdf"
                 className="btn-outline w-full h-full inline-flex justify-center text-center"
               >
-                Download CV
+                <Tx>Download CV</Tx>
               </MagneticButton>
 
               <MagneticButton href="/projects" className="btn-outline w-full h-full inline-flex justify-center text-center">
-                View Projects
+                <Tx>View Projects</Tx>
               </MagneticButton>
 
               {/* Bottom row: each spans two columns (2-button width) */}
@@ -379,7 +386,7 @@ export default function Page() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-4"
-                aria-label="Open my GitHub profile in a new tab"
+                aria-label={t("Open my GitHub profile in a new tab")}
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
                   <path
@@ -387,7 +394,7 @@ export default function Page() {
                     d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.83 1.32 3.52 1 .11-.79.42-1.32.76-1.62-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.24-3.23-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.64-5.49 5.95.44.38.83 1.12.83 2.26v3.35c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"
                   />
                 </svg>
-                <span>GitHub</span>
+                <span><Tx>GitHub</Tx></span>
               </a>
 
               <a
@@ -395,7 +402,7 @@ export default function Page() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-4"
-                aria-label="Open my LinkedIn profile in a new tab"
+                aria-label={t("Open my LinkedIn profile in a new tab")}
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
                   <path
@@ -403,7 +410,7 @@ export default function Page() {
                     d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.47-.9 1.62-1.85 3.33-1.85 3.56 0 4.22 2.34 4.22 5.39v6.35ZM5.34 7.44A2.06 2.06 0 1 1 5.33 3.3a2.06 2.06 0 0 1 .01 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"
                   />
                 </svg>
-                <span>LinkedIn</span>
+                <span><Tx>LinkedIn</Tx></span>
               </a>
             </div>
           </div>
@@ -418,25 +425,37 @@ export default function Page() {
       </header>
 
       {/* ABOUT */}
-      <Section id="about" title="About" subtitle="Materials, data, and a big soft spot for useful tools.">
+      <Section
+        id="about"
+        title={<Tx>About</Tx>}
+        subtitle={<Tx>Materials, data, and a big soft spot for useful tools.</Tx>}
+      >
         <div className="grid gap-6 md:grid-cols-2 items-center">
           <div className="card">
             <div className="space-y-3 text-gray-700 dark:text-gray-300">
               <p>
-                Endurance sports are a big part of my life. I train year round and finished an Ironman. Long swims, windy bike rides, and quiet miles teach patience and grit. The plan matters, but so do the small choices inside the plan. Fuel on time. Keep the cadence. Fix little problems early.
+                <Tx>
+                  Endurance sports are a big part of my life. I train year round and finished an Ironman. Long swims, windy bike rides, and quiet miles teach patience and grit. The plan matters, but so do the small choices inside the plan. Fuel on time. Keep the cadence. Fix little problems early.
+                </Tx>
               </p>
               <p>
-                I came to Europe to study in Munich and work with teams building real materials, not just slides. Germany gave me new labs, bilingual meetings, and a useful kind of humility. Learn fast. Ask clear questions. Write things down so the next person does not have to guess.
+                <Tx>
+                  I came to Europe to study in Munich and work with teams building real materials, not just slides. Germany gave me new labs, bilingual meetings, and a useful kind of humility. Learn fast. Ask clear questions. Write things down so the next person does not have to guess.
+                </Tx>
               </p>
               <p>
-                That mindset shows up in my work. I break big goals into blocks I can finish this week. I keep clean notebooks and short scripts that anyone can run. I like small tools that make decisions easier for the whole team. If a teammate can pick up my work without me in the room, that is success.
+                <Tx>
+                  That mindset shows up in my work. I break big goals into blocks I can finish this week. I keep clean notebooks and short scripts that anyone can run. I like small tools that make decisions easier for the whole team. If a teammate can pick up my work without me in the room, that is success.
+                </Tx>
               </p>
               <p>
-                Day to day I move between lignin and other biobased materials, Python and ML pipelines, and little interactive apps. Give me a fuzzy problem, a pile of notes, and a deadline and I am happy.
+                <Tx>
+                  Day to day I move between lignin and other biobased materials, Python and ML pipelines, and little interactive apps. Give me a fuzzy problem, a pile of notes, and a deadline and I am happy.
+                </Tx>
               </p>
 
               <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60 text-center">
-                <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
+                <h3 className="font-semibold text-base uppercase tracking-wide"><Tx>Interests</Tx></h3>
                 <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto">
                   {interests.map(({ label, emoji }) => (
                     <span
@@ -444,7 +463,7 @@ export default function Page() {
                       className="w-full h-[3.25rem] inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/40 dark:border-gray-800/60 bg-white/5 px-3 text-[13px] sm:text-sm font-medium text-center whitespace-normal break-words leading-snug"
                     >
                       <span aria-hidden className="shrink-0">{emoji}</span>
-                      <span className="block">{label}</span>
+                      <span className="block">{t(label)}</span>
                     </span>
                   ))}
                 </div>
@@ -510,7 +529,7 @@ export default function Page() {
       </Section>
 
       {/* PROJECTS — Featured */}
-      <Section id="projects" title="Featured projects" subtitle="Hands-on tools and experiments.">
+      <Section id="projects" title={<Tx>Featured projects</Tx>} subtitle={<Tx>Hands-on tools and experiments.</Tx>}>
         <div className="grid md:grid-cols-3 gap-6">
           <FeaturedCard
             title="Eagle Scout Project"
@@ -534,7 +553,7 @@ export default function Page() {
       </Section>
 
       {/* EXPERIENCE */}
-      <Section title="Experience">
+      <Section title={<Tx>Experience</Tx>}>
         <div className="grid md:grid-cols-12 gap-6">
           <div className="md:col-span-7">
             <GreenTimeline items={exp} />
@@ -548,53 +567,56 @@ export default function Page() {
       </Section>
 
       {/* EDUCATION & RESEARCH */}
-      <Section title="Education & Research">
+      <Section title={<Tx>Education & Research</Tx>}>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="card">
-            <h3 className="font-semibold">Education</h3>
+            <h3 className="font-semibold"><Tx>Education</Tx></h3>
             <ul className="mt-3 space-y-4 text-sm">
               <li>
                 <div className="font-medium flex items-center gap-2">
-                  <span className="text-xl">📈</span> MS Financial Engineering
+                  <span className="text-xl">📈</span> <Tx>MS Financial Engineering</Tx>
                 </div>
-                <div className="text-gray-500">WorldQuant University · Jan 2024 – Dec 2025 (DEAC)</div>
+                <div className="text-gray-500"><Tx>WorldQuant University · Jan 2024 – Dec 2025 (DEAC)</Tx></div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Capstone:</span> Sustainability (TBD).
+                  <span className="font-medium text-gray-300"><Tx>Capstone:</Tx></span>{" "}
+                  <Tx>Sustainability (TBD).</Tx>
                 </div>
               </li>
               <li>
                 <div className="font-medium flex items-center gap-2">
-                  <span className="text-xl">🧻</span> MEng Paper Technology
+                  <span className="text-xl">🧻</span> <Tx>MEng Paper Technology</Tx>
                 </div>
-                <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</div>
+                <div className="text-gray-500"><Tx>Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</Tx></div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Thesis:</span>{" "}
-                  <em>Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract</em>
+                  <span className="font-medium text-gray-300"><Tx>Thesis:</Tx></span>{" "}
+                  <em><Tx>Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract</Tx></em>
                 </div>
               </li>
               <li>
                 <div className="font-medium flex items-center gap-2">
-                  <span className="text-xl">💻</span> BS Computer Science
+                  <span className="text-xl">💻</span> <Tx>BS Computer Science</Tx>
                 </div>
-                <div className="text-gray-500">University of the People · Jun 2023 – Jun 2025 (WASC)</div>
+                <div className="text-gray-500"><Tx>University of the People · Jun 2023 – Jun 2025 (WASC)</Tx></div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Concentrations:</span> Data Science, Network & Application Security
+                  <span className="font-medium text-gray-300"><Tx>Concentrations:</Tx></span>{" "}
+                  <Tx>Data Science, Network & Application Security</Tx>
                 </div>
               </li>
               <li>
                 <div className="font-medium flex items-center gap-2">
-                  <span className="text-xl">📄</span> BS Paper Engineering
+                  <span className="text-xl">📄</span> <Tx>BS Paper Engineering</Tx>
                 </div>
-                <div className="text-gray-500">SUNY ESF · Aug 2020 – Aug 2023 (ABET)</div>
+                <div className="text-gray-500"><Tx>SUNY ESF · Aug 2020 – Aug 2023 (ABET)</Tx></div>
                 <div className="mt-1 text-gray-400">
-                  <span className="font-medium text-gray-300">Minors:</span> Management, Physics
+                  <span className="font-medium text-gray-300"><Tx>Minors:</Tx></span>{" "}
+                  <Tx>Management, Physics</Tx>
                 </div>
               </li>
             </ul>
           </div>
 
           <div className="card">
-            <h3 className="font-semibold">Research & Publications</h3>
+            <h3 className="font-semibold"><Tx>Research & Publications</Tx></h3>
             <Publications />
           </div>
         </div>
