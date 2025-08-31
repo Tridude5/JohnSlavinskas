@@ -22,6 +22,7 @@ export default function Header() {
       <div className="container">
         {/* Top row */}
         <div className="flex items-center justify-between gap-3 py-3">
+          {/* Brand */}
           <Link href="/" className="min-w-0 text-lg sm:text-xl font-semibold tracking-tight">
             <span className="text-emerald-500">John</span> Slavinskas
           </Link>
@@ -35,11 +36,8 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Right: desktop language + mobile button */}
+          {/* Right group: Menu (mobile) then DE toggle (always) */}
           <div className="flex items-center gap-2">
-            <div className="hidden md:block">
-              <LanguageToggle />
-            </div>
             <button
               type="button"
               className="md:hidden inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-sm text-white/90 hover:bg-white/5"
@@ -62,10 +60,15 @@ export default function Header() {
                 />
               </svg>
             </button>
+
+            {/* Language toggle stays to the far right on all sizes */}
+            <div className="shrink-0">
+              <LanguageToggle />
+            </div>
           </div>
         </div>
 
-        {/* Mobile panel */}
+        {/* Mobile panel (links only) */}
         <div
           id="mobile-nav"
           className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ${
@@ -73,10 +76,6 @@ export default function Header() {
           }`}
         >
           <div className="pb-3">
-            {/* mobile language toggle */}
-            <div className="px-3 pb-2">
-              <LanguageToggle />
-            </div>
             <div className="flex flex-col gap-2">
               {NAV.map((n) => (
                 <Link
