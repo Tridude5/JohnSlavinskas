@@ -17,7 +17,7 @@ const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ss
 
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---------- Experience timeline (gray line, bigger dot, close to text, shifted right) ---------- */
+/* ---------- Experience timeline ---------- */
 function GreenTimeline({ items }: { items: TLItem[] }) {
   return (
     <ol className="relative ml-[14px] pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
@@ -156,7 +156,7 @@ function Publications() {
   );
 }
 
-/* ---------- Featured helper (shimmer + blueprint grid, no pills) ---------- */
+/* ---------- Featured helper ---------- */
 function FeaturedCard({
   title,
   blurb,
@@ -181,18 +181,12 @@ function FeaturedCard({
       onMouseMove={onMove}
       className="group relative block overflow-hidden rounded-2xl border border-gray-200/70 dark:border-gray-800/70 bg-white dark:bg-zinc-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
     >
-      {/* gradient topper */}
       <div className={`h-1 w-full bg-gradient-to-r ${accent} opacity-80 group-hover:opacity-100`} />
-
-      {/* soft mouse glimmer */}
       <div
         className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{ background: "radial-gradient(360px circle at var(--x) var(--y), rgba(255,255,255,0.12), transparent 40%)" }}
       />
-
-      {/* faint blueprint grid */}
       <div className="absolute inset-0 -z-10 opacity-[0.06] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:22px_22px] text-gray-700 dark:text-white" />
-
       <div className="p-6">
         <div className="flex items-start justify-between gap-4">
           <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
@@ -201,9 +195,7 @@ function FeaturedCard({
           </span>
         </div>
         <p className="mt-3 text-sm leading-6 text-gray-700 dark:text-gray-200">{blurb}</p>
-        <div className="mt-4 text-sm font-medium text-emerald-600 dark:text-emerald-300">
-          View project
-        </div>
+        <div className="mt-4 text-sm font-medium text-emerald-600 dark:text-emerald-300">View project</div>
       </div>
     </Link>
   );
@@ -269,7 +261,7 @@ export default function Page() {
 
   return (
     <>
-      {/* HERO — shorter intro with intl experience */}
+      {/* HERO */}
       <header className="container pt-10 pb-6 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-70">
           <BlueprintFX />
@@ -290,20 +282,20 @@ export default function Page() {
             </p>
 
             <div className="mt-6 max-w-xl">
-              {/* Dynamic commits KPI (no basePath prop) */}
+              {/* Dynamic commits KPI */}
               <DynamicHeroKpis publicationsCount={6} />
             </div>
 
-            {/* CTAs — now all magnetic + shiny */}
-            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
-              <MagneticButton href={`${base}/resume`} className="btn w-full inline-flex justify-center text-center">
+            {/* CTAs — symmetrical, space-filling */}
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
+              <MagneticButton href={`${base}/resume`} className="btn w-full h-full inline-flex justify-center text-center">
                 See Resume
               </MagneticButton>
 
               <MagneticButton
                 href={`${base}/downloads/Resume%20P.pdf`}
                 download="John_Slavinskas_Resume_1p.pdf"
-                className="btn-outline w-full inline-flex justify-center text-center"
+                className="btn-outline w-full h-full inline-flex justify-center text-center"
               >
                 Download 1-pager
               </MagneticButton>
@@ -311,49 +303,47 @@ export default function Page() {
               <MagneticButton
                 href={`${base}/downloads/CV-P.pdf`}
                 download="John_Slavinskas_CV.pdf"
-                className="btn-outline w-full inline-flex justify-center text-center"
+                className="btn-outline w-full h-full inline-flex justify-center text-center"
               >
                 Download CV
               </MagneticButton>
 
-              <MagneticButton href="/projects" className="btn-outline w-full inline-flex justify-center text-center">
+              <MagneticButton href="/projects" className="btn-outline w-full h-full inline-flex justify-center text-center">
                 View Projects
               </MagneticButton>
 
-              {/* Grid span must be on wrapper; add a small div for layout */}
-              <div className="col-span-2">
-                <MagneticButton
-                  href="https://github.com/Tridude5"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-outline w-full inline-flex items-center justify-center gap-2 px-4 py-2.5"
-                >
-                  <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fill="currentColor"
-                      d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.83 1.32 3.52 1 .11-.79.42-1.32.76-1.62-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.24-3.23-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.64-5.49 5.95.44.38.83 1.12.83 2.26v3.35c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"
-                    />
-                  </svg>
-                  <span>GitHub</span>
-                </MagneticButton>
-              </div>
+              {/* Bottom row: each spans two columns (2-button width) */}
+              <a
+                href="https://github.com/Tridude5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-4"
+                aria-label="Open my GitHub profile in a new tab"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.83 1.32 3.52 1 .11-.79.42-1.32.76-1.62-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.24-3.23-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.64-5.49 5.95.44.38.83 1.12.83 2.26v3.35c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"
+                  />
+                </svg>
+                <span>GitHub</span>
+              </a>
 
-              <div className="col-span-2">
-                <MagneticButton
-                  href="https://www.linkedin.com/in/john-slavinskas/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-outline w-full inline-flex items-center justify-center gap-2 px-4 py-2.5"
-                >
-                  <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fill="currentColor"
-                      d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.47-.9 1.62-1.85 3.33-1.85 3.56 0 4.22 2.34 4.22 5.39v6.35ZM5.34 7.44A2.06 2.06 0 1 1 5.33 3.3a2.06 2.06 0 0 1 .01 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"
-                    />
-                  </svg>
-                  <span>LinkedIn</span>
-                </MagneticButton>
-              </div>
+              <a
+                href="https://www.linkedin.com/in/john-slavinskas/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-4"
+                aria-label="Open my LinkedIn profile in a new tab"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.47-.9 1.62-1.85 3.33-1.85 3.56 0 4.22 2.34 4.22 5.39v6.35ZM5.34 7.44A2.06 2.06 0 1 1 5.33 3.3a2.06 2.06 0 0 1 .01 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"
+                  />
+                </svg>
+                <span>LinkedIn</span>
+              </a>
             </div>
           </div>
 
@@ -366,7 +356,7 @@ export default function Page() {
         </div>
       </header>
 
-      {/* ABOUT — endurance, Ironman, Europe, and translation to work (friendly, no long dashes) */}
+      {/* ABOUT */}
       <Section id="about" title="About" subtitle="Materials, data, and a big soft spot for useful tools.">
         <div className="grid gap-6 md:grid-cols-2 items-center">
           <div className="card">
@@ -428,14 +418,12 @@ export default function Page() {
             href="/projects#eagle-scout"
             accent="from-emerald-400 via-teal-400 to-emerald-500"
           />
-
           <FeaturedCard
             title="Prazise"
             blurb="Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions — private by design. In active development."
             href="/projects#prazise"
             accent="from-amber-400 via-orange-400 to-yellow-500"
           />
-
           <FeaturedCard
             title="Efficient Frontier App"
             blurb="Interactive mean-variance explorer with factor tilts, constraints, and stress tests — compare to benchmarks and export in one click."
@@ -481,9 +469,7 @@ export default function Page() {
                 <div className="text-gray-500">Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)</div>
                 <div className="mt-1 text-gray-400">
                   <span className="font-medium text-gray-300">Thesis:</span>{" "}
-                  <em>
-                    Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract
-                  </em>
+                  <em>Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract</em>
                 </div>
               </li>
               <li>
