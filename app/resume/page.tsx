@@ -1,10 +1,16 @@
+"use client";
 import React from "react";
 import EmailLink from "@/components/EmailLink";
+import Tx from "@/components/i18n/Tx";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
+// NOTE: Metadata stays static (English) in a static export.
+// If you want localized titles, you'd need generateMetadata() + cookies.
 export const metadata = { title: "Resume — John Slavinskas" };
 
 export default function ResumePage() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const { t } = useI18n();
 
   return (
     <div className="container py-12 print:py-0">
@@ -19,14 +25,14 @@ export default function ResumePage() {
                 download="John_Slavinskas_Resume_1p.pdf"
                 className="btn-outline"
               >
-                Download 1-page (PDF)
+                <Tx>Download 1-page (PDF)</Tx>
               </a>
               <a
                 href={`${base}/downloads/CV-P.pdf`}
                 download="John_Slavinskas_CV.pdf"
                 className="btn"
               >
-                Download CV (PDF)
+                <Tx>Download CV (PDF)</Tx>
               </a>
             </div>
           </div>
@@ -34,25 +40,29 @@ export default function ResumePage() {
           {/* Personal details */}
           <section className="mt-8">
             <div className="flex items-center gap-3">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Personal Details</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">
+                <Tx>Personal Details</Tx>
+              </h2>
               <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
             </div>
             <dl className="mt-4 space-y-3">
               <div className="grid grid-cols-[140px,1fr] gap-x-4">
-                <dt className="text-gray-500 dark:text-gray-400 text-sm">Name</dt>
+                <dt className="text-gray-500 dark:text-gray-400 text-sm"><Tx>Name</Tx></dt>
                 <dd className="text-gray-900 dark:text-gray-100 text-sm">John Slavinskas</dd>
               </div>
               <div className="grid grid-cols-[140px,1fr] gap-x-4">
-                <dt className="text-gray-500 dark:text-gray-400 text-sm">Phone</dt>
+                <dt className="text-gray-500 dark:text-gray-400 text-sm"><Tx>Phone</Tx></dt>
                 <dd className="text-gray-900 dark:text-gray-100 text-sm">+49 1575 4805360</dd>
               </div>
               <div className="grid grid-cols-[140px,1fr] gap-x-4">
-                <dt className="text-gray-500 dark:text-gray-400 text-sm">Email</dt>
+                <dt className="text-gray-500 dark:text-gray-400 text-sm"><Tx>Email</Tx></dt>
                 <dd className="text-gray-900 dark:text-gray-100 text-sm"><EmailLink /></dd>
               </div>
               <div className="grid grid-cols-[140px,1fr] gap-x-4">
-                <dt className="text-gray-500 dark:text-gray-400 text-sm">Location</dt>
-                <dd className="text-gray-900 dark:text-gray-100 text-sm">Munich, Germany (EU work-authorized)</dd>
+                <dt className="text-gray-500 dark:text-gray-400 text-sm"><Tx>Location</Tx></dt>
+                <dd className="text-gray-900 dark:text-gray-100 text-sm">
+                  {t("Munich, Germany (EU work-authorized)")}
+                </dd>
               </div>
             </dl>
           </section>
@@ -60,35 +70,39 @@ export default function ResumePage() {
           {/* Qualifications */}
           <section className="mt-12">
             <div className="flex items-center gap-3">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Qualifications Summary</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">
+                <Tx>Qualifications Summary</Tx>
+              </h2>
               <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
             </div>
             <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
-              <li>Research in lignin chemistry, biopolymers & sustainable materials</li>
-              <li>Python, TensorFlow/Keras, SQL, Java, HTML/CSS/JS, PHP, Kotlin, Swift</li>
-              <li>Lab & pilot-scale experience: GC, VOC analysis, optimization</li>
-              <li>Co-author on peer-reviewed publications in fiber recycling & packaging</li>
+              <li><Tx>Research in lignin chemistry, biopolymers & sustainable materials</Tx></li>
+              <li><Tx>Python, TensorFlow/Keras, SQL, Java, HTML/CSS/JS, PHP, Kotlin, Swift</Tx></li>
+              <li><Tx>Lab & pilot-scale experience: GC, VOC analysis, optimization</Tx></li>
+              <li><Tx>Co-author on peer-reviewed publications in fiber recycling & packaging</Tx></li>
             </ul>
           </section>
 
           {/* Education */}
           <section className="mt-10">
             <div className="flex items-center gap-3">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Education</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">
+                <Tx>Education</Tx>
+              </h2>
               <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
             </div>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <strong>WorldQuant University</strong> — M.S. Financial Engineering (Jan 2024 – Nov 2025)
+                <strong>WorldQuant University</strong> — {t("M.S. Financial Engineering (Jan 2024 – Nov 2025)")}
               </li>
               <li>
-                <strong>HM Hochschule München</strong> — M.Eng. Paper Technology (Oct 2023 – Jul 2025)
+                <strong>HM Hochschule München</strong> — {t("M.Eng. Paper Technology (Oct 2023 – Jul 2025)")}
               </li>
               <li>
-                <strong>University of the People</strong> — B.S. Computer Science, Data Science (Jun 2023 – Jun 2025)
+                <strong>University of the People</strong> — {t("B.S. Computer Science, Data Science (Jun 2023 – Jun 2025)")}
               </li>
               <li>
-                <strong>SUNY-ESF</strong> — B.S. Paper Engineering; minors in Management & Physics (Aug 2020 – Aug 2023)
+                <strong>SUNY-ESF</strong> — {t("B.S. Paper Engineering; minors in Management & Physics (Aug 2020 – Aug 2023)")}
               </li>
             </ul>
           </section>
@@ -96,40 +110,42 @@ export default function ResumePage() {
           {/* Experience */}
           <section className="mt-10">
             <div className="flex items-center gap-3">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Experience (selected)</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">
+                <Tx>Experience (selected)</Tx>
+              </h2>
               <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
             </div>
             <div className="mt-4 space-y-6 text-sm">
               <div>
-                <div className="font-medium">Lignopure — Technology Development (Working Student)</div>
-                <div className="text-gray-500 dark:text-gray-400">Dec 2024 – Jun 2025</div>
+                <div className="font-medium"><Tx>Lignopure — Technology Development (Working Student)</Tx></div>
+                <div className="text-gray-500 dark:text-gray-400"><Tx>Dec 2024 – Jun 2025</Tx></div>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
-                  <li>Developed lignin-based leather (extrusion, up to 70% lignin); optimized mechanical properties.</li>
-                  <li>Explored formulations to improve compatibility and strength.</li>
+                  <li><Tx>Developed lignin-based leather (extrusion, up to 70% lignin); optimized mechanical properties.</Tx></li>
+                  <li><Tx>Explored formulations to improve compatibility and strength.</Tx></li>
                 </ul>
               </div>
               <div>
-                <div className="font-medium">Master Thesis — Lignin Solubility for Cosmetics</div>
-                <div className="text-gray-500 dark:text-gray-400">Nov 2024 – Jun 2025</div>
+                <div className="font-medium"><Tx>Master Thesis — Lignin Solubility for Cosmetics</Tx></div>
+                <div className="text-gray-500 dark:text-gray-400"><Tx>Nov 2024 – Jun 2025</Tx></div>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
-                  <li>Solvent selection & optimization (temperature, ratios, surfactants); HSP estimation.</li>
-                  <li>Evaluated functional changes of lignin during dissolution.</li>
+                  <li><Tx>Solvent selection & optimization (temperature, ratios, surfactants); HSP estimation.</Tx></li>
+                  <li><Tx>Evaluated functional changes of lignin during dissolution.</Tx></li>
                 </ul>
               </div>
               <div>
-                <div className="font-medium">Sonoco — Emerging Leader</div>
-                <div className="text-gray-500 dark:text-gray-400">May 2023 – Aug 2023</div>
+                <div className="font-medium"><Tx>Sonoco — Emerging Leader</Tx></div>
+                <div className="text-gray-500 dark:text-gray-400"><Tx>May 2023 – Aug 2023</Tx></div>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
-                  <li>Improved effluent treatment with cost-effective solutions; enhanced compliance.</li>
-                  <li>Used sensors for real-time visibility, improving quality control and uptime.</li>
+                  <li><Tx>Improved effluent treatment with cost-effective solutions; enhanced compliance.</Tx></li>
+                  <li><Tx>Used sensors for real-time visibility, improving quality control and uptime.</Tx></li>
                 </ul>
               </div>
               <div>
-                <div className="font-medium">Safar Partners — Intern</div>
-                <div className="text-gray-500 dark:text-gray-400">Feb 2023 – Apr 2023</div>
+                <div className="font-medium"><Tx>Safar Partners — Intern</Tx></div>
+                <div className="text-gray-500 dark:text-gray-400"><Tx>Feb 2023 – Apr 2023</Tx></div>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
-                  <li>Competitive analysis of biodegradable plastics; recommended investment in Radical Plastics.</li>
-                  <li>Evaluated polymerization processes vs competitors; prepared investor materials.</li>
+                  <li><Tx>Competitive analysis of biodegradable plastics; recommended investment in Radical Plastics.</Tx></li>
+                  <li><Tx>Evaluated polymerization processes vs competitors; prepared investor materials.</Tx></li>
                 </ul>
               </div>
             </div>
@@ -138,7 +154,9 @@ export default function ResumePage() {
           {/* Publications */}
           <section className="mt-10">
             <div className="flex items-center gap-3">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Publications</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">
+                <Tx>Publications</Tx>
+              </h2>
               <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
             </div>
             <ul className="mt-4 space-y-2 text-sm leading-6">
@@ -154,13 +172,15 @@ export default function ResumePage() {
           {/* Certifications */}
           <section className="mt-10">
             <div className="flex items-center gap-3">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">Certifications</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">
+                <Tx>Certifications</Tx>
+              </h2>
               <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
             </div>
             <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm list-disc pl-5">
-              <li>SCE Incubator — Founding Your Own Startup (2024–2025)</li>
-              <li>DeepLearning.AI — TensorFlow Developer (2023)</li>
-              <li>IBM — AI Engineering (2023)</li>
+              <li><Tx>SCE Incubator — Founding Your Own Startup (2024–2025)</Tx></li>
+              <li><Tx>DeepLearning.AI — TensorFlow Developer (2023)</Tx></li>
+              <li><Tx>IBM — AI Engineering (2023)</Tx></li>
             </ul>
           </section>
         </div>
