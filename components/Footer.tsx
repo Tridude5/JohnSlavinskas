@@ -1,18 +1,69 @@
 "use client";
+
 import Link from "next/link";
-import EmailLink from "./EmailLink";
-import { useI18n } from '@/components/i18n/I18nProvider';
+import EmailLink from "@/components/EmailLink";
+import Tx from "@/components/i18n/Tx";
+
+function FooterLink({
+  href,
+  children,
+  ariaLabel,
+}: {
+  href: string;
+  children: React.ReactNode;
+  ariaLabel?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-label={ariaLabel}
+      className="
+        rounded-lg px-3 py-1.5 text-sm
+        text-gray-700 dark:text-gray-300
+        hover:text-emerald-400 hover:bg-black/5 dark:hover:bg-white/5
+        transition-colors
+      "
+    >
+      {children}
+    </Link>
+  );
+}
 
 export default function Footer() {
-  const { t } = useI18n();
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="border-t border-gray-200/50 dark:border-gray-800/60 mt-16">
-      <div className="container py-10 text-sm text-gray-600 dark:text-gray-400 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} John Slavinskas</p>
-        <div className="flex items-center gap-4">
-          <EmailLink className="fancy-underline" />
-          <Link className="fancy-underline" href="/legal/imprint">{t('footer.imprint')}</Link>
-          <Link className="fancy-underline" href="/legal/privacy">{t('footer.privacy')}</Link>
+    <footer className="mt-16 border-t border-black/5 dark:border-white/10">
+      <div className="container py-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* left: copyright */}
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+            © {year} John Slavinskas
+          </p>
+
+          {/* right: actions */}
+          <nav
+            aria-label="Footer"
+            className="flex flex-wrap items-center gap-2 sm:gap-3"
+          >
+            {/* email as a subtle pill */}
+            <span className="rounded-lg border border-black/10 dark:border-white/10 px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+              <EmailLink />
+            </span>
+
+            {/* divider dot for larger screens */}
+            <span className="hidden sm:inline text-gray-400">•</span>
+
+            <FooterLink href="/legal/imprint" ariaLabel="Imprint">
+              <Tx>Imprint</Tx>
+            </FooterLink>
+
+            <span className="hidden sm:inline text-gray-400">•</span>
+
+            <FooterLink href="/legal/privacy" ariaLabel="Privacy">
+              <Tx>Privacy</Tx>
+            </FooterLink>
+          </nav>
         </div>
       </div>
     </footer>
