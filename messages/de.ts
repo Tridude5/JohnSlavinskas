@@ -12,6 +12,10 @@ export default {
   "nav.resume": "Lebenslauf",
   "nav.projects": "Projekte",
 
+  // footer dot-keys
+  "footer.imprint": "Impressum",
+  "footer.privacy": "Datenschutz",
+  
   /* ===== HERO ===== */
   "Materials × Software × Finance": "Werkstoffe × Software × Finanzen",
   "materials × data × finance": "Werkstoffe × Daten × Finanzen",
