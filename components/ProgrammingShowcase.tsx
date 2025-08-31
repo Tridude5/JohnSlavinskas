@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /* ----------------------- Data ----------------------- */
 type Level = "daily" | "confident" | "familiar";
@@ -40,11 +41,30 @@ const PACKAGES: Item[] = [
 ];
 
 /* ---------------------- Styling --------------------- */
-const LEVELS: Record<Level, { title: string; note: string; chip: string; glow: string }> = {
-  daily:     { title: "Daily",     note: "use all the time",  chip: "border-emerald-300/30 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20", glow: "from-emerald-400/60 to-cyan-400/60" },
-  confident: { title: "Confident", note: "ship independently",chip: "border-sky-300/25 bg-gradient-to-r from-sky-400/15 to-indigo-400/15",      glow: "from-sky-400/60 to-indigo-400/60" },
-  familiar:  { title: "Familiar",  note: "ramp fast",         chip: "border-white/15 bg-white/5",                                                 glow: "from-zinc-200/40 to-white/30" }
-};
+type LevelMeta = { title: string; note: string; chip: string; glow: string };
+
+function getLevels(t: (k: string) => string): Record<Level, LevelMeta> {
+  return {
+    daily: {
+      title: t("Daily"),
+      note:  t("use all the time"),
+      chip:  "border-emerald-300/30 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20",
+      glow:  "from-emerald-400/60 to-cyan-400/60",
+    },
+    confident: {
+      title: t("Confident"),
+      note:  t("ship independently"),
+      chip:  "border-sky-300/25 bg-gradient-to-r from-sky-400/15 to-indigo-400/15",
+      glow:  "from-sky-400/60 to-indigo-400/60",
+    },
+    familiar: {
+      title: t("Familiar"),
+      note:  t("ramp fast"),
+      chip:  "border-white/15 bg-white/5",
+      glow:  "from-zinc-200/40 to-white/30",
+    },
+  };
+}
 
 function Chip({ text, chip, i }: { text: string; chip: string; i: number }) {
   return (
@@ -62,19 +82,29 @@ function Chip({ text, chip, i }: { text: string; chip: string; i: number }) {
   );
 }
 
-function GroupCard({ title, items, level }: { title: string; items: Item[]; level: Level }) {
-  const meta = LEVELS[level];
+function GroupCard({
+  title,
+  items,
+  level,
+  meta,
+}: {
+  title: string;
+  items: Item[];
+  level: Level;
+  meta: Record<Level, LevelMeta>;
+}) {
+  const m = meta[level];
   const labels = items.filter((it) => it.level === level).map((it) => it.label);
   if (!labels.length) return null;
   return (
     <div className="relative rounded-2xl border border-white/10 bg-white/[0.035] p-4 backdrop-blur overflow-hidden">
-      <div className={`absolute inset-0 -z-10 bg-gradient-to-br ${meta.glow} opacity-15`} />
+      <div className={`absolute inset-0 -z-10 bg-gradient-to-br ${m.glow} opacity-15`} />
       <div className="mb-2 flex items-baseline justify-between">
         <div className="text-sm font-semibold">{title}</div>
-        <div className="text-[11px] text-gray-300">{meta.note}</div>
+        <div className="text-[11px] text-gray-300">{m.note}</div>
       </div>
       <div className="flex flex-wrap gap-2">
-        {labels.map((t, i) => <Chip key={t} text={t} chip={meta.chip} i={i} />)}
+        {labels.map((t, i) => <Chip key={t} text={t} chip={m.chip} i={i} />)}
       </div>
     </div>
   );
@@ -82,29 +112,33 @@ function GroupCard({ title, items, level }: { title: string; items: Item[]; leve
 
 /* -------------------- Main component ----------------- */
 export default function ProgrammingShowcase() {
+  const { t } = useI18n();
+  const meta = React.useMemo(() => getLevels(t), [t]);
   const [level, setLevel] = React.useState<Level>("daily");
 
   return (
     <aside className="relative isolate min-w-0 w-full max-w-none rounded-3xl border border-white/10 bg-black/30 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur overflow-hidden">
-      <h3 className="font-semibold">Programming Showcase</h3>
+      <h3 className="font-semibold">{t("Programming Showcase")}</h3>
 
       {/* Level tabs */}
       <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-1 grid grid-cols-3 gap-1">
         {(["daily","confident","familiar"] as Level[]).map((lv) => (
           <button
             key={lv}
-            className={`text-xs px-3 py-2 rounded-lg border transition w-full ${lv === level ? "border-white/25 bg-white/15" : "border-white/10 hover:bg-white/10"}`}
+            className={`text-xs px-3 py-2 rounded-lg border transition w-full ${
+              lv === level ? "border-white/25 bg-white/15" : "border-white/10 hover:bg-white/10"
+            }`}
             onClick={() => setLevel(lv)}
           >
-            {LEVELS[lv].title}
+            {meta[lv].title}
           </button>
         ))}
       </div>
 
       {/* skills grid */}
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <GroupCard title="Languages" items={LANGUAGES} level={level} />
-        <GroupCard title="Packages"  items={PACKAGES}  level={level} />
+        <GroupCard title={t("Languages")} items={LANGUAGES} level={level} meta={meta} />
+        <GroupCard title={t("Packages")}  items={PACKAGES}  level={level} meta={meta} />
       </div>
 
       {/* subtle shimmer accent */}
