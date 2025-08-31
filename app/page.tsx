@@ -325,44 +325,48 @@ export default function Page() {
 
   return (
     <>
-      {/* HERO */}
+      {/* HERO — mobile overflow fixes applied */}
       <header className="container pt-10 pb-6 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-70">
           <BlueprintFX />
         </div>
 
-        <div className="grid gap-8 md:grid-cols-12 items-center relative">
+        <div className="grid gap-5 sm:gap-8 md:grid-cols-12 items-start relative overflow-hidden">
           {/* Left */}
-          <div className="md:col-span-7">
+          <div className="min-w-0 md:col-span-7">
             <p className="text-sm uppercase tracking-widest text-gray-500">
               <Tx>Materials × Software × Finance</Tx>
             </p>
 
-            <h1 className="mt-1 text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight bg-gradient-to-r from-emerald-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent">
+            <h1 className="mt-1 text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight bg-gradient-to-r from-emerald-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent break-words">
               John (Jack) Slavinskas
             </h1>
 
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
+            <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
               <Tx>
                 I work at the overlap of materials and software. International experience (Europe & North America).
                 I turn lignin and other biobased research into clean data, simple models, and small tools that help teams decide faster.
               </Tx>
             </p>
 
-            <div className="mt-6 max-w-xl">
+            {/* ensure KPIs don't force overflow */}
+            <div className="mt-6 max-w-xl min-w-0 overflow-hidden">
               <DynamicHeroKpis publicationsCount={6} />
             </div>
 
-            {/* CTAs — symmetrical, space-filling */}
+            {/* CTAs — mobile safe: allow wrap + shrink */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
-              <MagneticButton href={`${base}/resume`} className="btn w-full h-full inline-flex justify-center text-center">
+              <MagneticButton
+                href={`${base}/resume`}
+                className="btn w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
+              >
                 <Tx>See Resume</Tx>
               </MagneticButton>
 
               <MagneticButton
                 href={`${base}/downloads/Resume%20P.pdf`}
                 download="John_Slavinskas_Resume_1p.pdf"
-                className="btn-outline w-full h-full inline-flex justify-center text-center"
+                className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>Download 1-pager</Tx>
               </MagneticButton>
@@ -370,24 +374,27 @@ export default function Page() {
               <MagneticButton
                 href={`${base}/downloads/CV-P.pdf`}
                 download="John_Slavinskas_CV.pdf"
-                className="btn-outline w-full h-full inline-flex justify-center text-center"
+                className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>Download CV</Tx>
               </MagneticButton>
 
-              <MagneticButton href="/projects" className="btn-outline w-full h-full inline-flex justify-center text-center">
+              <MagneticButton
+                href="/projects"
+                className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
+              >
                 <Tx>View Projects</Tx>
               </MagneticButton>
 
-              {/* Bottom row: each spans two columns (2-button width) */}
+              {/* Bottom row — each spans two columns */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-4"
+                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-3 sm:px-4 min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
                 aria-label={t("Open my GitHub profile in a new tab")}
               >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+                <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
                   <path
                     fill="currentColor"
                     d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.83 1.32 3.52 1 .11-.79.42-1.32.76-1.62-2.67-.31-5.48-1.34-5.48-5.96 0-1.32.47-2.39 1.24-3.23-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.64-5.49 5.95.44.38.83 1.12.83 2.26v3.35c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"
@@ -400,10 +407,10 @@ export default function Page() {
                 href="https://www.linkedin.com/in/john-slavinskas/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-4"
+                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-3 sm:px-4 min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
                 aria-label={t("Open my LinkedIn profile in a new tab")}
               >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+                <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
                   <path
                     fill="currentColor"
                     d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.47-.9 1.62-1.85 3.33-1.85 3.56 0 4.22 2.34 4.22 5.39v6.35ZM5.34 7.44A2.06 2.06 0 1 1 5.33 3.3a2.06 2.06 0 0 1 .01 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"
@@ -415,8 +422,8 @@ export default function Page() {
           </div>
 
           {/* Right: Skills at a glance */}
-          <div className="md:col-span-5">
-            <div className="card card-gradient">
+          <div className="min-w-0 md:col-span-5">
+            <div className="card card-gradient overflow-hidden">
               <SkillsCard />
             </div>
           </div>
