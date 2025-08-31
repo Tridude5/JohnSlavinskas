@@ -1,7 +1,8 @@
 "use client";
+
 import * as React from "react";
 import KPIs from "@/components/KPIs";
-import { useI18n } from "@/components/i18n/I18nProvider";
+import Tx from "@/components/i18n/Tx";
 
 type Props = { publicationsCount?: number; label?: string };
 
@@ -9,7 +10,6 @@ export default function DynamicHeroKpis({
   publicationsCount = 6,
   label = "Open-source Commits (12 mo)",
 }: Props) {
-  const { t } = useI18n();
   const [total, setTotal] = React.useState(0);
   const [spark, setSpark] = React.useState<number[]>([0, 0, 0, 0, 0, 0]);
 
@@ -37,12 +37,12 @@ export default function DynamicHeroKpis({
     <KPIs
       items={[
         {
-          label: t("Publications"),
+          label: <Tx>Publications</Tx>,
           value: publicationsCount,
           spark: [1, 2, 3, 4, 5, publicationsCount],
         },
         {
-          label: t(label),
+          label: <Tx>{label}</Tx>, // translates whatever label you pass in
           value: total,
           spark,
         },
