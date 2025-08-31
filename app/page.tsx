@@ -374,7 +374,7 @@ export default function Page() {
                 Day to day I move between lignin and other biobased materials, Python and ML pipelines, and little interactive apps. Give me a fuzzy problem, a pile of notes, and a deadline and I am happy.
               </p>
 
-              <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/60 text-center">
+              <div className="pt-4 border-top border-t border-gray-200/50 dark:border-gray-800/60 text-center">
                 <h3 className="font-semibold text-base uppercase tracking-wide">Interests</h3>
                 <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto">
                   {interests.map(({ label, emoji }) => (
@@ -391,20 +391,32 @@ export default function Page() {
             </div>
           </div>
 
+          {/* Right column: 2×2 parallax photo grid */}
           <ParallaxGroup>
-            <figure
-              data-parallax="0.12"
-              className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
-            >
-              <Image
-                src={`${base}/downloads/1683206302513.jfif`}
-                alt="John Slavinskas"
-                fill
-                className="object-cover"
-                priority
-                unoptimized
-              />
-            </figure>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { src: `${base}/downloads/1683206302513.jfif`, alt: "John Slavinskas — portrait", parallax: "0.12" },
+                { src: `${base}/downloads/Christmas_Market_Munich.jpg`, alt: "Christmas Market — Munich", parallax: "0.08" },
+                { src: `${base}/downloads/Caving_Syracuse.jpg`, alt: "Caving — Syracuse", parallax: "0.06" },
+                { src: `${base}/downloads/Salzburg.jpg`, alt: "Salzburg", parallax: "0.10" },
+              ].map((p, i) => (
+                <figure
+                  key={p.src}
+                  data-parallax={p.parallax}
+                  className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200/30 dark:border-gray-800/50"
+                >
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={i === 0}
+                    unoptimized
+                  />
+                </figure>
+              ))}
+            </div>
           </ParallaxGroup>
         </div>
       </Section>
