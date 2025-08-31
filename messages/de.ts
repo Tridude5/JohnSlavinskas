@@ -1,41 +1,236 @@
+// /messages/de.ts
 export default {
-  "nav.about": "Über mich",
-  "nav.resume": "Lebenslauf",
-  "nav.projects": "Projekte",
-  "footer.imprint": "Impressum",
-  "footer.privacy": "Datenschutz",
-  "hero.title": "Papieringenieur × Quant‑Technologe",
-  "hero.tagline": "Ich entwickle nachhaltige Materialien und Prozesse, baue Daten‑ & ML‑Tools und prototypisiere Ideen aus der quantitativen Finanzwelt.",
-  "hero.viewResume": "Lebenslauf ansehen",
-  "hero.download1p": "1‑Seite herunterladen",
-  "hero.downloadCV": "CV herunterladen",
-  "sections.at_a_glance": "Auf einen Blick",
-  "sections.about": "Über mich",
-  "sections.recent_experience": "Berufserfahrung",
-  "sections.selected_publications": "Ausgewählte Publikationen",
-  "sections.projects": "Projekte",
-  "resume.title": "Lebenslauf — John Slavinskas",
-  "resume.download_1p": "1‑Seite (PDF) herunterladen",
-  "resume.download_cv": "CV (PDF) herunterladen",
-  "resume.qualifications": "Qualifikationen",
-  "resume.education": "Ausbildung",
-  "resume.experience": "Berufserfahrung (Auswahl)",
-  "resume.publications": "Publikationen",
-  "resume.certifications": "Zertifikate",
-  "privacy.title": "Datenschutzerklärung",
-  "privacy.updated": "Zuletzt aktualisiert",
-  "privacy.body": "Diese Website verwendet keine Cookies und kein Tracking. Unser Hosting‑Anbieter verarbeitet ggf. grundlegende Server‑Logs (IP‑Adresse, Zeitstempel, URL, User‑Agent), um Sicherheit und Betrieb zu gewährleisten. Wir verkaufen oder teilen keine personenbezogenen Daten.",
-  "privacy.contact": "Kontakt / Verantwortlicher",
-  "privacy.emails": "Wenn Sie mir eine E‑Mail senden, erhalte ich Ihre Adresse und die darin enthaltenen Informationen, um antworten zu können. Ich füge Sie keiner Mailingliste hinzu und gebe Ihre Daten nicht weiter.",
-  "privacy.eurights": "Besucher aus der EU/dem EWR haben ggf. Rechte auf Auskunft, Berichtigung, Löschung oder Einschränkung der Verarbeitung. Kontaktieren Sie mich zur Ausübung dieser Rechte.",
-  "privacy.embeds": "Wir vermeiden Drittanbieter‑Einbindungen, die Cookies setzen. Falls wir solche Inhalte hinzufügen (z. B. Karten oder Videos), werden sie erst nach Ihrem Klick geladen.",
-  "privacy.changes": "Änderungen an dieser Erklärung werden mit Datum hier veröffentlicht.",
-  "imprint.title": "Impressum",
-  "imprint.serviceprovider": "Diensteanbieter (§5 DDG)",
-  "imprint.contact": "Kontakt",
-  "imprint.responsible": "Verantwortlich für den Inhalt",
-  "imprint.liability": "Haftung für Inhalte",
-  "imprint.liabilityText": "Als Diensteanbieter bin ich gemäß §7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten verantwortlich. Nach §§8 bis 10 DDG bin ich jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben unberührt.",
-  "imprint.copyright": "Urheberrecht",
-  "imprint.copyrightText": "Die vom Seitenbetreiber erstellten Inhalte unterliegen dem Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung."
-} as const;
+  /* ===== NAV / HEADER ===== */
+  "John Slavinskas": "John Slavinskas",
+  "About": "Über mich",
+  "Resume": "Lebenslauf",
+  "Projects": "Projekte",
+  "DE": "DE",
+
+  /* ===== HERO ===== */
+  "Materials × Software × Finance": "Werkstoffe × Software × Finanzen",
+  "materials × data × finance": "Werkstoffe × Daten × Finanzen",
+  "John (Jack) Slavinskas": "John (Jack) Slavinskas",
+  "I work at the overlap of materials and software. International experience (Europe & North America). I turn lignin and other biobased research into clean data, simple models, and small tools that help teams decide faster.":
+    "Ich arbeite an der Schnittstelle von Werkstoffen und Software. Internationale Erfahrung (Europa & Nordamerika). Ich verwandle Lignin und andere biobasierte Forschung in saubere Daten, einfache Modelle und kleine Tools, die Teams helfen, schneller zu entscheiden.",
+  "Publications": "Veröffentlichungen",
+  "Open-source Commits (12 mo)": "Open-Source-Commits (12 Monate)",
+  "See Resume": "Lebenslauf ansehen",
+  "Download 1-pager": "Einseiter herunterladen",
+  "Download CV": "CV herunterladen",
+  "View Projects": "Projekte ansehen",
+  "GitHub": "GitHub",
+  "LinkedIn": "LinkedIn",
+  "Skills at a glance": "Fähigkeiten auf einen Blick",
+
+  /* ===== ABOUT ===== */
+  "Materials, data, and a big soft spot for useful tools.": "Werkstoffe, Daten und eine große Schwäche für nützliche Tools.",
+  "Endurance sports are a big part of my life. I train year round and finished an Ironman. Long swims, windy bike rides, and quiet miles teach patience and grit. The plan matters, but so do the small choices inside the plan. Fuel on time. Keep the cadence. Fix little problems early.":
+    "Ausdauersport ist ein großer Teil meines Lebens. Ich trainiere das ganze Jahr und habe einen Ironman gefinisht. Lange Schwimmeinheiten, windige Radausfahrten und ruhige Laufkilometer lehren Geduld und Biss. Der Plan ist wichtig, aber ebenso die kleinen Entscheidungen im Plan. Rechtzeitig verpflegen. Die Kadenz halten. Kleine Probleme früh beheben.",
+  "I came to Europe to study in Munich and work with teams building real materials, not just slides. Germany gave me new labs, bilingual meetings, and a useful kind of humility. Learn fast. Ask clear questions. Write things down so the next person does not have to guess.":
+    "Fürs Studium bin ich nach München gekommen und arbeite mit Teams, die echte Materialien bauen – nicht nur Folien. Deutschland brachte neue Labore, zweisprachige Meetings und eine nützliche Form von Demut. Schnell lernen. Klare Fragen stellen. Dinge so aufschreiben, dass die nächste Person nicht raten muss.",
+  "That mindset shows up in my work. I break big goals into blocks I can finish this week. I keep clean notebooks and short scripts that anyone can run. I like small tools that make decisions easier for the whole team. If a teammate can pick up my work without me in the room, that is success.":
+    "Diese Haltung prägt meine Arbeit. Große Ziele zerlege ich in Pakete, die ich diese Woche fertig bekomme. Ich führe saubere Notizbücher und kurze Skripte, die jede:r ausführen kann. Ich mag kleine Tools, die Entscheidungen fürs ganze Team leichter machen. Wenn jemand meine Arbeit aufnehmen kann, ohne dass ich im Raum bin, ist das ein Erfolg.",
+  "Day to day I move between lignin and other biobased materials, Python and ML pipelines, and little interactive apps. Give me a fuzzy problem, a pile of notes, and a deadline and I am happy.":
+    "Im Alltag bewege ich mich zwischen Lignin und anderen biobasierten Werkstoffen, Python- und ML-Pipelines und kleinen interaktiven Apps. Gib mir ein vages Problem, einen Stapel Notizen und eine Deadline – und ich bin glücklich.",
+  "Interests": "Interessen",
+  "Triathlon": "Triathlon",
+  "Ultimate": "Ultimate Frisbee",
+  "Programming": "Programmierung",
+  "Entrepreneurship": "Unternehmertum",
+  "Travel": "Reisen",
+  "Birdwatching": "Vogelbeobachtung",
+  "Fishing": "Angeln",
+  "Geocaching": "Geocaching",
+
+  /* ===== PHOTO LABELS / ALTs ===== */
+  "Resume picture — headshot": "Bewerbungsfoto — Porträt",
+  "Resume picture": "Bewerbungsfoto",
+  "Christmas Market with friends in Munich": "Weihnachtsmarkt mit Freunden in München",
+  "Christmas Market — Munich": "Christkindlmarkt — München",
+  "Caving in Syracuse": "Höhlentour in Syracuse",
+  "Caving — Syracuse": "Höhlentour — Syracuse",
+  "Salzburg, Austria": "Salzburg, Österreich",
+
+  /* ===== PROJECTS SECTION (HOME) ===== */
+  "Featured projects": "Ausgewählte Projekte",
+  "Hands-on tools and experiments.": "Praktische Tools und Experimente.",
+  "Featured": "Ausgewählt",
+  "View project": "Projekt ansehen",
+
+  "Eagle Scout Project": "Eagle-Scout-Projekt",
+  "Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers — built to last, delivered on time.":
+    "Individuelle Dugout-Aufbewahrungssysteme für die John Glenn High School. Geplant, genehmigt, finanziert und mit Freiwilligen umgesetzt — langlebig gebaut, pünktlich geliefert.",
+
+  "Prazise": "Prazise",
+  "Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions — private by design. In active development.":
+    "Erholungsbewusste Trainings-Engine. Liest HF/HRV, Schlaf und jüngste Belastung, kalibriert Ziele automatisch und passt Einheiten an — datenschutzfreundlich konzipiert. In aktiver Entwicklung.",
+
+  "Efficient Frontier App": "Efficient-Frontier-App",
+  "Interactive mean-variance explorer with factor tilts, constraints, and stress tests — compare to benchmarks and export in one click.":
+    "Interaktiver Mean-Variance-Explorer mit Faktor-Tilts, Restriktionen und Stresstests — mit Benchmarks vergleichen und mit einem Klick exportieren.",
+
+  /* ===== EXPERIENCE (HOME) ===== */
+  "Experience": "Erfahrung",
+  "Technology Development — Working Student — Lignopure": "Technologieentwicklung — Werkstudent — Lignopure",
+  "Dec 2024 – Jun 2025 · Hamburg": "Dez 2024 – Jun 2025 · Hamburg",
+  "Developed lignin-based leather via extrusion (≤70% lignin).": "Ligninbasiertes Leder mittels Extrusion (≤70 % Lignin) entwickelt.",
+  "Optimized properties; achieved industry-leading strength.": "Eigenschaften optimiert; branchenführende Festigkeit erreicht.",
+  "Experimented with new lignin formulations for compatibility.": "Mit neuen Ligninformulierungen zur besseren Kompatibilität experimentiert.",
+
+  "Master Thesis Researcher — HM Munich (with Lignopure)": "Masterarbeit – HM München (mit Lignopure)",
+  "Nov 2024 – Jun 2025": "Nov 2024 – Jun 2025",
+  "Solvent selection & optimization (temperature, ratios, surfactants).": "Lösungsmittelauswahl & -optimierung (Temperatur, Verhältnisse, Tenside).",
+  "Estimated Hansen Solubility Parameters for solvent selection.": "Hansen-Löslichkeitsparameter zur Lösungsmittelauswahl abgeschätzt.",
+  "Evaluated functional changes during dissolution.": "Funktionelle Veränderungen während der Auflösung bewertet.",
+
+  "Technology Development Intern — Lignopure": "Praktikum Technologieentwicklung — Lignopure",
+  "Aug 2024 – Nov 2024": "Aug 2024 – Nov 2024",
+  "Lignin processing & drying method studies.": "Studien zur Ligninverarbeitung und Trocknungsverfahren.",
+  "Contributed to “ForFun” functional materials project.": "Mitgewirkt am „ForFun“-Projekt für funktionelle Materialien.",
+  "With Univ. of Helsinki: VOC testing; identified odor sources & mitigations.": "Mit der Univ. Helsinki: VOC-Tests; Geruchsquellen identifiziert & Maßnahmen abgeleitet.",
+
+  "Emerging Leader (Intern) — Sonoco Product Co.": "Emerging Leader (Praktikant) — Sonoco Product Co.",
+  "May 2023 – Aug 2023": "Mai 2023 – Aug 2023",
+  "Analyzed effluent treatment; implemented cost-effective improvements.": "Abwasserbehandlung analysiert; kosteneffiziente Verbesserungen umgesetzt.",
+  "Deployed Parcview/Everactive sensors for real-time QC.": "Parcview/Everactive-Sensoren für Echtzeit-Qualitätskontrolle eingesetzt.",
+
+  /* ===== PROGRAMMING SHOWCASE (HOME SIDEBAR) ===== */
+  "Programming Showcase": "Programmier-Showcase",
+  "Daily": "Täglich",
+  "Confident": "Sicher",
+  "Familiar": "Vertraut",
+  "Languages": "Sprachen",
+  "use all the time": "nutze ich ständig",
+  "Packages": "Pakete",
+  "Pandas": "Pandas",
+  "NumPy": "NumPy",
+  "TensorFlow / Keras": "TensorFlow / Keras",
+  "Matplotlib": "Matplotlib",
+
+  /* ===== EDUCATION & RESEARCH (HOME) ===== */
+  "Education & Research": "Ausbildung & Forschung",
+  "Education": "Ausbildung",
+  "MS Financial Engineering": "MSc Financial Engineering",
+  "WorldQuant University · Jan 2024 – Dec 2025 (DEAC)": "WorldQuant University · Jan 2024 – Dez 2025 (DEAC)",
+  "Capstone: Sustainability (TBD).": "Abschlussprojekt: Nachhaltigkeit (folgt).",
+  "MEng Paper Technology": "MEng Papiertechnik",
+  "Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)": "Hochschule München (HM) · Okt 2023 – Jul 2025 (ZEvA)",
+  "Thesis: Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract":
+    "Masterarbeit: Löslichkeitsbewertung technischer Lignine in organischen Lösungsmitteln zur Entwicklung eines ligninbasierten Extrakts",
+  "BS Computer Science": "BSc Informatik",
+  "University of the People · Jun 2023 – Jun 2025 (WASC)": "University of the People · Jun 2023 – Jun 2025 (WASC)",
+  "Concentrations: Data Science, Network & Application Security": "Schwerpunkte: Data Science, Netzwerk- & Anwendungssicherheit",
+  "BS Paper Engineering": "BSc Papiertechnik",
+  "SUNY ESF · Aug 2020 – Aug 2023 (ABET)": "SUNY ESF · Aug 2020 – Aug 2023 (ABET)",
+  "Minors: Management, Physics": "Nebenfächer: Management, Physik",
+  "Research & Publications": "Forschung & Veröffentlichungen",
+
+  /* ===== PUBLICATIONS LIST (HOME) ===== */
+  // (Titles/journals kept as is; years are numbers)
+  "↗": "↗",
+
+  /* ===== FOOTER ===== */
+  "© 2025 John Slavinskas": "© 2025 John Slavinskas",
+  "Imprint": "Impressum",
+  "Privacy": "Datenschutz",
+
+  /* ===== RESUME PAGE ===== */
+  "Download 1-page (PDF)": "Einseiter herunterladen (PDF)",
+  "Download CV (PDF)": "CV herunterladen (PDF)",
+  "Personal Details": "Persönliche Angaben",
+  "Name": "Name",
+  "Phone": "Telefon",
+  "Email": "E-Mail",
+  "Location": "Standort",
+  "Munich, Germany (EU work-authorized)": "München, Deutschland (arbeitsberechtigt in der EU)",
+  "Qualifications Summary": "Profil / Qualifikationen",
+  "Research in lignin chemistry, biopolymers & sustainable materials": "Forschung zu Ligninchemie, Biopolymeren & nachhaltigen Werkstoffen",
+  "Python, TensorFlow/Keras, SQL, Java, HTML/CSS/JS, PHP, Kotlin, Swift": "Python, TensorFlow/Keras, SQL, Java, HTML/CSS/JS, PHP, Kotlin, Swift",
+  "Lab & pilot-scale experience: GC, VOC analysis, optimization": "Labor- & Pilotmaßstab: GC, VOC-Analyse, Optimierung",
+  "Co-author on peer-reviewed publications in fiber recycling & packaging": "Koautor begutachteter Veröffentlichungen zu Faserrecycling & Verpackung",
+
+  "Education (resume)": "Ausbildung",
+  "WorldQuant University — M.S. Financial Engineering (Jan 2024 – Nov 2025)": "WorldQuant University — M.Sc. Financial Engineering (Jan 2024 – Nov 2025)",
+  "HM Hochschule München — M.Eng. Paper Technology (Oct 2023 – Jul 2025)": "HM Hochschule München — M.Eng. Papiertechnik (Okt 2023 – Jul 2025)",
+  "University of the People — B.S. Computer Science, Data Science (Jun 2023 – Jun 2025)": "University of the People — B.Sc. Informatik, Data Science (Jun 2023 – Jun 2025)",
+  "SUNY-ESF — B.S. Paper Engineering; minors in Management & Physics (Aug 2020 – Aug 2023)": "SUNY-ESF — B.Sc. Papiertechnik; Nebenfächer Management & Physik (Aug 2020 – Aug 2023)",
+
+  "Experience (selected)": "Erfahrung (Auswahl)",
+  "Lignopure — Technology Development (Working Student)": "Lignopure — Technologieentwicklung (Werkstudent)",
+  "Developed lignin-based leather (extrusion, up to 70% lignin); optimized mechanical properties.": "Ligninbasiertes Leder entwickelt (Extrusion, bis 70 % Lignin); mechanische Eigenschaften optimiert.",
+  "Explored formulations to improve compatibility and strength.": "Formulierungen zur Verbesserung von Kompatibilität und Festigkeit untersucht.",
+
+  "Master Thesis — Lignin Solubility for Cosmetics": "Masterarbeit — Ligninlöslichkeit für Kosmetik",
+  "Solvent selection & optimization (temperature, ratios, surfactants); HSP estimation.": "Lösungsmittelauswahl & -optimierung (Temperatur, Verhältnisse, Tenside); HSP-Abschätzung.",
+  "Evaluated functional changes of lignin during dissolution.": "Funktionelle Veränderungen von Lignin während der Auflösung bewertet.",
+
+  "Sonoco — Emerging Leader": "Sonoco — Emerging Leader",
+  "Improved effluent treatment with cost-effective solutions; enhanced compliance.": "Abwasserbehandlung mit kosteneffizienten Lösungen verbessert; Compliance gesteigert.",
+  "Used sensors for real-time visibility, improving quality control and uptime.": "Sensoren für Echtzeit-Transparenz eingesetzt; Qualitätssicherung und Verfügbarkeit verbessert.",
+
+  "Safar Partners — Intern": "Safar Partners — Praktikant",
+  "Competitive analysis of biodegradable plastics; recommended investment in Radical Plastics.": "Wettbewerbsanalyse zu biologisch abbaubaren Kunststoffen; Investition in Radical Plastics empfohlen.",
+  "Evaluated polymerization processes vs competitors; prepared investor materials.": "Polymerisationsprozesse gegenüber Wettbewerbern bewertet; Investorenunterlagen erstellt.",
+
+  "Publications (resume)": "Veröffentlichungen",
+  "Certifications": "Zertifikate",
+  "SCE Incubator — Founding Your Own Startup (2024–2025)": "SCE-Inkubator — Eigene Gründung (2024–2025)",
+  "DeepLearning.AI — TensorFlow Developer (2023)": "DeepLearning.AI — TensorFlow-Entwickler (2023)",
+  "IBM — AI Engineering (2023)": "IBM — KI-Engineering (2023)",
+
+  /* ===== PROJECTS PAGE ===== */
+  "Resume — John Slavinskas": "Lebenslauf — John Slavinskas",
+  "Completed": "Abgeschlossen",
+  "Eagle Scout — Helmet & Bat Racks for John Glenn High School": "Eagle Scout — Helmboxen & Schlägerhalter für die John Glenn High School",
+  "Boy Scouts of America • Rank awarded Mar 2020": "Boy Scouts of America • Rang verliehen März 2020",
+  "2019–2020": "2019–2020",
+  "Eagle Scout is the highest rank in Scouting and requires sustained leadership, community service, and a capstone project. I proposed, planned, fundraised, and led the construction of custom helmet and bat racks for the baseball and softball dugouts at John Glenn High School.":
+    "Eagle Scout ist der höchste Rang im Scouting und erfordert kontinuierliche Führung, Gemeindedienst und ein Abschlussprojekt. Ich habe maßgeschneiderte Helm- und Schlägerhalter für die Baseball- und Softball-Dugouts der John Glenn High School vorgeschlagen, geplant, finanziert und den Bau geleitet.",
+  "Defined scope and design; coordinated with school staff and coaches": "Umfang und Design definiert; mit Schulpersonal und Trainern koordiniert",
+  "Raised funds, sourced materials, created a detailed bill of materials": "Mittel beschafft, Materialien besorgt, detaillierte Stückliste erstellt",
+  "Scheduled and led volunteer crews; safety briefing and task breakdown": "Freiwilligenteams eingeplant und geführt; Sicherheitsunterweisung und Aufgabenaufteilung",
+  "Managed timeline and budget; delivered durable, finished racks on time": "Zeitplan und Budget gesteuert; langlebige, fertige Regale termingerecht geliefert",
+  "leadership": "Führung",
+  "community": "Gemeinschaft",
+  "operations": "Betrieb",
+  "fabrication": "Fertigung",
+
+  "Private": "Privat",
+  "Hansen Solubility Parameter Toolkit": "Hansen-Löslichkeitsparameter-Toolkit",
+  "Estimate HSPs for a specific lignin from bench solubility screens": "HSPs für ein bestimmtes Lignin aus einfachen Löslichkeitstests abschätzen",
+  "2024–2025 (private to Lignopure)": "2024–2025 (privat bei Lignopure)",
+  "Ran a solvent screen (acetone, butanediol, ethanol, DMSO, etc.) and used %-solubility data to estimate the lignin’s Hansen parameters (δD, δP, δH). The UI then matches the estimated HSP to a solvent database to rank candidate dissolvers/blends for that particular lignin (structure varies by source, so HSPs differ). Code/data are private to Lignopure.":
+    "Lösungsmittel-Screening (Aceton, Butandiol, Ethanol, DMSO etc.) durchgeführt und %-Löslichkeitsdaten verwendet, um die Hansen-Parameter des Lignins (δD, δP, δH) abzuschätzen. Die UI gleicht die geschätzten HSPs mit einer Lösungsmitteldatenbank ab, um geeignete Löser/Mischungen für dieses spezifische Lignin zu ranken (die Struktur variiert je nach Quelle, daher unterscheiden sich HSPs). Code/Daten sind privat bei Lignopure.",
+  "materials": "Werkstoffe",
+  "HSP": "HSP",
+  "lignin": "Lignin",
+  "python": "Python",
+  "ui": "UI",
+
+  "In development": "In Entwicklung",
+  "Precision training micro-tool": "Präzises Trainings-Mikro-Tool",
+  "Prazise reads heart rate, HRV, sleep, and workouts to deliver precise training — personalized to you, not a template. It adapts sessions to recovery, explains the why, and keeps data private by design.":
+    "Prazise liest Herzfrequenz, HRV, Schlaf und Workouts, um präzises Training zu liefern — personalisiert für dich, kein Template. Es passt Einheiten an die Erholung an, erklärt das Warum und wahrt Privatsphäre by Design.",
+  "Reads HR, HRV, sleep, and recent sessions; calibrates to the athlete": "Liest HF, HRV, Schlaf und jüngste Einheiten; kalibriert auf die Athlet:in",
+  "Daily precision session suggestions with targets, cues, and post-run insights": "Tägliche Präzisions-Session-Vorschläge mit Zielen, Hinweisen und Auswertungen",
+  "Recovery-aware adjustments after tough/breakthrough days; overtraining risk signals": "Erholungsbewusste Anpassungen nach harten/„Breakthrough“-Tagen; Signale für Überlastungsrisiko",
+  "Privacy-first: encrypted at rest, deletable on request, never sold": "Privacy-first: im Ruhezustand verschlüsselt, auf Wunsch löschbar, niemals verkauft",
+  "Device-friendly: Garmin, Polar, Suunto, Apple Health, Fitbit (planned)": "Geräte-freundlich: Garmin, Polar, Suunto, Apple Health, Fitbit (geplant)",
+  "software": "Software",
+  "sports": "Sport",
+  "modeling": "Modellierung",
+  "product": "Produkt",
+
+  "Planned": "Geplant",
+  "WorldQuant University Capstone": "WorldQuant University Capstone",
+  "M.S. Financial Engineering": "M.Sc. Financial Engineering",
+  "Target: Dec 2025": "Ziel: Dez 2025",
+  "Capstone slated for December 2025. Topic TBD; likely directions include portfolio optimization, time-series modeling, or derivatives pricing.":
+    "Abschlussprojekt für Dezember 2025 geplant. Thema TBD; voraussichtliche Richtungen: Portfolio-Optimierung, Zeitreihen-Modellierung oder Derivate-Bewertung.",
+  "finance": "Finanzen",
+  "ml": "ML",
+
+  "Ask AI": "KI fragen",
+  "Projects — John Slavinskas": "Projekte — John Slavinskas",
+};
