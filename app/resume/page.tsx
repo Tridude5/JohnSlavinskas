@@ -1,16 +1,11 @@
-"use client";
 import React from "react";
 import EmailLink from "@/components/EmailLink";
 import Tx from "@/components/i18n/Tx";
-import { useI18n } from "@/components/i18n/I18nProvider";
 
-// NOTE: Metadata stays static (English) in a static export.
-// If you want localized titles, you'd need generateMetadata() + cookies.
 export const metadata = { title: "Resume — John Slavinskas" };
 
 export default function ResumePage() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const { t } = useI18n();
 
   return (
     <div className="container py-12 print:py-0">
@@ -61,7 +56,7 @@ export default function ResumePage() {
               <div className="grid grid-cols-[140px,1fr] gap-x-4">
                 <dt className="text-gray-500 dark:text-gray-400 text-sm"><Tx>Location</Tx></dt>
                 <dd className="text-gray-900 dark:text-gray-100 text-sm">
-                  {t("Munich, Germany (EU work-authorized)")}
+                  <Tx>Munich, Germany (EU work-authorized)</Tx>
                 </dd>
               </div>
             </dl>
@@ -93,16 +88,16 @@ export default function ResumePage() {
             </div>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <strong>WorldQuant University</strong> — {t("M.S. Financial Engineering (Jan 2024 – Nov 2025)")}
+                <strong>WorldQuant University</strong> — <Tx>M.S. Financial Engineering (Jan 2024 – Nov 2025)</Tx>
               </li>
               <li>
-                <strong>HM Hochschule München</strong> — {t("M.Eng. Paper Technology (Oct 2023 – Jul 2025)")}
+                <strong>HM Hochschule München</strong> — <Tx>M.Eng. Paper Technology (Oct 2023 – Jul 2025)</Tx>
               </li>
               <li>
-                <strong>University of the People</strong> — {t("B.S. Computer Science, Data Science (Jun 2023 – Jun 2025)")}
+                <strong>University of the People</strong> — <Tx>B.S. Computer Science, Data Science (Jun 2023 – Jun 2025)</Tx>
               </li>
               <li>
-                <strong>SUNY-ESF</strong> — {t("B.S. Paper Engineering; minors in Management & Physics (Aug 2020 – Aug 2023)")}
+                <strong>SUNY-ESF</strong> — <Tx>B.S. Paper Engineering; minors in Management & Physics (Aug 2020 – Aug 2023)</Tx>
               </li>
             </ul>
           </section>
