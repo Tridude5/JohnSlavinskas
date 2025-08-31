@@ -6,6 +6,11 @@ export default {
   "Resume": "Lebenslauf",
   "Projects": "Projekte",
   "DE": "DE",
+  // dot-keys used by the header:
+  "nav.home": "Startseite",
+  "nav.about": "Über mich",
+  "nav.resume": "Lebenslauf",
+  "nav.projects": "Projekte",
 
   /* ===== HERO ===== */
   "Materials × Software × Finance": "Werkstoffe × Software × Finanzen",
@@ -127,7 +132,6 @@ export default {
   "Research & Publications": "Forschung & Veröffentlichungen",
 
   /* ===== PUBLICATIONS LIST (HOME) ===== */
-  // (Titles/journals kept as is; years are numbers)
   "↗": "↗",
 
   /* ===== FOOTER ===== */
