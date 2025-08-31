@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import KPIs from "@/components/KPIs";
-import Tx from "@/components/i18n/Tx";
 
 type Props = { publicationsCount?: number; label?: string };
 
@@ -36,16 +35,8 @@ export default function DynamicHeroKpis({
   return (
     <KPIs
       items={[
-        {
-          label: <Tx>Publications</Tx>,
-          value: publicationsCount,
-          spark: [1, 2, 3, 4, 5, publicationsCount],
-        },
-        {
-          label: <Tx>{label}</Tx>, // translates whatever label you pass in
-          value: total,
-          spark,
-        },
+        { label: "Publications", value: publicationsCount, spark: [1, 2, 3, 4, 5, publicationsCount] },
+        { label, value: total, spark },
       ]}
     />
   );
