@@ -1,34 +1,49 @@
 'use client';
-import React, {createContext, useContext, useEffect, useMemo, useState} from 'react';
+import React, {createContext, useContext, useMemo, useCallback, useEffect, useState} from 'react';
 import en from '@/messages/en';
 import de from '@/messages/de';
 
 export type Lang = 'en' | 'de';
-type Ctx = { lang: Lang; setLang: (l: Lang)=>void; t: (k: string)=>string; };
+type Ctx = { lang: Lang; setLang: (l: Lang)=>void; t: (k: string)=>string };
 
 const I18nCtx = createContext<Ctx>({ lang: 'en', setLang: ()=>{}, t: (k)=>k });
 
-export function I18nProvider({children}:{children: React.ReactNode}){
-  const [lang, setLang] = useState<Lang>('en');
+function getInitialLang(): Lang {
+  if (typeof window === 'undefined') return 'en';
+  const stored = window.localStorage.getItem('lang');
+  if (stored === 'de' || stored === 'en') return stored;
+  const cookie = document.cookie.match(/(?:^|; )lang=(en|de)/)?.[1];
+  if (cookie === 'de' || cookie === 'en') return cookie as Lang;
+  if (navigator.language?.toLowerCase().startsWith('de')) return 'de';
+  return 'en';
+}
 
-  // initial from localStorage / navigator
-  useEffect(()=>{
-    const stored = typeof window !== 'undefined' ? window.localStorage.getItem('lang') : null;
-    if (stored === 'de' || stored === 'en') setLang(stored);
-    else if (typeof navigator !== 'undefined' && navigator.language?.toLowerCase().startsWith('de')) setLang('de');
+export function I18nProvider({ children }: { children: React.ReactNode }) {
+  // 👇 avoid “flash” by reading initial value synchronously
+  const [lang, setLangState] = useState<Lang>(() => getInitialLang());
+
+  // keep <html lang> accurate for a11y/SEO
+  useEffect(() => { document.documentElement.setAttribute('lang', lang); }, [lang]);
+
+  const persist = (l: Lang) => {
+    try {
+      localStorage.setItem('lang', l);
+      document.cookie = `lang=${l}; Path=/; Max-Age=31536000; SameSite=Lax`;
+    } catch {/* ignore */}
+  };
+
+  const setLang = useCallback((l: Lang) => {
+    setLangState(l);
+    persist(l);
   }, []);
 
-  useEffect(()=>{
-    if (typeof window !== 'undefined') window.localStorage.setItem('lang', lang);
-  }, [lang]);
+  // select dictionary + safe fallback to EN
+  const dict = lang === 'de' ? (de as Record<string,string>) : (en as Record<string,string>);
+  const base = en as Record<string,string>;
 
-  // 🔧 Cast to string-keyed maps for dynamic lookups
-  const dict = (lang === 'de' ? de : en) as Record<string, string>;
-  const base = en as Record<string, string>;
+  const t = useMemo(() => (k: string) => dict[k] ?? base[k] ?? k, [dict, base]);
 
-  const t = useMemo(()=> (k: string)=> dict[k] ?? base[k] ?? k, [dict, base]);
-
-  const value = useMemo(()=>({lang, setLang, t}), [lang, t]);
+  const value = useMemo(() => ({ lang, setLang, t }), [lang, setLang, t]);
   return <I18nCtx.Provider value={value}>{children}</I18nCtx.Provider>;
 }
 
