@@ -113,7 +113,6 @@ function GreenTimeline({ items }: { items: TLItem[] }) {
 
 /* ---------- Publications ---------- */
 function Publications() {
-  // Titles/journals left as-is
   return (
     <ul className="mt-3 divide-y divide-white/10">
       <li className="py-4">
@@ -424,11 +423,11 @@ export default function Page() {
         </div>
       </header>
 
-      {/* ABOUT */}
+      {/* ABOUT — use t() for Section props (strings only) */}
       <Section
         id="about"
-        title={<Tx>About</Tx>}
-        subtitle={<Tx>Materials, data, and a big soft spot for useful tools.</Tx>}
+        title={t("About")}
+        subtitle={t("Materials, data, and a big soft spot for useful tools.")}
       >
         <div className="grid gap-6 md:grid-cols-2 items-center">
           <div className="card">
@@ -529,7 +528,7 @@ export default function Page() {
       </Section>
 
       {/* PROJECTS — Featured */}
-      <Section id="projects" title={<Tx>Featured projects</Tx>} subtitle={<Tx>Hands-on tools and experiments.</Tx>}>
+      <Section id="projects" title={t("Featured projects")} subtitle={t("Hands-on tools and experiments.")}>
         <div className="grid md:grid-cols-3 gap-6">
           <FeaturedCard
             title="Eagle Scout Project"
@@ -553,7 +552,7 @@ export default function Page() {
       </Section>
 
       {/* EXPERIENCE */}
-      <Section title={<Tx>Experience</Tx>}>
+      <Section title={t("Experience")}>
         <div className="grid md:grid-cols-12 gap-6">
           <div className="md:col-span-7">
             <GreenTimeline items={exp} />
@@ -567,7 +566,7 @@ export default function Page() {
       </Section>
 
       {/* EDUCATION & RESEARCH */}
-      <Section title={<Tx>Education & Research</Tx>}>
+      <Section title={t("Education & Research")}>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="card">
             <h3 className="font-semibold"><Tx>Education</Tx></h3>
