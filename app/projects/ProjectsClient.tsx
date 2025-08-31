@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 // Types
 export type Link = { label: string; href: string };
@@ -16,10 +17,10 @@ export type Project = {
   compact?: boolean; // smaller vertical rhythm to vary card heights
 };
 
-// Data
+// Data (keep English; we translate on render)
 const projects: Project[] = [
   {
-    id: "eagle-scout", // /projects#eagle-scout
+    id: "eagle-scout",
     title: "Eagle Scout — Helmet & Bat Racks for John Glenn High School",
     subtitle: "Boy Scouts of America • Rank awarded Mar 2020",
     period: "2019–2020",
@@ -35,18 +36,18 @@ const projects: Project[] = [
     tags: ["leadership", "community", "operations", "fabrication"],
   },
   {
-    id: "hsp-toolkit", // /projects#hsp-toolkit (optional to link)
+    id: "hsp-toolkit",
     title: "Hansen Solubility Parameter Toolkit",
     subtitle: "Estimate HSPs for a specific lignin from bench solubility screens",
     status: "Private",
     period: "2024–2025 (private to Lignopure)",
-    compact: true, // make this card shorter so the one beneath tucks up
+    compact: true,
     summary:
       "Ran a solvent screen (acetone, butanediol, ethanol, DMSO, etc.) and used %-solubility data to estimate the lignin’s Hansen parameters (δD, δP, δH). The UI then matches the estimated HSP to a solvent database to rank candidate dissolvers/blends for that particular lignin (structure varies by source, so HSPs differ). Code/data are private to Lignopure.",
     tags: ["materials", "HSP", "lignin", "python", "ui"],
   },
   {
-    id: "prazise", // /projects#prazise
+    id: "prazise",
     title: "Prazise",
     subtitle: "Precision training micro-tool",
     status: "In development",
@@ -62,7 +63,7 @@ const projects: Project[] = [
     tags: ["software", "sports", "modeling", "product"],
   },
   {
-    id: "wqu-capstone", // /projects#wqu-capstone (optional to link)
+    id: "wqu-capstone",
     title: "WorldQuant University Capstone",
     subtitle: "M.S. Financial Engineering",
     status: "Planned",
@@ -75,6 +76,7 @@ const projects: Project[] = [
 
 // UI helpers
 function StatusBadge({ status }: { status: Project["status"] }) {
+  const { t } = useI18n();
   const styles: Record<Project["status"], string> = {
     Completed: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
     "In development": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
@@ -83,12 +85,14 @@ function StatusBadge({ status }: { status: Project["status"] }) {
   };
   return (
     <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${styles[status]}`}>
-      {status}
+      {t(status)}
     </span>
   );
 }
 
 function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
+  const { t } = useI18n();
+
   // track mouse position for a soft glimmer effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = e.currentTarget;
@@ -115,8 +119,7 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          background:
-            "radial-gradient(360px circle at var(--x) var(--y), rgba(255,255,255,0.12), transparent 40%)",
+          background: "radial-gradient(360px circle at var(--x) var(--y), rgba(255,255,255,0.12), transparent 40%)",
         }}
       />
 
@@ -126,34 +129,34 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
 
         <div className={`flex flex-wrap items-start justify-between gap-3 ${gapRight}`}>
           <div>
-            <h3 className={`${titleSize} font-semibold tracking-tight`}>{p.title}</h3>
+            <h3 className={`${titleSize} font-semibold tracking-tight`}>{t(p.title)}</h3>
             {p.subtitle && (
-              <p className="text-sm text-gray-500 dark:text-gray-400">{p.subtitle}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t(p.subtitle)}</p>
             )}
           </div>
           {p.period && (
-            <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{p.period}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{t(p.period)}</span>
           )}
         </div>
 
-        <p className="mt-3 text-sm text-gray-700 dark:text-gray-200 leading-6">{p.summary}</p>
+        <p className="mt-3 text-sm text-gray-700 dark:text-gray-200 leading-6">{t(p.summary)}</p>
 
         {p.bullets && p.bullets.length > 0 && (
           <ul className={`mt-3 list-disc pl-5 space-y-1 text-sm ${p.compact ? "hidden md:block md:space-y-0 md:list-none md:pl-0" : ""}`}>
             {p.bullets.map((b, i) => (
-              <li key={i}>{b}</li>
+              <li key={i}>{t(b)}</li>
             ))}
           </ul>
         )}
 
         {p.tags && p.tags.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
-            {p.tags.map((t) => (
+            {p.tags.map((tag) => (
               <span
-                key={t}
+                key={tag}
                 className="rounded-full px-2 py-0.5 text-xs bg-gray-100 text-gray-700 dark:bg-zinc-800/60 dark:text-gray-200"
               >
-                {t}
+                {t(tag)}
               </span>
             ))}
           </div>
@@ -163,7 +166,7 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
           <div className="mt-4 flex flex-wrap gap-2">
             {p.links.map((l) => (
               <a key={l.href} href={l.href} className="btn-outline text-sm">
-                {l.label}
+                {t(l.label)}
               </a>
             ))}
           </div>
@@ -187,7 +190,7 @@ export default function ProjectsClient() {
       {projects.map((p, i) => (
         <div
           key={p.id ?? p.title}
-          id={p.id}                      // anchor target lives here
+          id={p.id}
           className="mb-6 break-inside-avoid scroll-mt-24"
         >
           <ProjectCard p={p} accentClass={accents[i % accents.length]} />
