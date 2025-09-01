@@ -3,32 +3,24 @@ import type { Metadata } from "next";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  "https://tridude5.github.io/JohnSlavinskas"; // keep the GitHub Pages base
+  "https://tridude5.github.io/JohnSlavinskas";
 
 const TITLE = "John Slavinskas — Portfolio";
 const DESCRIPTION =
   "Materials × Software × Finance. I turn lignin & other biobased research into clean data, simple models, and small tools.";
 
-const OG_IMAGE = "/downloads/og-card.jpg"; // 1200x630 is ideal
+const OG_IMAGE = "/downloads/og-card.jpg"; // 1200x630
 
-// helper to make absolute URLs
 export const abs = (path = "/") => new URL(path, SITE_URL).toString();
 
 export const baseMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: TITLE,
-    template: "%s — John Slavinskas",
-  },
+  title: { default: TITLE, template: "%s — John Slavinskas" },
   description: DESCRIPTION,
-  alternates: {
-    canonical: abs("/"),
-    // If you later publish a German route, point it here:
-    // languages: { en: abs("/"), de: abs("/?lng=de") },
-  },
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    url: abs("/"),
+    url: "/",
     siteName: "John Slavinskas",
     title: TITLE,
     description: DESCRIPTION,
@@ -47,13 +39,5 @@ export const baseMetadata: Metadata = {
     "max-snippet": -1,
     "max-video-preview": -1,
   },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
-  // Fill these if you want file-free ownership verification:
-  verification: {
-    google: process.env.NEXT_PUBLIC_GSC_CODE || undefined, // e.g. "abc123..."
-    bing: process.env.NEXT_PUBLIC_BING_CODE || undefined,
-  },
+  icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
 };
