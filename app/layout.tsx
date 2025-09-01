@@ -6,9 +6,11 @@ import { baseMetadata } from "@/app/seo.config";   // ⬅️ central SEO config
 import JsonLdPerson from "@/components/JsonLd";     // ⬅️ JSON-LD <script/>
 
 import { I18nProvider } from "@/components/i18n/I18nProvider";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppEffects from "@/components/AppEffects";
+
+// NEW: glassy sticky top nav
+import TopNav from "@/components/TopNav";
 
 // You can override parts of baseMetadata here if you want
 export const metadata: Metadata = {
@@ -24,10 +26,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased">
+      {/* pt-16 offsets the fixed TopNav (h-14) for safe spacing */}
+      <body className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased pt-16">
         <AppEffects />
         <I18nProvider>
-          <Header />
+          <TopNav />
           <main className="flex-1">{children}</main>
           <Footer />
         </I18nProvider>
