@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import KPIs from "@/components/KPIs";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 type Props = { publicationsCount?: number; label?: string };
 
@@ -8,17 +9,18 @@ export default function DynamicHeroKpis({
   publicationsCount = 6,
   label = "Open-source Commits (12 mo)",
 }: Props) {
+  const { t } = useI18n();
   const [total, setTotal] = React.useState(0);
   const [spark, setSpark] = React.useState<number[]>([0, 0, 0, 0, 0, 0]);
 
   React.useEffect(() => {
     let cancelled = false;
 
-    // Build a safe URL that respects GitHub Pages base path
+    // Respect GitHub Pages base path (e.g. /JohnSlavinskas)
     const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "");
     const url = `${base}/github-contrib.json`;
 
-    // 1) Seed from localStorage to avoid a flash of 0
+    // Seed from localStorage to avoid a flash of 0
     try {
       const saved = localStorage.getItem("ghContrib");
       if (saved) {
@@ -40,13 +42,13 @@ export default function DynamicHeroKpis({
       // ignore
     }
 
-    // 2) Live fetch (no-store) and only replace when valid
+    // Live fetch (no-store); only update if payload is valid
     fetch(url, { cache: "no-store" })
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`)))
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
       .then((d) => {
         const weeks: number[] | undefined = Array.isArray(d?.weeks) ? d.weeks : undefined;
         const totalNum = typeof d?.total === "number" ? d.total : undefined;
-        if (!weeks || totalNum === undefined) return; // ignore bad payloads
+        if (!weeks || totalNum === undefined) return;
 
         const bucket = Math.max(1, Math.ceil(weeks.length / 6));
         const cumul = Array.from({ length: 6 }, (_, i) =>
@@ -58,23 +60,29 @@ export default function DynamicHeroKpis({
           setSpark(cumul.length === 6 ? cumul : [0, 0, 0, 0, 0, 0]);
         }
 
-        // save good data for instant load next time
         try {
           localStorage.setItem("ghContrib", JSON.stringify({ total: totalNum, weeks }));
-        } catch { /* ignore */ }
+        } catch {
+          // ignore
+        }
       })
       .catch(() => {
-        // don’t clobber existing state with zeros on fetch errors
+        // don't overwrite with zeros on fetch errors
       });
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
+
+  const pubsLabel = t("Publications");         // expects key in en.ts/de.ts
+  const commitsLabel = t(label);               // "Open-source Commits (12 mo)" key
 
   return (
     <KPIs
       items={[
-        { label: "Publications", value: publicationsCount, spark: [1, 2, 3, 4, 5, publicationsCount] },
-        { label, value: total, spark },
+        { label: pubsLabel, value: publicationsCount, spark: [1, 2, 3, 4, 5, publicationsCount] },
+        { label: commitsLabel, value: total, spark },
       ]}
     />
   );
