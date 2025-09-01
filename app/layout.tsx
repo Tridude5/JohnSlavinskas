@@ -1,22 +1,24 @@
+// /app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
+
+import { baseMetadata } from "@/app/seo.config";   // ⬅️ central SEO config
+import JsonLdPerson from "@/components/JsonLd";     // ⬅️ JSON-LD <script/>
+
 import { I18nProvider } from "@/components/i18n/I18nProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppEffects from "@/components/AppEffects";
 
+// You can override parts of baseMetadata here if you want
 export const metadata: Metadata = {
-  title: "John Slavinskas — Paper Engineer × Quant Technologist",
+  ...baseMetadata,
+  title: {
+    default: "John Slavinskas — Paper Engineer × Quant Technologist",
+    template: "%s — John Slavinskas",
+  },
   description:
     "Portfolio of John Slavinskas — Paper Engineer blending sustainable materials research, software/ML, and quantitative finance.",
-  metadataBase: new URL("https://tridude5.github.io/JohnSlavinskas"),
-  openGraph: {
-    title: "John Slavinskas — Paper Engineer × Quant Technologist",
-    description:
-      "Portfolio of John Slavinskas — Paper Engineering, ML/software, and quantitative finance.",
-    type: "website",
-    url: "https://tridude5.github.io/JohnSlavinskas",
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -29,6 +31,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-1">{children}</main>
           <Footer />
         </I18nProvider>
+        {/* SEO: JSON-LD (Person) */}
+        <JsonLdPerson />
       </body>
     </html>
   );
