@@ -15,7 +15,7 @@ export default function Publications() {
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
           <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
-          <span>2025</span>
+          <span>Jul 7, 2025</span>
         </div>
       </li>
 
@@ -51,7 +51,7 @@ export default function Publications() {
           <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
             J. Engineering Research & Reports
           </span>
-          <span>2024</span>
+          <span>May 21, 2024</span>
         </div>
       </li>
 
@@ -69,7 +69,7 @@ export default function Publications() {
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
           <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
-          <span>2023</span>
+          <span>Jun 26, 2023</span>
         </div>
       </li>
 
@@ -85,7 +85,7 @@ export default function Publications() {
         </a>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
           <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
-          <span>2022</span>
+          <span>Jan 1, 2023</span>
         </div>
       </li>
 
@@ -105,7 +105,7 @@ export default function Publications() {
           <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
             J. Engineering Research & Reports
           </span>
-          <span>2022</span>
+          <span>Dec 20, 2022</span>
         </div>
       </li>
     </ul>
