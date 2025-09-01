@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 
 import Section from "@/components/Section";
 import BlueprintFX from "@/components/BlueprintFX";
@@ -14,11 +13,14 @@ import DynamicHeroKpis from "@/components/DynamicHeroKpis";
 import Tx from "@/components/i18n/Tx";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
-// ⬇️ your moved components (placed in /components)
+// moved components
 import PhotoTile from "@/components/PhotoTile";
 import Timeline from "@/components/Timeline";
 import Publications from "@/components/Publications";
 import FeaturedCard from "@/components/FeaturedCard";
+
+// ✅ use your existing MagneticButton
+import MagneticButton from "@/components/MagneticButton";
 
 /* ---------- Local types ---------- */
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
@@ -35,8 +37,7 @@ const interests = [
   { label: "Geocaching", emoji: "📍" },
 ];
 
-type TL = TLItem[];
-const exp: TL = [
+const exp: TLItem[] = [
   {
     role: "Technology Development — Working Student",
     org: "Lignopure",
@@ -84,6 +85,9 @@ export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const { t } = useI18n();
 
+  // exact external page you shared
+  const EXTERNAL_RESUME_URL = "https://tridude5.github.io/JohnSlavinskas/resume/";
+
   return (
     <>
       {/* HERO */}
@@ -116,37 +120,38 @@ export default function Page() {
 
             {/* CTAs */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
-              {/* Internal nav → Next Link */}
-              <Link
-                href={`${base}/resume`}
+              {/* External resume page (same tab) */}
+              <MagneticButton
+                href={EXTERNAL_RESUME_URL}
                 className="btn w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>See Resume</Tx>
-              </Link>
+              </MagneticButton>
 
-              {/* Direct file downloads → native <a download> */}
-              <a
+              {/* Direct file downloads (same origin) */}
+              <MagneticButton
                 href={`${base}/downloads/Resume%20P.pdf`}
                 download="John_Slavinskas_Resume_1p.pdf"
                 className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>Download 1-pager</Tx>
-              </a>
+              </MagneticButton>
 
-              <a
+              <MagneticButton
                 href={`${base}/downloads/CV-P.pdf`}
                 download="John_Slavinskas_CV.pdf"
                 className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>Download CV</Tx>
-              </a>
+              </MagneticButton>
 
-              <Link
+              {/* Internal navigation uses next/link under the hood via your component */}
+              <MagneticButton
                 href={`${base}/projects`}
                 className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>View Projects</Tx>
-              </Link>
+              </MagneticButton>
 
               {/* Bottom row */}
               <a
