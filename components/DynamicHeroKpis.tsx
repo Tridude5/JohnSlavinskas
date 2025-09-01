@@ -12,9 +12,14 @@ export default function DynamicHeroKpis({
   const [spark, setSpark] = React.useState<number[]>([0, 0, 0, 0, 0, 0]);
 
   React.useEffect(() => {
-    // no-store avoids stale cached JSON
-    fetch("github-contrib.json", { cache: "no-store" })
-      .then((r) => r.json())
+    const base = process.env.NEXT_PUBLIC_BASE_PATH || ""; // supports GitHub Pages subpath
+    const url = `${base}/github-contrib.json`;
+
+    fetch(url, { cache: "no-store" })
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
       .then((d) => {
         const weeks: number[] = Array.isArray(d.weeks) ? d.weeks : [];
         const bucket = Math.max(1, Math.ceil(weeks.length / 6));
@@ -25,7 +30,8 @@ export default function DynamicHeroKpis({
         setTotal(typeof d.total === "number" ? d.total : cumul.at(-1) ?? 0);
         setSpark(cumul.length === 6 ? cumul : [0, 0, 0, 0, 0, 0]);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("github-contrib.json fetch failed:", err);
         setTotal(0);
         setSpark([0, 0, 0, 0, 0, 0]);
       });
