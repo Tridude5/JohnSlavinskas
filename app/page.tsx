@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 
 import Section from "@/components/Section";
@@ -15,317 +13,80 @@ import DynamicHeroKpis from "@/components/DynamicHeroKpis";
 import Tx from "@/components/i18n/Tx";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
+// ⬇️ your moved components (placed in /components)
+import PhotoTile from "@/components/PhotoTile";
+import Timeline from "@/components/Timeline";
+import Publications from "@/components/Publications";
+import FeaturedCard from "@/components/FeaturedCard";
+
 const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ssr: false });
 
+/* ---------- Local types ---------- */
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
-/* ---------- Reusable photo tile with gentle hover expand ---------- */
-function PhotoTile({
-  src,
-  alt,
-  label,
-  parallax = "0.08",
-  className = "",
-  sizes,
-  objectPosition,
-  priority = false,
-}: {
-  src: string;
-  alt: string;   // english key
-  label: string; // english key
-  parallax?: string;
-  className?: string;
-  sizes?: string;
-  objectPosition?: string;
-  priority?: boolean;
-}) {
-  const { t } = useI18n();
+/* ---------- Local data ---------- */
+const interests = [
+  { label: "Triathlon", emoji: "🏊🚴🏃" },
+  { label: "Ultimate", emoji: "🥏" },
+  { label: "Programming", emoji: "💻" },
+  { label: "Entrepreneurship", emoji: "🚀" },
+  { label: "Travel", emoji: "✈️" },
+  { label: "Birdwatching", emoji: "🪶" },
+  { label: "Fishing", emoji: "🎣" },
+  { label: "Geocaching", emoji: "📍" },
+];
 
-  return (
-    <figure data-parallax={parallax} className={`group relative overflow-visible ${className}`} tabIndex={0}>
-      <div
-        className="
-          relative h-full w-full overflow-hidden rounded-2xl border
-          border-gray-200/30 dark:border-gray-800/50 bg-white/5
-          shadow-sm transition-all duration-300 ease-out
-          group-hover:scale-[1.04] group-focus-within:scale-[1.04]
-          group-hover:shadow-2xl group-focus-within:shadow-2xl
-          group-hover:z-10 group-focus-within:z-10
-        "
-        style={{ willChange: "transform" }}
-      >
-        <Image
-          src={src}
-          alt={t(alt)}
-          fill
-          className="object-cover"
-          sizes={sizes ?? "(max-width: 640px) 100vw, 33vw"}
-          priority={priority}
-          unoptimized
-          style={objectPosition ? { objectPosition } : undefined}
-        />
-        <figcaption
-          className="
-            absolute bottom-2 left-2 rounded-md bg-black/60 text-white
-            text-[11px] sm:text-xs px-2 py-1 backdrop-blur-sm
-            transition-colors duration-200
-            group-hover:bg-black/70 group-focus-within:bg-black/70
-          "
-        >
-          <Tx>{label}</Tx>
-        </figcaption>
-      </div>
-    </figure>
-  );
-}
-
-/* ---------- Experience timeline ---------- */
-function GreenTimeline({ items }: { items: TLItem[] }) {
-  const { t } = useI18n();
-  return (
-    <ol className="relative ml-[14px] pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
-      {items.map((it, i) => (
-        <li key={i} className="relative pb-8 last:pb-0">
-          <span
-            aria-hidden
-            className="absolute top-1 h-4 w-4 rounded-full bg-emerald-500 ring-[3px] ring-emerald-500/25"
-            style={{ left: 0, transform: "translateX(calc(-50% - 47px))" }}
-          />
-          <div className="pt-0.5">
-            <h3 className="font-semibold">
-              {t(it.role)} — <span className="text-emerald-400">{t(it.org)}</span>
-            </h3>
-            <div className="mt-1 text-sm text-gray-400">
-              {t(it.period)}
-              {it.loc ? ` · ${t(it.loc)}` : ""}
-            </div>
-            <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-200">
-              {it.bullets.map((b, j) => (
-                <li key={j}>{t(b)}</li>
-              ))}
-            </ul>
-          </div>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
-/* ---------- Publications ---------- */
-function Publications() {
-  return (
-    <ul className="mt-3 divide-y divide-white/10">
-      <li className="py-4">
-        <a
-          href="https://journaljmsrr.com/index.php/JMSRR/article/view/425"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="font-medium">Lignin-Derived Carbon Fibres: Opportunities and Challenges</span>
-          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
-        </a>
-        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
-          <span>2025</span>
-        </div>
-      </li>
-      <li className="py-4">
-        <a
-          href="https://chemrxiv.org/engage/chemrxiv/article-details/6809454b927d1c2e6670bc80"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="font-medium">Lignin Derived Chemicals and Aromatics: A Review</span>
-          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
-        </a>
-        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">ChemRxiv</span>
-          <span>Apr 24, 2025</span>
-        </div>
-      </li>
-      <li className="py-4">
-        <a
-          href="https://journaljerr.com/index.php/JERR/article/view/1174"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="font-medium">
-            Sustainable Greeting Card – Paper Products Produced on a Laboratory Paper Machine
-          </span>
-          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
-        </a>
-        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
-            J. Engineering Research & Reports
-          </span>
-          <span>2024</span>
-        </div>
-      </li>
-      <li className="py-4">
-        <a
-          href="https://journaljmsrr.com/index.php/JMSRR/article/view/251"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="font-medium">
-            Characterization of Recycled Fiber Material Made from LCB and/or OCC – Handsheet Study
-          </span>
-          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
-        </a>
-        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
-          <span>2023</span>
-        </div>
-      </li>
-      <li className="py-4">
-        <a
-          href="https://journaljmsrr.com/index.php/JMSRR/article/view/225"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="font-medium">Upgrading of OCC with Aseptic Packaging for Paper Board Applications</span>
-          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
-        </a>
-        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">JMSRR</span>
-          <span>2022</span>
-        </div>
-      </li>
-      <li className="py-4">
-        <a
-          href="https://journaljerr.com/index.php/JERR/article/view/780"
-          className="fancy-underline group inline-flex items-start"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="font-medium">
-            A Global Look at the Market Potential of Liquid Container Board and Its Ability to Reduce Plastic Waste – A Brief Review
-          </span>
-          <span aria-hidden className="ml-1 transition-transform group-hover:translate-x-0.5">↗</span>
-        </a>
-        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-semibold">
-            J. Engineering Research & Reports
-          </span>
-          <span>2022</span>
-        </div>
-      </li>
-    </ul>
-  );
-}
-
-/* ---------- Featured helper ---------- */
-function FeaturedCard({
-  title,
-  blurb,
-  href,
-  accent = "from-emerald-400 via-cyan-400 to-emerald-500",
-}: {
-  title: string; // english key
-  blurb: string; // english key
-  href: string;
-  accent?: string;
-}) {
-  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--x", `${e.clientX - r.left}px`);
-    el.style.setProperty("--y", `${e.clientY - r.top}px`);
-  };
-
-  return (
-    <Link
-      href={href}
-      onMouseMove={onMove}
-      className="group relative block overflow-hidden rounded-2xl border border-gray-200/70 dark:border-gray-800/70 bg-white dark:bg-zinc-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-    >
-      <div className={`h-1 w-full bg-gradient-to-r ${accent} opacity-80 group-hover:opacity-100`} />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: "radial-gradient(360px circle at var(--x) var(--y), rgba(255,255,255,0.12), transparent 40%)" }}
-      />
-      <div className="absolute inset-0 -z-10 opacity-[0.06] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:22px_22px] text-gray-700 dark:text-white" />
-      <div className="p-6">
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="text-lg font-semibold tracking-tight"><Tx>{title}</Tx></h3>
-          <span aria-hidden className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-xs text-gray-500 dark:text-gray-300">
-            <Tx>Featured</Tx>
-          </span>
-        </div>
-        <p className="mt-3 text-sm leading-6 text-gray-700 dark:text-gray-200"><Tx>{blurb}</Tx></p>
-        <div className="mt-4 text-sm font-medium text-emerald-600 dark:text-emerald-300"><Tx>View project</Tx></div>
-      </div>
-    </Link>
-  );
-}
+const exp: TLItem[] = [
+  {
+    role: "Technology Development — Working Student",
+    org: "Lignopure",
+    period: "Dec 2024 – Jun 2025",
+    loc: "Hamburg",
+    bullets: [
+      "Developed lignin-based leather via extrusion (≤70% lignin).",
+      "Optimized properties; achieved industry-leading strength.",
+      "Experimented with new lignin formulations for compatibility.",
+    ],
+  },
+  {
+    role: "Master Thesis Researcher",
+    org: "HM Munich (with Lignopure)",
+    period: "Nov 2024 – Jun 2025",
+    bullets: [
+      "Solvent selection & optimization (temperature, ratios, surfactants).",
+      "Estimated Hansen Solubility Parameters for solvent selection.",
+      "Evaluated functional changes during dissolution.",
+    ],
+  },
+  {
+    role: "Technology Development Intern",
+    org: "Lignopure",
+    period: "Aug 2024 – Nov 2024",
+    bullets: [
+      "Lignin processing & drying method studies.",
+      "Contributed to “ForFun” functional materials project.",
+      "With Univ. of Helsinki: VOC testing; identified odor sources & mitigations.",
+    ],
+  },
+  {
+    role: "Emerging Leader (Intern)",
+    org: "Sonoco Product Co.",
+    period: "May 2023 – Aug 2023",
+    bullets: [
+      "Analyzed effluent treatment; implemented cost-effective improvements.",
+      "Deployed Parcview/Everactive sensors for real-time QC.",
+    ],
+  },
+];
 
 /* ---------- Page ---------- */
 export default function Page() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const { t } = useI18n();
 
-  const interests = [
-    { label: "Triathlon", emoji: "🏊🚴🏃" },
-    { label: "Ultimate", emoji: "🥏" },
-    { label: "Programming", emoji: "💻" },
-    { label: "Entrepreneurship", emoji: "🚀" },
-    { label: "Travel", emoji: "✈️" },
-    { label: "Birdwatching", emoji: "🪶" },
-    { label: "Fishing", emoji: "🎣" },
-    { label: "Geocaching", emoji: "📍" },
-  ];
-
-  const exp: TLItem[] = [
-    {
-      role: "Technology Development — Working Student",
-      org: "Lignopure",
-      period: "Dec 2024 – Jun 2025",
-      loc: "Hamburg",
-      bullets: [
-        "Developed lignin-based leather via extrusion (≤70% lignin).",
-        "Optimized properties; achieved industry-leading strength.",
-        "Experimented with new lignin formulations for compatibility.",
-      ],
-    },
-    {
-      role: "Master Thesis Researcher",
-      org: "HM Munich (with Lignopure)",
-      period: "Nov 2024 – Jun 2025",
-      bullets: [
-        "Solvent selection & optimization (temperature, ratios, surfactants).",
-        "Estimated Hansen Solubility Parameters for solvent selection.",
-        "Evaluated functional changes during dissolution.",
-      ],
-    },
-    {
-      role: "Technology Development Intern",
-      org: "Lignopure",
-      period: "Aug 2024 – Nov 2024",
-      bullets: [
-        "Lignin processing & drying method studies.",
-        "Contributed to “ForFun” functional materials project.",
-        "With Univ. of Helsinki: VOC testing; identified odor sources & mitigations.",
-      ],
-    },
-    {
-      role: "Emerging Leader (Intern)",
-      org: "Sonoco Product Co.",
-      period: "May 2023 – Aug 2023",
-      bullets: [
-        "Analyzed effluent treatment; implemented cost-effective improvements.",
-        "Deployed Parcview/Everactive sensors for real-time QC.",
-      ],
-    },
-  ];
-
   return (
     <>
-      {/* HERO — mobile overflow fixes applied */}
+      {/* HERO */}
       <header className="container pt-10 pb-6 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-70">
           <BlueprintFX />
@@ -349,12 +110,11 @@ export default function Page() {
               </Tx>
             </p>
 
-            {/* ensure KPIs don't force overflow */}
             <div className="mt-6 max-w-xl min-w-0 overflow-hidden">
               <DynamicHeroKpis publicationsCount={6} />
             </div>
 
-            {/* CTAs — mobile safe: allow wrap + shrink */}
+            {/* CTAs */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
               <MagneticButton
                 href={`${base}/resume`}
@@ -386,7 +146,7 @@ export default function Page() {
                 <Tx>View Projects</Tx>
               </MagneticButton>
 
-              {/* Bottom row — each spans two columns */}
+              {/* Bottom row */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
@@ -430,7 +190,7 @@ export default function Page() {
         </div>
       </header>
 
-      {/* ABOUT — use t() for Section props (strings only) */}
+      {/* ABOUT */}
       <Section
         id="about"
         title={t("About")}
@@ -477,7 +237,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right column: asymmetrical mosaic with subtle hover expand */}
+          {/* Right column: photo mosaic */}
           <ParallaxGroup>
             <div
               className="
@@ -562,7 +322,7 @@ export default function Page() {
       <Section title={t("Experience")}>
         <div className="grid md:grid-cols-12 gap-6">
           <div className="md:col-span-7">
-            <GreenTimeline items={exp} />
+            <Timeline items={exp} />
           </div>
           <aside className="md:col-span-5">
             <div className="sticky top-24">
