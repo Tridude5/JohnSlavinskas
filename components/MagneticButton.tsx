@@ -6,21 +6,15 @@ import Link from "next/link";
 type Props = {
   href?: string;
   as?: "a" | "button";        // default "a"
-  className?: string;
+  className?: string;         // <-- put your hover styles here (applies to the OUTER element now)
   target?: string;
   rel?: string;
   download?: string | boolean;
   onClick?: React.MouseEventHandler<HTMLElement>;
-  strength?: number;          // how “magnetic” (px of travel), default 16
+  strength?: number;          // px of travel, default 16
   children: React.ReactNode;
 };
 
-/**
- * Magnetic + shiny button:
- * - Slightly follows the cursor (magnet).
- * - Radial shine that tracks mouse (using CSS vars --x/--y).
- * - Works for internal & external links and for downloads.
- */
 export default function MagneticButton({
   href,
   as = "a",
@@ -32,58 +26,59 @@ export default function MagneticButton({
   strength = 16,
   children,
 }: Props) {
-  const ref = React.useRef<HTMLElement>(null);
+  const wrapperRef = React.useRef<HTMLElement>(null);
+  const moverRef = React.useRef<HTMLSpanElement>(null);
+
+  const prefersReducedMotion = React.useMemo(
+    () => typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
+    []
+  );
 
   const onMove = (e: React.MouseEvent<HTMLElement>) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
+    if (prefersReducedMotion) return;
+    const wrapper = wrapperRef.current;
+    const mover = moverRef.current;
+    if (!wrapper || !mover) return;
+
+    const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const x = e.clientX - r.left;
     const y = e.clientY - r.top;
 
     // shine position
-    el.style.setProperty("--x", `${x}px`);
-    el.style.setProperty("--y", `${y}px`);
+    mover.style.setProperty("--x", `${x}px`);
+    mover.style.setProperty("--y", `${y}px`);
 
-    // magnet translation
+    // magnet translation (on inner)
     const dx = (x - r.width / 2) / (r.width / 2);
     const dy = (y - r.height / 2) / (r.height / 2);
-    el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+    mover.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
   };
 
   const onLeave = () => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.transform = "translate(0,0)";
+    const mover = moverRef.current;
+    if (!mover) return;
+    mover.style.transform = "translate(0,0)";
   };
 
-  const content = (
+  // Inner moving content (no hover classes here)
+  const inner = (
     <span
-      ref={ref as any}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      onClick={onClick}
-      // base styles; we keep your existing .btn/.btn-outline look via className
+      ref={moverRef}
       className={[
-        "relative inline-flex items-center justify-center rounded-full transition-transform duration-150",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400",
-        // enable shine variables with a default so SSR is fine
-        "[--x:50%] [--y:50%]",
-        "will-change-transform group", // group for hover effects
-        className,
+        "relative inline-flex w-full h-full items-center justify-center rounded-full",
+        "transition-transform duration-150 will-change-transform [--x:50%] [--y:50%]",
       ].join(" ")}
     >
-      {/* Shine layer that follows the cursor */}
+      {/* Shine layer */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-150"
         style={{
-          // Radial highlight following --x/--y
           background:
             "radial-gradient(140px 140px at var(--x) var(--y), rgba(255,255,255,0.35), rgba(255,255,255,0) 60%)",
         }}
       />
-      {/* Subtle glossy top edge */}
+      {/* Gloss layer */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-full opacity-60 mix-blend-soft-light"
@@ -92,34 +87,51 @@ export default function MagneticButton({
             "linear-gradient(to bottom, rgba(255,255,255,0.25), rgba(255,255,255,0.05) 40%, rgba(0,0,0,0) 60%)",
         }}
       />
-      {/* actual label/content */}
       <span className="relative z-[1]">{children}</span>
     </span>
   );
 
-  // Prefer Next <Link> for internal routes
+  // Common props for the OUTER element (gets your hover classes)
+  const outerProps = {
+    ref: wrapperRef as any,
+    onMouseMove: onMove,
+    onMouseLeave: onLeave,
+    onClick,
+    // outer gets the hover styles + group for inner shine
+    className: [
+      "inline-block group rounded-full", // base
+      className,                         // your hover styles, e.g. shadow/border/bg
+    ].join(" "),
+  };
+
+  // Internal routes → Next Link (when starting with "/")
   if (href && href.startsWith("/")) {
     return (
-      <Link href={href} className="inline-block">
-        {content}
+      <Link href={href} {...(outerProps as any)}>
+        {inner}
       </Link>
     );
   }
 
+  // Button variant (no href)
   if (as === "button" || !href) {
-    return content;
+    return (
+      <button type="button" {...(outerProps as any)}>
+        {inner}
+      </button>
+    );
   }
 
-  // External link <a>
+  // External / relative links (incl. "projects", "downloads/..")
   return (
     <a
       href={href}
       target={target}
-      rel={rel}
+      rel={target === "_blank" ? rel ?? "noopener noreferrer" : rel}
       download={download as any}
-      className="inline-block"
+      {...(outerProps as any)}
     >
-      {content}
+      {inner}
     </a>
   );
 }
