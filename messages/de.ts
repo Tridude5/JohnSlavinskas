@@ -1,4 +1,4 @@
-// /messages/de.ts
+// /messages/de.ts 
 export default {
   /* ===== NAV / HEADER ===== */
   "John Slavinskas": "John Slavinskas",
@@ -159,7 +159,7 @@ export default {
   "Co-author on peer-reviewed publications in fiber recycling & packaging": "Koautor begutachteter Veröffentlichungen zu Faserrecycling & Verpackung",
 
   "Education (resume)": "Ausbildung",
-  "WorldQuant University — M.S. Financial Engineering (Jan 2024 – Nov 2025)": "WorldQuant University — M.Sc. Financial Engineering (Jan 2024 – Nov 2025)",
+  "WorldQuant University — M.S. Financial Engineering (Jan 2024 – Nov 2025)": "WorldQuant University — M.Sc. Finanzingenieurwesen (Jan 2024 – Nov 2025)",
   "HM Hochschule München — M.Eng. Paper Technology (Oct 2023 – Jul 2025)": "HM Hochschule München — M.Eng. Papiertechnik (Okt 2023 – Jul 2025)",
   "University of the People — B.S. Computer Science, Data Science (Jun 2023 – Jun 2025)": "University of the People — B.Sc. Informatik, Data Science (Jun 2023 – Jun 2025)",
   "SUNY-ESF — B.S. Paper Engineering; minors in Management & Physics (Aug 2020 – Aug 2023)": "SUNY-ESF — B.Sc. Papiertechnik; Nebenfächer Management & Physik (Aug 2020 – Aug 2023)",
@@ -232,7 +232,7 @@ export default {
 
   "Planned": "Geplant",
   "WorldQuant University Capstone": "WorldQuant University Capstone",
-  "M.S. Financial Engineering": "M.Sc. Financial Engineering",
+  "M.S. Financial Engineering": "M.Sc. Finanzingenieurwesen",
   "Target: Dec 2025": "Ziel: Dez 2025",
   "Capstone slated for December 2025. Topic TBD; likely directions include portfolio optimization, time-series modeling, or derivatives pricing.":
     "Abschlussprojekt für Dezember 2025 geplant. Thema TBD; voraussichtliche Richtungen: Portfolio-Optimierung, Zeitreihen-Modellierung oder Derivate-Bewertung.",
