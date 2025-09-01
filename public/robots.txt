@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://tridude5.github.io/JohnSlavinskas/sitemap.xml
