@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 
 import Section from "@/components/Section";
@@ -19,8 +20,6 @@ import Timeline from "@/components/Timeline";
 import Publications from "@/components/Publications";
 import FeaturedCard from "@/components/FeaturedCard";
 
-const MagneticButton = dynamic(() => import("@/components/MagneticButton"), { ssr: false });
-
 /* ---------- Local types ---------- */
 type TLItem = { role: string; org: string; period: string; loc?: string; bullets: string[] };
 
@@ -36,7 +35,8 @@ const interests = [
   { label: "Geocaching", emoji: "📍" },
 ];
 
-const exp: TLItem[] = [
+type TL = TLItem[];
+const exp: TL = [
   {
     role: "Technology Development — Working Student",
     org: "Lignopure",
@@ -116,35 +116,37 @@ export default function Page() {
 
             {/* CTAs */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
-              <MagneticButton
+              {/* Internal nav → Next Link */}
+              <Link
                 href={`${base}/resume`}
                 className="btn w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>See Resume</Tx>
-              </MagneticButton>
+              </Link>
 
-              <MagneticButton
+              {/* Direct file downloads → native <a download> */}
+              <a
                 href={`${base}/downloads/Resume%20P.pdf`}
                 download="John_Slavinskas_Resume_1p.pdf"
                 className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>Download 1-pager</Tx>
-              </MagneticButton>
+              </a>
 
-              <MagneticButton
+              <a
                 href={`${base}/downloads/CV-P.pdf`}
                 download="John_Slavinskas_CV.pdf"
                 className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>Download CV</Tx>
-              </MagneticButton>
+              </a>
 
-              <MagneticButton
-                href="/projects"
+              <Link
+                href={`${base}/projects`}
                 className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>View Projects</Tx>
-              </MagneticButton>
+              </Link>
 
               {/* Bottom row */}
               <a
