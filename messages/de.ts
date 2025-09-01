@@ -285,7 +285,7 @@ export default {
   // Titles (segmented tabs) and taglines (used with <Tx>)
   "Paper Engineering": "Papiertechnik",
   "Computer Science / AI": "Informatik / KI",
-  "Financial Engineering": "Financial Engineering",
+  "Financial Engineering": "Finanzingenieurwesen",
   "materials • processes": "Werkstoffe • Prozesse",
   "software • data": "Software • Daten",
   "models • markets": "Modelle • Märkte",
