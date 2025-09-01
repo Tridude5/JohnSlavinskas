@@ -279,5 +279,45 @@ export default {
   "privacy.embeds":
     "Einige Seiten können Inhalte Dritter laden (z. B. Code-Einbettungen, Schriftarten, Karten, Videos, Analytics). Dabei können die Anbieter Ihre IP-Adresse erhalten und Cookies setzen oder ähnliche Technologien verwenden. Ich halte Dritt-Einbindungen so gering wie möglich und lade sie nur, wenn erforderlich.",
   "privacy.changes":
-    "Diese Erklärung kann angepasst werden, wenn sich Website oder Rechtslage ändern. Die aktuelle Fassung erkennen Sie am Datum oben."
+    "Diese Erklärung kann angepasst werden, wenn sich Website oder Rechtslage ändern. Die aktuelle Fassung erkennen Sie am Datum oben.",
+
+  /* ===== SKILLS SHOWCASE (pills & UI from SkillsShowcaseCardFancy.tsx) ===== */
+  // Titles (segmented tabs) and taglines (used with <Tx>)
+  "Paper Engineering": "Papiertechnik",
+  "Computer Science / AI": "Informatik / KI",
+  "Financial Engineering": "Financial Engineering",
+  "materials • processes": "Werkstoffe • Prozesse",
+  "software • data": "Software • Daten",
+  "models • markets": "Modelle • Märkte",
+
+  // Arrow button aria-labels
+  "Previous": "Zurück",
+  "Next": "Weiter",
+  // Region label
+  "Skills showcase": "Skills-Showcase",
+
+  // Paper domain pills
+  "Lignin valorization": "Ligninverwertung",
+  "Biopolymer & fiber composites": "Biopolymer- und Faserverbunde",
+  "Barrier coatings & surface chemistry": "Barrierebeschichtungen & Oberflächenchemie",
+  "Wet-end chemistry": "Wet-End-Chemie",
+  "Fiber morphology & testing": "Fasermorphologie & -prüfung",
+  "Paper physics & mechanical testing": "Papierphysik & mechanische Prüfung",
+
+  // CS/AI domain pills
+  "Python": "Python",
+  "Flutter / Dart": "Flutter / Dart",
+  "SQL / NoSQL": "SQL / NoSQL",
+  "Firebase (Auth/Firestore)": "Firebase (Auth/Firestore)",
+  "Web development (HTML/CSS/JS)": "Webentwicklung (HTML/CSS/JS)",
+  "Quadratic programming": "Quadratische Programmierung",
+  "Transformers & Bayesian networks": "Transformer & Bayessche Netze",
+
+  // Finance domain pills
+  "Factor models (CAPM, Fama-French)": "Faktormodelle (CAPM, Fama-French)",
+  "ML-driven modeling (AI-integrated)": "ML-getriebene Modellierung (KI-integriert)",
+  "Python data science stack": "Python-Data-Science-Stack",
+  "Backtesting pipelines": "Backtesting-Pipelines",
+  "Risk assessment (VaR/CVaR)": "Risikobewertung (VaR/CVaR)",
+  "Monte Carlo simulation": "Monte-Carlo-Simulation"
 };
