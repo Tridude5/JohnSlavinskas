@@ -267,7 +267,7 @@ export default function Page() {
               <PhotoTile
                 src={`${base}/downloads/Christmas_Market_Munich.jpg`}
                 alt="Christmas Market with friends in Munich"
-                label="Christmas Market — Munich"
+                label="Christmas Market — Munich, DE"
                 parallax="0.08"
                 className="col-span-2 row-span-1"
                 sizes="(max-width: 640px) 100vw, 50vw"
@@ -276,7 +276,7 @@ export default function Page() {
               <PhotoTile
                 src={`${base}/downloads/Caving_Syracuse.jpg`}
                 alt="Caving in Syracuse"
-                label="Caving — Syracuse"
+                label="Caving — Syracuse, NY"
                 parallax="0.06"
                 className="col-span-1 row-span-2"
                 sizes="(max-width: 640px) 50vw, 25vw"
