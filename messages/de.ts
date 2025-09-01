@@ -1,4 +1,4 @@
-// /messages/de.ts 
+// /messages/de.ts
 export default {
   /* ===== NAV / HEADER ===== */
   "John Slavinskas": "John Slavinskas",
@@ -81,8 +81,11 @@ export default {
 
   /* ===== EXPERIENCE (HOME) ===== */
   "Experience": "Erfahrung",
+  // (You used some combined strings in the past. Keeping them here in case other pages reference them.)
   "Technology Development — Working Student — Lignopure": "Technologieentwicklung — Werkstudent — Lignopure",
   "Dec 2024 – Jun 2025 · Hamburg": "Dez 2024 – Jun 2025 · Hamburg",
+
+  // Bullets
   "Developed lignin-based leather via extrusion (≤70% lignin).": "Ligninbasiertes Leder mittels Extrusion (≤70 % Lignin) entwickelt.",
   "Optimized properties; achieved industry-leading strength.": "Eigenschaften optimiert; branchenführende Festigkeit erreicht.",
   "Experimented with new lignin formulations for compatibility.": "Mit neuen Ligninformulierungen zur besseren Kompatibilität experimentiert.",
@@ -104,6 +107,23 @@ export default {
   "Analyzed effluent treatment; implemented cost-effective improvements.": "Abwasserbehandlung analysiert; kosteneffiziente Verbesserungen umgesetzt.",
   "Deployed Parcview/Everactive sensors for real-time QC.": "Parcview/Everactive-Sensoren für Echtzeit-Qualitätskontrolle eingesetzt.",
 
+  // NEW: Separate keys that your <Timeline /> actually uses (role/org/period/location)
+  "Technology Development — Working Student": "Technologieentwicklung — Werkstudent",
+  "Master Thesis Researcher": "Masterand (Masterarbeit)",
+  "Technology Development Intern": "Technologieentwicklung — Praktikant",
+  "Emerging Leader (Intern)": "Emerging Leader (Praktikant)",
+
+  "Lignopure": "Lignopure",
+  "HM Munich (with Lignopure)": "HM München (mit Lignopure)",
+  "Sonoco Product Co.": "Sonoco Product Co.",
+  "Hamburg": "Hamburg",
+
+  "Dec 2024 – Jun 2025": "Dez 2024 – Juni 2025",
+  // (The following three already existed above; they are included once in this file)
+  // "Nov 2024 – Jun 2025": "Nov 2024 – Jun 2025",
+  // "Aug 2024 – Nov 2024": "Aug 2024 – Nov 2024",
+  // "May 2023 – Aug 2023": "Mai 2023 – Aug 2023",
+
   /* ===== PROGRAMMING SHOWCASE (HOME SIDEBAR) ===== */
   "Programming Showcase": "Programmier-Showcase",
   "Daily": "Täglich",
@@ -122,17 +142,33 @@ export default {
   "Education": "Ausbildung",
   "MS Financial Engineering": "MSc Finanzingenieurwesen",
   "WorldQuant University · Jan 2024 – Dec 2025 (DEAC)": "WorldQuant University · Jan 2024 – Dez 2025 (DEAC)",
-  "Capstone: Sustainability (TBD).": "Abschlussprojekt: Nachhaltigkeit (folgt).",
+
+  // NEW: split labels/values used in your page
+  "Capstone:": "Abschlussprojekt:",
+  "Sustainability (TBD).": "Nachhaltigkeit (folgt).",
+
   "MEng Paper Technology": "MEng Papiertechnik",
   "Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)": "Hochschule München (HM) · Okt 2023 – Jul 2025 (ZEvA)",
-  "Thesis: Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract":
-    "Masterarbeit: Löslichkeitsbewertung technischer Lignine in organischen Lösungsmitteln zur Entwicklung eines ligninbasierten Extrakts",
+
+  // NEW: split labels/values for thesis
+  "Thesis:": "Masterarbeit:",
+  "Solubility Evaluation of Technical Lignins in Organic Solvents for the Development of a Lignin-Based Extract":
+    "Löslichkeitsbewertung technischer Lignine in organischen Lösungsmitteln zur Entwicklung eines ligninbasierten Extrakts",
+
   "BS Computer Science": "BSc Informatik",
   "University of the People · Jun 2023 – Jun 2025 (WASC)": "University of the People · Jun 2023 – Jun 2025 (WASC)",
-  "Concentrations: Data Science, Network & Application Security": "Schwerpunkte: Data Science, Netzwerk- & Anwendungssicherheit",
+
+  // NEW: split labels/values for concentrations
+  "Concentrations:": "Schwerpunkte:",
+  "Data Science, Network & Application Security": "Data Science, Netzwerk- & Anwendungssicherheit",
+
   "BS Paper Engineering": "BSc Papiertechnik",
   "SUNY ESF · Aug 2020 – Aug 2023 (ABET)": "SUNY ESF · Aug 2020 – Aug 2023 (ABET)",
-  "Minors: Management, Physics": "Nebenfächer: Management, Physik",
+
+  // NEW: split labels/values for minors
+  "Minors:": "Nebenfächer:",
+  "Management, Physics": "Management, Physik",
+
   "Research & Publications": "Forschung & Veröffentlichungen",
 
   /* ===== PUBLICATIONS LIST (HOME) ===== */
@@ -319,5 +355,13 @@ export default {
   "Python data science stack": "Python-Data-Science-Stack",
   "Backtesting pipelines": "Backtesting-Pipelines",
   "Risk assessment (VaR/CVaR)": "Risikobewertung (VaR/CVaR)",
-  "Monte Carlo simulation": "Monte-Carlo-Simulation"
+  "Monte Carlo simulation": "Monte-Carlo-Simulation",
+
+  /* ===== Buttons / aria (used in HERO) ===== */
+  "Open my GitHub profile in a new tab": "GitHub-Profil in neuem Tab öffnen",
+  "Open my LinkedIn profile in a new tab": "LinkedIn-Profil in neuem Tab öffnen",
+
+  /* ===== Extra phrases requested ===== */
+  "ship independently": "eigenständig ausliefern",
+  "ramp fast": "schnell einarbeiten"
 };
