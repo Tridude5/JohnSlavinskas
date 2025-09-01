@@ -120,7 +120,7 @@ export default {
   /* ===== EDUCATION & RESEARCH (HOME) ===== */
   "Education & Research": "Ausbildung & Forschung",
   "Education": "Ausbildung",
-  "MS Financial Engineering": "MSc Financial Engineering",
+  "MS Financial Engineering": "MSc Finanzingenieurwesen",
   "WorldQuant University · Jan 2024 – Dec 2025 (DEAC)": "WorldQuant University · Jan 2024 – Dez 2025 (DEAC)",
   "Capstone: Sustainability (TBD).": "Abschlussprojekt: Nachhaltigkeit (folgt).",
   "MEng Paper Technology": "MEng Papiertechnik",
