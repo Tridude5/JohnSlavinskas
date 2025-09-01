@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+// (Link not needed for this fix)
+// import Link from "next/link";
 
 import Section from "@/components/Section";
 import BlueprintFX from "@/components/BlueprintFX";
@@ -13,13 +14,10 @@ import DynamicHeroKpis from "@/components/DynamicHeroKpis";
 import Tx from "@/components/i18n/Tx";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
-// moved components
 import PhotoTile from "@/components/PhotoTile";
 import Timeline from "@/components/Timeline";
 import Publications from "@/components/Publications";
 import FeaturedCard from "@/components/FeaturedCard";
-
-// ✅ use your existing MagneticButton
 import MagneticButton from "@/components/MagneticButton";
 
 /* ---------- Local types ---------- */
@@ -82,10 +80,10 @@ const exp: TLItem[] = [
 
 /* ---------- Page ---------- */
 export default function Page() {
+  // You can keep using this for images if you like, but CTAs below now use *relative* paths.
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const { t } = useI18n();
 
-  // exact external page you shared
   const EXTERNAL_RESUME_URL = "https://tridude5.github.io/JohnSlavinskas/resume/";
 
   return (
@@ -120,7 +118,7 @@ export default function Page() {
 
             {/* CTAs */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
-              {/* External resume page (same tab) */}
+              {/* Works (external absolute URL) */}
               <MagneticButton
                 href={EXTERNAL_RESUME_URL}
                 className="btn w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
@@ -128,26 +126,27 @@ export default function Page() {
                 <Tx>See Resume</Tx>
               </MagneticButton>
 
-              {/* Direct file downloads (same origin) */}
+              {/* ✅ Use relative URL so it resolves under /JohnSlavinskas/ on GitHub Pages */}
               <MagneticButton
-                href={`${base}/downloads/Resume%20P.pdf`}
+                href={"downloads/Resume%20P.pdf"}
                 download="John_Slavinskas_Resume_1p.pdf"
                 className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>Download 1-pager</Tx>
               </MagneticButton>
 
+              {/* ✅ Relative URL (no leading slash) */}
               <MagneticButton
-                href={`${base}/downloads/CV-P.pdf`}
+                href={"downloads/CV-P.pdf"}
                 download="John_Slavinskas_CV.pdf"
                 className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>Download CV</Tx>
               </MagneticButton>
 
-              {/* Internal navigation uses next/link under the hood via your component */}
+              {/* ✅ Relative internal nav; keeps MagneticButton */}
               <MagneticButton
-                href={`${base}/projects`}
+                href={"projects"}
                 className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
               >
                 <Tx>View Projects</Tx>
@@ -255,7 +254,6 @@ export default function Page() {
                 lg:auto-rows-[300px]
               "
             >
-              {/* LEFT — wider, tall */}
               <PhotoTile
                 src={`${base}/downloads/1683206302513.jfif`}
                 alt="Resume picture — headshot"
@@ -266,7 +264,6 @@ export default function Page() {
                 priority
               />
 
-              {/* TOP RIGHT — wide */}
               <PhotoTile
                 src={`${base}/downloads/Christmas_Market_Munich.jpg`}
                 alt="Christmas Market with friends in Munich"
@@ -276,7 +273,6 @@ export default function Page() {
                 sizes="(max-width: 640px) 100vw, 50vw"
               />
 
-              {/* BOTTOM RIGHT — tall */}
               <PhotoTile
                 src={`${base}/downloads/Caving_Syracuse.jpg`}
                 alt="Caving in Syracuse"
@@ -287,7 +283,6 @@ export default function Page() {
                 objectPosition="50% 45%"
               />
 
-              {/* FAR RIGHT — tall */}
               <PhotoTile
                 src={`${base}/downloads/Salzburg.jpg`}
                 alt="Salzburg, Austria"
