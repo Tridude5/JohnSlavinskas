@@ -241,4 +241,43 @@ export default {
 
   "Ask AI": "KI fragen",
   "Projects — John Slavinskas": "Projekte — John Slavinskas",
+
+  /* ===== LEGAL: IMPRESSUM ===== */
+  "imprint.title": "Impressum",
+  "imprint.lastUpdated": "Zuletzt aktualisiert: {date}",
+  "imprint.serviceProviderHeading": "Diensteanbieter (§ 5 TMG)",
+  "imprint.contactHeading": "Kontakt",
+  "imprint.phoneLabel": "Telefon:",
+  "imprint.emailLabel": "E-Mail:",
+  "imprint.responsibleHeading": "Verantwortlich für den Inhalt (§ 18 Abs. 2 MStV)",
+  "imprint.liabilityContentHeading": "Haftung für Inhalte",
+  "imprint.liabilityContent":
+    "Die Inhalte dieser Website werden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann ich jedoch keine Gewähr übernehmen. Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werde ich diese Inhalte umgehend entfernen.",
+  "imprint.linksLiabilityHeading": "Haftung für Links",
+  "imprint.linksLiability":
+    "Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links umgehend entfernen.",
+  "imprint.copyrightHeading": "Urheberrecht",
+  "imprint.copyright":
+    "Die durch mich erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen meiner schriftlichen Zustimmung. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht von mir erstellt wurden, werden die Urheberrechte Dritter beachtet und entsprechende Inhalte als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitte ich um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Inhalte umgehend entfernen.",
+
+  /* ===== LEGAL: DATENSCHUTZ ===== */
+  "privacy.title": "Datenschutz",
+  "privacy.updated": "Zuletzt aktualisiert",
+  "privacy.contact": "Kontakt",
+  "privacy.phoneLabel": "Telefon:",
+  "privacy.emailLabel": "E-Mail:",
+  "privacy.emailsHeading": "E-Mails",
+  "privacy.eurightsHeading": "EU/EWR",
+  "privacy.embedsHeading": "Einbindungen Dritter",
+  "privacy.changesHeading": "Änderungen",
+  "privacy.body":
+    "Ich verarbeite so wenige personenbezogene Daten wie möglich, um diese Website zu betreiben. Ich verkaufe keine Daten. Zur Bereitstellung der Website und zu Sicherheitszwecken fallen automatisch Server-Logs an (z. B. IP-Adresse, Datum/Uhrzeit, Referrer, User-Agent). Logs werden nur so lange aufbewahrt, wie es für Sicherheit und Fehlersuche erforderlich ist.",
+  "privacy.emails":
+    "Wenn Sie mir eine E-Mail senden, verarbeite ich Ihre Nachricht, Ihre E-Mail-Adresse und die von Ihnen mitgeteilten Informationen, um zu antworten. Rechtsgrundlagen sind Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Kommunikation) und Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an Beantwortung und Dokumentation). Korrespondenz wird nur so lange aufbewahrt, wie es zur Bearbeitung Ihres Anliegens und etwaiger gesetzlicher Aufbewahrungspflichten erforderlich ist.",
+  "privacy.eurights":
+    "Für Betroffene im EU/EWR-Raum gelten die Rechte nach der DSGVO, insbesondere Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch und Datenübertragbarkeit. Außerdem besteht das Recht, sich bei einer Aufsichtsbehörde am Aufenthaltsort oder Arbeitsplatz zu beschweren.",
+  "privacy.embeds":
+    "Einige Seiten können Inhalte Dritter laden (z. B. Code-Einbettungen, Schriftarten, Karten, Videos, Analytics). Dabei können die Anbieter Ihre IP-Adresse erhalten und Cookies setzen oder ähnliche Technologien verwenden. Ich halte Dritt-Einbindungen so gering wie möglich und lade sie nur, wenn erforderlich.",
+  "privacy.changes":
+    "Diese Erklärung kann angepasst werden, wenn sich Website oder Rechtslage ändern. Die aktuelle Fassung erkennen Sie am Datum oben."
 };
