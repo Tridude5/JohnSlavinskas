@@ -3,10 +3,11 @@ import React from "react";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
 export default function ImprintClient({
-  lastUpdatedISO = new Date().toISOString().slice(0, 10),
+  // Fixed date
+  lastUpdatedISO = "2025-09-01",
 }: { lastUpdatedISO?: string }) {
   const { t, locale } = useI18n() as { t: (k: string, o?: any) => string; locale?: string };
-  const tt = (k: string, o?: any) => t(`imprint.${k}`, o); // <-- 👈 namespaced helper
+  const tt = (k: string, o?: any) => t(`imprint.${k}`, o); // namespaced helper
 
   const me = {
     name: "John Slavinskas",
@@ -18,8 +19,14 @@ export default function ImprintClient({
     email: "Slavinskasjack@gmail.com",
   } as const;
 
-  const formattedDate = new Intl.DateTimeFormat(locale || undefined, { dateStyle: "long" })
-    .format(new Date(lastUpdatedISO));
+  // Robust UTC parsing to avoid off-by-one issues across timezones
+  const [y, m, d] = lastUpdatedISO.split("-").map(Number);
+  const dateUtc = new Date(Date.UTC(y, (m || 1) - 1, d || 1));
+
+  // Force English long date so it reads "September 1, 2025"
+  const formattedDate = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(dateUtc);
+  // If you prefer locale-aware formatting instead, use:
+  // const formattedDate = new Intl.DateTimeFormat(locale || undefined, { dateStyle: "long" }).format(dateUtc);
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-12 text-zinc-900 dark:text-zinc-100">
@@ -31,7 +38,9 @@ export default function ImprintClient({
         <address className="not-italic leading-7">
           <div>{me.name}</div>
           <div>{me.street}</div>
-          <div>{me.postalCode} {me.city}, {me.country}</div>
+          <div>
+            {me.postalCode} {me.city}, {me.country}
+          </div>
         </address>
       </section>
 
@@ -45,7 +54,9 @@ export default function ImprintClient({
         </p>
         <p>
           {tt("emailLabel")}{" "}
-          <a className="underline underline-offset-2" href={`mailto:${me.email}`}>{me.email}</a>
+          <a className="underline underline-offset-2" href={`mailto:${me.email}`}>
+            {me.email}
+          </a>
         </p>
       </section>
 
@@ -67,11 +78,6 @@ export default function ImprintClient({
         <h2 className="text-xl font-medium">{tt("copyrightHeading")}</h2>
         <p>{tt("copyright")}</p>
       </section>
-
-      {/* Optional: remove this footer to avoid the © duplicate with your site footer */}
-      {/* <footer className="mt-10 text-sm opacity-70">
-        <p>© {new Date().getFullYear()} {me.name}</p>
-      </footer> */}
     </main>
   );
 }
