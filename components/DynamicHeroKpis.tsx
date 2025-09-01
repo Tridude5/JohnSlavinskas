@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import KPIs from "@/components/KPIs";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 type Props = { publicationsCount?: number; label?: string };
 
@@ -8,18 +9,14 @@ export default function DynamicHeroKpis({
   publicationsCount = 6,
   label = "Open-source Commits (12 mo)",
 }: Props) {
+  const { t } = useI18n();
   const [total, setTotal] = React.useState(0);
   const [spark, setSpark] = React.useState<number[]>([0, 0, 0, 0, 0, 0]);
 
   React.useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_BASE_PATH || ""; // supports GitHub Pages subpath
-    const url = `${base}/github-contrib.json`;
-
-    fetch(url, { cache: "no-store" })
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
+    // no-store avoids stale cached JSON
+    fetch("github-contrib.json", { cache: "no-store" })
+      .then((r) => r.json())
       .then((d) => {
         const weeks: number[] = Array.isArray(d.weeks) ? d.weeks : [];
         const bucket = Math.max(1, Math.ceil(weeks.length / 6));
@@ -30,8 +27,7 @@ export default function DynamicHeroKpis({
         setTotal(typeof d.total === "number" ? d.total : cumul.at(-1) ?? 0);
         setSpark(cumul.length === 6 ? cumul : [0, 0, 0, 0, 0, 0]);
       })
-      .catch((err) => {
-        console.error("github-contrib.json fetch failed:", err);
+      .catch(() => {
         setTotal(0);
         setSpark([0, 0, 0, 0, 0, 0]);
       });
@@ -40,8 +36,8 @@ export default function DynamicHeroKpis({
   return (
     <KPIs
       items={[
-        { label: "Publications", value: publicationsCount, spark: [1, 2, 3, 4, 5, publicationsCount] },
-        { label, value: total, spark },
+        { label: t("Publications"), value: publicationsCount, spark: [1, 2, 3, 4, 5, publicationsCount] },
+        { label: t(label), value: total, spark },
       ]}
     />
   );
