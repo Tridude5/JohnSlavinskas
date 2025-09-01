@@ -1,9 +1,16 @@
 "use client";
 
 import { useI18n } from "@/components/i18n/I18nProvider";
-import { TLItem } from "@/types/home";
 
-export default function GreenTimeline({ items }: { items: TLItem[] }) {
+type TLItem = {
+  role: string;
+  org: string;
+  period: string;
+  loc?: string;
+  bullets: string[];
+};
+
+export default function Timeline({ items }: { items: TLItem[] }) {
   const { t } = useI18n();
   return (
     <ol className="relative ml-[14px] pl-8 md:pl-9 border-l-2 border-gray-400/30 dark:border-white/10">
