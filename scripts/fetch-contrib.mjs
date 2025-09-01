@@ -1,12 +1,12 @@
 // scripts/fetch-contrib.mjs
-// Public contributions for a specific user via GitHub GraphQL (no private).
-// Writes: public/github-contrib.json -> { total: number, weeks: number[] }
+// Pull PUBLIC contributions for a specific user via GraphQL.
+// Writes: public/github-contrib.json -> { total, weeks[~52] }
 
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const login = process.env.GH_LOGIN || "Tridude5";
-const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN; // GitHub Actions token
+const login = process.env.GH_LOGIN || "Tridude5";            // <-- your GitHub username
+const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN; // use Actions token
 
 const outPath = path.join(process.cwd(), "public", "github-contrib.json");
 await fs.mkdir(path.dirname(outPath), { recursive: true });
@@ -30,13 +30,14 @@ const QUERY_PUBLIC_BY_USER = `
 
 function sumWeeks(weeks) {
   return Array.isArray(weeks)
-    ? weeks.map(w => (w.contributionDays || []).reduce((s, d) => s + (d?.contributionCount || 0), 0))
+    ? weeks.map(w => (w.contributionDays || [])
+        .reduce((s, d) => s + (d?.contributionCount || 0), 0))
     : Array(52).fill(0);
 }
 
 async function main() {
   if (!token) {
-    console.warn("⚠ GH_TOKEN missing; writing zeros.");
+    console.warn("⚠ No token in env; writing zeros.");
     await fs.writeFile(outPath, JSON.stringify({ total: 0, weeks: Array(52).fill(0) }, null, 2));
     return;
   }
@@ -61,6 +62,9 @@ async function main() {
   }
 
   const j = await r.json();
+  const err = j?.errors?.[0]?.message;
+  if (err) console.warn("GraphQL errors:", j.errors);
+
   const coll = j?.data?.user?.contributionsCollection;
   const total = Number(coll?.totalCommitContributions) || 0;
   const weeks = sumWeeks(coll?.contributionCalendar?.weeks);
@@ -70,6 +74,6 @@ async function main() {
 }
 
 main().catch(async (e) => {
-  console.error("❌ fetch-contrib error:", e);
+  console.error("❌ fetch-contrib failed:", e);
   await fs.writeFile(outPath, JSON.stringify({ total: 0, weeks: Array(52).fill(0) }, null, 2));
 });
