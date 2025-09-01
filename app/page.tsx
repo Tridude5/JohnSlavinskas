@@ -1,8 +1,7 @@
+// /app/page.tsx (or your home page file)
 "use client";
 
 import React from "react";
-// (Link not needed for this fix)
-// import Link from "next/link";
 
 import Section from "@/components/Section";
 import BlueprintFX from "@/components/BlueprintFX";
@@ -80,21 +79,26 @@ const exp: TLItem[] = [
 
 /* ---------- Page ---------- */
 export default function Page() {
-  // You can keep using this for images if you like, but CTAs below now use *relative* paths.
+  // keep using base for images if you want, CTAs below use relative paths for GH Pages
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const { t } = useI18n();
 
+  // external resume page
   const EXTERNAL_RESUME_URL = "https://tridude5.github.io/JohnSlavinskas/resume/";
 
   return (
     <>
-      {/* HERO */}
-      <header className="container pt-10 pb-6 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 opacity-70">
+      {/* HERO — polished background & fades */}
+      <header className="container relative pt-20 pb-10 overflow-hidden">
+        <div className="absolute inset-0 -z-10">
           <BlueprintFX />
+          {/* soft vignette from top */}
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+          {/* fade to content at bottom */}
+          <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none bg-gradient-to-t from-black/40 to-transparent" />
         </div>
 
-        <div className="grid gap-5 sm:gap-8 md:grid-cols-12 items-start relative overflow-hidden">
+        <div className="grid gap-5 sm:gap-8 md:grid-cols-12 items-start relative">
           {/* Left */}
           <div className="min-w-0 md:col-span-7">
             <p className="text-sm uppercase tracking-widest text-gray-500">
@@ -105,7 +109,7 @@ export default function Page() {
               John (Jack) Slavinskas
             </h1>
 
-            <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
+            <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-200 max-w-2xl">
               <Tx>
                 I work at the overlap of materials and software. International experience (Europe & North America).
                 I turn lignin and other biobased research into clean data, simple models, and small tools that help teams decide faster.
@@ -116,38 +120,44 @@ export default function Page() {
               <DynamicHeroKpis publicationsCount={6} />
             </div>
 
-            {/* CTAs */}
+            {/* CTAs — hover lift (no conflict with the magnetic transform) */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
-              {/* Works (external absolute URL) */}
+              {/* Primary */}
               <MagneticButton
                 href={EXTERNAL_RESUME_URL}
-                className="btn w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
+                className="btn w-full h-full inline-flex justify-center text-center text-[13px] sm:text-sm
+                           rounded-full border border-white/10 shadow-sm
+                           hover:shadow-lg hover:border-white/20 transition"
               >
                 <Tx>See Resume</Tx>
               </MagneticButton>
 
-              {/* ✅ Use relative URL so it resolves under /JohnSlavinskas/ on GitHub Pages */}
+              {/* Outline (downloads + projects) */}
               <MagneticButton
                 href={"downloads/Resume%20P.pdf"}
                 download="John_Slavinskas_Resume_1p.pdf"
-                className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
+                className="btn-outline w-full h-full inline-flex justify-center text-center text-[13px] sm:text-sm
+                           rounded-full border border-white/15 hover:border-white/25
+                           hover:shadow-md hover:bg-white/10 transition"
               >
                 <Tx>Download 1-pager</Tx>
               </MagneticButton>
 
-              {/* ✅ Relative URL (no leading slash) */}
               <MagneticButton
                 href={"downloads/CV-P.pdf"}
                 download="John_Slavinskas_CV.pdf"
-                className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
+                className="btn-outline w-full h-full inline-flex justify-center text-center text-[13px] sm:text-sm
+                           rounded-full border border-white/15 hover:border-white/25
+                           hover:shadow-md hover:bg-white/10 transition"
               >
                 <Tx>Download CV</Tx>
               </MagneticButton>
 
-              {/* ✅ Relative internal nav; keeps MagneticButton */}
               <MagneticButton
                 href={"projects"}
-                className="btn-outline w-full h-full inline-flex justify-center text-center min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
+                className="btn-outline w-full h-full inline-flex justify-center text-center text-[13px] sm:text-sm
+                           rounded-full border border-white/15 hover:border-white/25
+                           hover:shadow-md hover:bg-white/10 transition"
               >
                 <Tx>View Projects</Tx>
               </MagneticButton>
@@ -157,7 +167,8 @@ export default function Page() {
                 href="https://github.com/Tridude5"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-3 sm:px-4 min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
+                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-3 sm:px-4 min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm
+                           rounded-full border border-white/15 hover:border-white/25 hover:shadow-md hover:bg-white/10 transition"
                 aria-label={t("Open my GitHub profile in a new tab")}
               >
                 <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
@@ -173,7 +184,8 @@ export default function Page() {
                 href="https://www.linkedin.com/in/john-slavinskas/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-3 sm:px-4 min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm"
+                className="btn-outline w-full h-full col-span-2 inline-flex items-center justify-center gap-2 px-3 sm:px-4 min-w-0 whitespace-normal break-words leading-snug text-[13px] sm:text-sm
+                           rounded-full border border-white/15 hover:border-white/25 hover:shadow-md hover:bg-white/10 transition"
                 aria-label={t("Open my LinkedIn profile in a new tab")}
               >
                 <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
@@ -204,7 +216,7 @@ export default function Page() {
       >
         <div className="grid gap-6 md:grid-cols-2 items-center">
           <div className="card">
-            <div className="space-y-3 text-gray-700 dark:text-gray-300">
+            <div className="space-y-3 text-gray-700 dark:text-gray-200">
               <p>
                 <Tx>
                   Endurance sports are a big part of my life. I train year round and finished an Ironman. Long swims, windy bike rides, and quiet miles teach patience and grit. The plan matters, but so do the small choices inside the plan. Fuel on time. Keep the cadence. Fix little problems early.
@@ -232,7 +244,7 @@ export default function Page() {
                   {interests.map(({ label, emoji }) => (
                     <span
                       key={label}
-                      className="w-full h-[3.25rem] inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/40 dark:border-gray-800/60 bg-white/5 px-3 text-[13px] sm:text-sm font-medium text-center whitespace-normal break-words leading-snug"
+                      className="w-full h-[3.25rem] inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 text-[13px] sm:text-sm font-medium text-center whitespace-normal break-words leading-snug"
                     >
                       <span aria-hidden className="shrink-0">{emoji}</span>
                       <span className="block">{t(label)}</span>
@@ -254,41 +266,45 @@ export default function Page() {
                 lg:auto-rows-[300px]
               "
             >
+              {/* LEFT — wider, tall */}
               <PhotoTile
                 src={`${base}/downloads/1683206302513.jfif`}
                 alt="Resume picture — headshot"
                 label="Resume picture"
                 parallax="0.12"
-                className="col-span-2 row-span-2"
+                className="col-span-2 row-span-2 rounded-2xl overflow-hidden ring-1 ring-white/10"
                 sizes="(max-width: 640px) 100vw, 50vw"
                 priority
               />
 
+              {/* TOP RIGHT — wide */}
               <PhotoTile
                 src={`${base}/downloads/Christmas_Market_Munich.jpg`}
                 alt="Christmas Market with friends in Munich"
-                label="Christmas Market — Munich, DE"
+                label="Christmas Market — Munich"
                 parallax="0.08"
-                className="col-span-2 row-span-1"
+                className="col-span-2 row-span-1 rounded-2xl overflow-hidden ring-1 ring-white/10"
                 sizes="(max-width: 640px) 100vw, 50vw"
               />
 
+              {/* BOTTOM RIGHT — tall */}
               <PhotoTile
                 src={`${base}/downloads/Caving_Syracuse.jpg`}
                 alt="Caving in Syracuse"
-                label="Caving — Syracuse, NY"
+                label="Caving — Syracuse"
                 parallax="0.06"
-                className="col-span-1 row-span-2"
+                className="col-span-1 row-span-2 rounded-2xl overflow-hidden ring-1 ring-white/10"
                 sizes="(max-width: 640px) 50vw, 25vw"
                 objectPosition="50% 45%"
               />
 
+              {/* FAR RIGHT — tall */}
               <PhotoTile
                 src={`${base}/downloads/Salzburg.jpg`}
                 alt="Salzburg, Austria"
                 label="Salzburg, Austria"
                 parallax="0.10"
-                className="col-span-1 row-span-2"
+                className="col-span-1 row-span-2 rounded-2xl overflow-hidden ring-1 ring-white/10"
                 sizes="(max-width: 640px) 50vw, 25vw"
               />
             </div>
