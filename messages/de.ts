@@ -56,9 +56,9 @@ export default {
   "Resume picture — headshot": "Bewerbungsfoto — Porträt",
   "Resume picture": "Bewerbungsfoto",
   "Christmas Market with friends in Munich": "Weihnachtsmarkt mit Freunden in München",
-  "Christmas Market — Munich": "Christkindlmarkt — München",
+  "Christmas Market — Munich, DE": "Christkindlmarkt — München, DE",
   "Caving in Syracuse": "Höhlentour in Syracuse",
-  "Caving — Syracuse": "Höhlentour — Syracuse",
+  "Caving — Syracuse, NY": "Höhlentour — Syracuse, NY",
   "Salzburg, Austria": "Salzburg, Österreich",
 
   /* ===== PROJECTS SECTION (HOME) ===== */
