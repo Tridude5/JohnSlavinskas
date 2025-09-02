@@ -18,6 +18,22 @@ export const metadata: Metadata = {
   },
   description:
     "Portfolio of John Slavinskas — Paper Engineer blending sustainable materials research, software/ML, and quantitative finance.",
+
+  // ✅ Wire up your unified dark favicons
+  icons: {
+    icon: [
+      { url: "/favicons/favicon.ico" },
+      { url: "/favicons/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: "/favicons/apple-touch-icon.png", sizes: "180x180" }],
+  },
+  manifest: "/favicons/manifest.json",
+  // optional but nice for mobile status bar colors
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0B0F1A" },
+    { media: "(prefers-color-scheme: dark)", color: "#0B0F1A" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
