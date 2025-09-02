@@ -5,13 +5,15 @@ import Header from "@/components/Header";
 
 /**
  * Fixed, glassy header that auto-reserves space below it.
- * - Adds safe-area inset for iOS notches.
- * - Provides a small min-height fallback so content isn't cut off before JS runs.
+ * Adds a small base gap so content sits a little under the header.
  */
 export default function StickyHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [height, setHeight] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  // 👇 tweak this to taste (px)
+  const BASE_GAP = 10; // small extra padding below the header
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -47,14 +49,18 @@ export default function StickyHeader() {
             ? "backdrop-blur bg-black/40 border-white/10"
             : "bg-transparent border-transparent",
         ].join(" ")}
-        // Respect iOS notch; this also increases measured height so spacer matches.
+        // Respect iOS notch
         style={{ paddingTop: "env(safe-area-inset-top)" }}
       >
         <Header />
       </div>
 
-      {/* Exact spacer; with a small fallback so content isn't cut off before measurement */}
-      <div aria-hidden="true" style={{ height }} className="min-h-14 sm:min-h-16" />
+      {/* Spacer equals measured header height + a little extra */}
+      <div
+        aria-hidden="true"
+        style={{ height: height + BASE_GAP }}
+        className="min-h-14 sm:min-h-16"
+      />
     </>
   );
 }
