@@ -15,10 +15,37 @@ const NAV = [
 export default function Header() {
   const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
+  const navRef = React.useRef<HTMLElement>(null);
+
+  // close mobile menu on route change
   React.useEffect(() => setOpen(false), [pathname]);
 
+  // Measure actual header height -> CSS var for anchor/scroll offset
+  React.useLayoutEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+
+    const setVar = () => {
+      const h = Math.ceil(el.getBoundingClientRect().height);
+      document.documentElement.style.setProperty("--header-h", `${h}px`);
+    };
+
+    setVar();
+    const ro = new ResizeObserver(setVar);
+    ro.observe(el);
+    window.addEventListener("resize", setVar, { passive: true });
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", setVar);
+    };
+  }, []);
+
   return (
-    <nav className="sticky top-0 z-50 border-b border-black/5 dark:border-white/10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-zinc-900/60">
+    <nav
+      ref={navRef}
+      className="sticky top-0 z-50 border-b border-black/5 dark:border-white/10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-zinc-900/60"
+    >
       <div className="container">
         {/* Top row */}
         <div className="flex items-center justify-between gap-3 py-3">
@@ -61,7 +88,7 @@ export default function Header() {
               </svg>
             </button>
 
-            {/* Language toggle stays to the far right on all sizes */}
+            {/* Language toggle */}
             <div className="shrink-0">
               <LanguageToggle />
             </div>
@@ -82,6 +109,7 @@ export default function Header() {
                   key={n.href}
                   href={n.href}
                   className="rounded-lg px-3 py-2 text-sm text-white/90 hover:bg-white/5"
+                  onClick={() => setOpen(false)}
                 >
                   <Tx>{n.label}</Tx>
                 </Link>
