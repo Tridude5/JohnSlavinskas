@@ -18,36 +18,25 @@ export const metadata: Metadata = {
   description:
     "Portfolio of John Slavinskas — Paper Engineer blending sustainable materials research, software/ML, and quantitative finance.",
 
-  // ✅ Matches your /public/favicons files exactly
+  // Google-friendly: stable 48x48 PNG + root ICO (no query strings)
   icons: {
     icon: [
-      { url: "/favicons/favicon-32.png?v=10", sizes: "32x32", type: "image/png" },
-      { url: "/favicons/favicon-16.png?v=10", sizes: "16x16", type: "image/png" },
-      { url: "/favicons/favicon.ico?v=10" }, // classic .ico fallback
+      { url: "/favicons/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" }, // classic root .ico
+      // optional extras for browsers
+      { url: "/favicons/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-16.png", sizes: "16x16", type: "image/png" },
     ],
-    apple: [{ url: "/favicons/apple-touch-icon.png?v=10", sizes: "180x180" }],
-    // legacy alias some user agents still read:
-    shortcut: ["/favicons/favicon.ico?v=10"],
+    apple: [{ url: "/favicons/apple-touch-icon.png", sizes: "180x180" }],
   },
 
-  manifest: "/favicons/manifest.json?v=10",
-  themeColor: "#0B0F1A",
+  manifest: "/favicons/manifest.json",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      {/* Extra insurance: explicit <link>s in case something overrides metadata */}
-      <head>
-        <link rel="icon" href="/favicons/favicon-32.png?v=10" sizes="32x32" type="image/png" />
-        <link rel="icon" href="/favicons/favicon-16.png?v=10" sizes="16x16" type="image/png" />
-        <link rel="icon" href="/favicons/favicon.ico?v=10" />
-        <link rel="shortcut icon" href="/favicons/favicon.ico?v=10" />
-        <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png?v=10" />
-        <link rel="manifest" href="/favicons/manifest.json?v=10" />
-        <meta name="theme-color" content="#0B0F1A" />
-      </head>
-
       <body className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased">
         <AppEffects />
         <I18nProvider>
