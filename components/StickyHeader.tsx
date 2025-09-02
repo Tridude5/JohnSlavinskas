@@ -1,19 +1,15 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 
 /**
- * Fixed, glassy header that auto-reserves space below it.
- * Adds a small base gap so content sits a little under the header.
+ * Fixed, glassy header with a deterministic spacer:
+ * - Uses CSS vars for height (no JS measuring -> no jumps)
+ * - Spacer includes iOS safe-area and a small base gap
  */
 export default function StickyHeader() {
   const [scrolled, setScrolled] = useState(false);
-  const [height, setHeight] = useState(0);
-  const wrapRef = useRef<HTMLDivElement>(null);
-
-  // 👇 tweak this to taste (px)
-  const BASE_GAP = 10; // small extra padding below the header
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -22,29 +18,12 @@ export default function StickyHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useLayoutEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-
-    const update = () => setHeight(el.getBoundingClientRect().height);
-    update();
-
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-
-    window.addEventListener("resize", update);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
   return (
     <>
+      {/* Fixed header */}
       <div
-        ref={wrapRef}
         className={[
-          "fixed top-0 inset-x-0 z-50 transition-all border-b",
+          "fixed top-0 inset-x-0 z-50 border-b transition-all",
           scrolled
             ? "backdrop-blur bg-black/40 border-white/10"
             : "bg-transparent border-transparent",
@@ -52,14 +31,20 @@ export default function StickyHeader() {
         // Respect iOS notch
         style={{ paddingTop: "env(safe-area-inset-top)" }}
       >
-        <Header />
+        {/* Force a known header height at each breakpoint */}
+        <div className="h-[var(--header-h)] flex items-center">
+          <Header />
+        </div>
       </div>
 
-      {/* Spacer equals measured header height + a little extra */}
+      {/* Exact spacer: header height + safe-area + small base gap */}
       <div
         aria-hidden="true"
-        style={{ height: height + BASE_GAP }}
-        className="min-h-14 sm:min-h-16"
+        className="w-full"
+        style={{
+          height:
+            "calc(var(--header-h) + env(safe-area-inset-top) + var(--header-gap))",
+        }}
       />
     </>
   );
