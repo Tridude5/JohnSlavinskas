@@ -18,29 +18,33 @@ export const metadata: Metadata = {
   description:
     "Portfolio of John Slavinskas — Paper Engineer blending sustainable materials research, software/ML, and quantitative finance.",
 
-  // Match your /public/favicons files exactly
+  // ✅ Matches your /public/favicons files exactly
   icons: {
     icon: [
-      { url: "/favicons/favicon-32.png?v=9", sizes: "32x32", type: "image/png" },
-      { url: "/favicons/favicon-16.png?v=9", sizes: "16x16", type: "image/png" },
-      { url: "/favicons/favicon.ico?v=9" }, // classic fallback
+      { url: "/favicons/favicon-32.png?v=10", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-16.png?v=10", sizes: "16x16", type: "image/png" },
+      { url: "/favicons/favicon.ico?v=10" }, // classic .ico fallback
     ],
-    apple: [{ url: "/favicons/apple-touch-icon.png?v=9", sizes: "180x180" }],
+    apple: [{ url: "/favicons/apple-touch-icon.png?v=10", sizes: "180x180" }],
+    // legacy alias some user agents still read:
+    shortcut: ["/favicons/favicon.ico?v=10"],
   },
-  manifest: "/favicons/manifest.json?v=9",
+
+  manifest: "/favicons/manifest.json?v=10",
   themeColor: "#0B0F1A",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      {/* Extra insurance: explicit <link>s */}
+      {/* Extra insurance: explicit <link>s in case something overrides metadata */}
       <head>
-        <link rel="icon" href="/favicons/favicon-32.png?v=9" sizes="32x32" type="image/png" />
-        <link rel="icon" href="/favicons/favicon-16.png?v=9" sizes="16x16" type="image/png" />
-        <link rel="icon" href="/favicons/favicon.ico?v=9" />
-        <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png?v=9" />
-        <link rel="manifest" href="/favicons/manifest.json?v=9" />
+        <link rel="icon" href="/favicons/favicon-32.png?v=10" sizes="32x32" type="image/png" />
+        <link rel="icon" href="/favicons/favicon-16.png?v=10" sizes="16x16" type="image/png" />
+        <link rel="icon" href="/favicons/favicon.ico?v=10" />
+        <link rel="shortcut icon" href="/favicons/favicon.ico?v=10" />
+        <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png?v=10" />
+        <link rel="manifest" href="/favicons/manifest.json?v=10" />
         <meta name="theme-color" content="#0B0F1A" />
       </head>
 
