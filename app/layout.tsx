@@ -1,14 +1,13 @@
-// /app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { baseMetadata } from "@/app/seo.config";
-import JsonLdPerson from "@/components/JsonLd";
+import { baseMetadata } from "@/app/seo.config";   // ⬅️ central SEO config
+import JsonLdPerson from "@/components/JsonLd";     // ⬅️ JSON-LD <script/>
+
 import { I18nProvider } from "@/components/i18n/I18nProvider";
 import Footer from "@/components/Footer";
 import AppEffects from "@/components/AppEffects";
 
-// NEW: sticky wrapper that *renders your Header inside*
 import StickyHeader from "@/components/StickyHeader";
 
 export const metadata: Metadata = {
@@ -24,15 +23,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      {/* pt-16 offsets the fixed header height (≈ h-14). 
-         If your Header is taller, bump this to pt-20. */}
-      <body className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased pt-16">
+      {/* No fixed top padding here — StickyHeader adds an exact spacer */}
+      <body className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased">
         <AppEffects />
         <I18nProvider>
           <StickyHeader />
           <main className="flex-1">{children}</main>
           <Footer />
         </I18nProvider>
+        {/* SEO: JSON-LD (Person) */}
         <JsonLdPerson />
       </body>
     </html>
