@@ -6,9 +6,9 @@ import { baseMetadata } from "@/app/seo.config";
 import JsonLdPerson from "@/components/JsonLd";
 
 import { I18nProvider } from "@/components/i18n/I18nProvider";
+import Header from "@/components/Header";           // ⬅️ use Header (not StickyHeader)
 import Footer from "@/components/Footer";
 import AppEffects from "@/components/AppEffects";
-import StickyHeader from "@/components/StickyHeader";
 
 export const metadata: Metadata = {
   ...baseMetadata,
@@ -23,11 +23,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      {/* No top padding here — header remains in flow since it's sticky */}
+      {/* Header is sticky itself, so no special padding needed here */}
       <body className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased">
         <AppEffects />
         <I18nProvider>
-          <StickyHeader />
+          <Header />
           <main className="flex-1">{children}</main>
           <Footer />
         </I18nProvider>
