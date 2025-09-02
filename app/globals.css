@@ -9,7 +9,7 @@
   --card: 249 250 251;
   --ring: 16 185 129;
 
-  /* ⬇️ NEW: header sizing tokens */
+  /* header sizing tokens */
   --header-h: 56px;   /* mobile header height */
   --header-gap: 8px;  /* small base gap below the header */
 }
@@ -24,7 +24,7 @@
   }
 }
 
-/* ⬇️ NEW: bump header height on sm+ screens */
+/* bump header height on sm+ screens */
 @media (min-width: 640px) {
   :root { --header-h: 64px; }
 }
@@ -40,6 +40,15 @@ body{
     radial-gradient(1000px 800px at -20% 10%, rgba(16,185,129,0.06), transparent 35%),
     rgb(var(--bg));
   font-feature-settings: "cv02","cv03","ss01","ss03";
+}
+
+/* === NEW: keep in-page targets fully below the sticky header === */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h, 64px) + env(safe-area-inset-top) + var(--header-gap, 8px));
+}
+[id] {
+  scroll-margin-top: calc(var(--header-h, 64px) + env(safe-area-inset-top) + var(--header-gap, 8px));
 }
 
 /* Fancy underline utility */
