@@ -1,4 +1,3 @@
-// /app/page.tsx (or your home page file)
 "use client";
 
 import React from "react";
@@ -79,11 +78,10 @@ const exp: TLItem[] = [
 
 /* ---------- Page ---------- */
 export default function Page() {
-  // keep using base for images if you want, CTAs below use relative paths for GH Pages
+  // keep base for images if you like; CTAs use relative paths for GH Pages
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const { t } = useI18n();
 
-  // external resume page
   const EXTERNAL_RESUME_URL = "https://tridude5.github.io/JohnSlavinskas/resume/";
 
   return (
@@ -120,7 +118,7 @@ export default function Page() {
               <DynamicHeroKpis publicationsCount={6} />
             </div>
 
-            {/* CTAs — hover lift (no conflict with the magnetic transform) */}
+            {/* CTAs — hover lift (applied to INNER span via className) */}
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
               {/* Primary */}
               <MagneticButton
@@ -162,7 +160,7 @@ export default function Page() {
                 <Tx>View Projects</Tx>
               </MagneticButton>
 
-              {/* Bottom row */}
+              {/* Bottom row (plain anchors keep the same outline look) */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
