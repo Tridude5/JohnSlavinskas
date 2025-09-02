@@ -4,16 +4,15 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 
 /**
- * Renders your original <Header /> fixed at the top, with a glassy background on scroll.
- * Automatically inserts a spacer div matching the header's real height,
- * so you never have to guess padding in the layout.
+ * Fixed, glassy header that auto-reserves space below it.
+ * - Adds safe-area inset for iOS notches.
+ * - Provides a small min-height fallback so content isn't cut off before JS runs.
  */
 export default function StickyHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [height, setHeight] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
 
-  // Track scroll for the glass effect
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     onScroll();
@@ -21,7 +20,6 @@ export default function StickyHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Measure header height and update on resize/content changes
   useLayoutEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
@@ -49,13 +47,14 @@ export default function StickyHeader() {
             ? "backdrop-blur bg-black/40 border-white/10"
             : "bg-transparent border-transparent",
         ].join(" ")}
+        // Respect iOS notch; this also increases measured height so spacer matches.
+        style={{ paddingTop: "env(safe-area-inset-top)" }}
       >
-        {/* Your original header content (branding + language switch) */}
         <Header />
       </div>
 
-      {/* Exact spacer so content starts right below the fixed header */}
-      <div aria-hidden="true" style={{ height }} />
+      {/* Exact spacer; with a small fallback so content isn't cut off before measurement */}
+      <div aria-hidden="true" style={{ height }} className="min-h-14 sm:min-h-16" />
     </>
   );
 }
