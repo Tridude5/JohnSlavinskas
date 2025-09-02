@@ -11,7 +11,7 @@
 
   /* header sizing tokens */
   --header-h: 56px;   /* mobile header height */
-  --header-gap: 8px;  /* small base gap below the header */
+  --header-gap: 4px;  /* small base gap below the header */
 }
 
 /* Keep your dark palette */
