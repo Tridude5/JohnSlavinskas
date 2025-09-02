@@ -19,17 +19,20 @@ export const metadata: Metadata = {
   description:
     "Portfolio of John Slavinskas — Paper Engineer blending sustainable materials research, software/ML, and quantitative finance.",
 
-  // ✅ Wire up your unified dark favicons
+  // ✅ Robust favicon wiring (PNG + ICO + legacy "shortcut" + Apple + Safari pinned)
   icons: {
     icon: [
-      { url: "/favicons/favicon.ico" },
-      { url: "/favicons/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicons/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicons/favicon-32.png?v=6", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-16.png?v=6", sizes: "16x16", type: "image/png" },
+      { url: "/favicons/favicon.ico?v=6" }, // some browsers prefer .ico
     ],
-    apple: [{ url: "/favicons/apple-touch-icon.png", sizes: "180x180" }],
+    shortcut: ["/favicons/favicon.ico?v=6"], // legacy alias some UAs still read
+    apple: [{ url: "/favicons/apple-touch-icon.png?v=6", sizes: "180x180" }],
+    other: [{ rel: "mask-icon", url: "/favicons/safari-pinned-tab.svg?v=6" }], // Safari pinned tab
   },
-  manifest: "/favicons/manifest.json",
-  // optional but nice for mobile status bar colors
+
+  manifest: "/favicons/manifest.json?v=6",
+  // Nice touch for mobile status bar / PWA
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#0B0F1A" },
     { media: "(prefers-color-scheme: dark)", color: "#0B0F1A" },
