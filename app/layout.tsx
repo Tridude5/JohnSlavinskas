@@ -18,34 +18,29 @@ export const metadata: Metadata = {
   description:
     "Portfolio of John Slavinskas — Paper Engineer blending sustainable materials research, software/ML, and quantitative finance.",
 
-  // ✅ Favicon wiring (matches /public/favicons exactly)
+  // Match your /public/favicons files exactly
   icons: {
     icon: [
-      { url: "/favicons/favicon-32.png?v=8", sizes: "32x32", type: "image/png" },
-      { url: "/favicons/favicon-16.png?v=8", sizes: "16x16", type: "image/png" },
-      { url: "/favicons/favicon.ico?v=8" }, // classic .ico fallback
+      { url: "/favicons/favicon-32.png?v=9", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-16.png?v=9", sizes: "16x16", type: "image/png" },
+      { url: "/favicons/favicon.ico?v=9" }, // classic fallback
     ],
-    // (no mask-icon added because there's no safari-pinned-tab.svg in your folder)
-    apple: [{ url: "/favicons/apple-touch-icon.png?v=8", sizes: "180x180" }],
+    apple: [{ url: "/favicons/apple-touch-icon.png?v=9", sizes: "180x180" }],
   },
-
-  manifest: "/favicons/manifest.json?v=8",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#0B0F1A" },
-    { media: "(prefers-color-scheme: dark)", color: "#0B0F1A" },
-  ],
+  manifest: "/favicons/manifest.json?v=9",
+  themeColor: "#0B0F1A",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      {/* Extra insurance: explicit <link>s */}
       <head>
-        {/* Extra safety: explicit <link>s in case something overrides metadata elsewhere */}
-        <link rel="icon" href="/favicons/favicon-32.png?v=8" sizes="32x32" type="image/png" />
-        <link rel="icon" href="/favicons/favicon-16.png?v=8" sizes="16x16" type="image/png" />
-        <link rel="icon" href="/favicons/favicon.ico?v=8" />
-        <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png?v=8" />
-        <link rel="manifest" href="/favicons/manifest.json?v=8" />
+        <link rel="icon" href="/favicons/favicon-32.png?v=9" sizes="32x32" type="image/png" />
+        <link rel="icon" href="/favicons/favicon-16.png?v=9" sizes="16x16" type="image/png" />
+        <link rel="icon" href="/favicons/favicon.ico?v=9" />
+        <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png?v=9" />
+        <link rel="manifest" href="/favicons/manifest.json?v=9" />
         <meta name="theme-color" content="#0B0F1A" />
       </head>
 
