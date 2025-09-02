@@ -78,7 +78,6 @@ const exp: TLItem[] = [
 
 /* ---------- Page ---------- */
 export default function Page() {
-  // keep base for images if you like; CTAs use relative paths for GH Pages
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const { t } = useI18n();
 
@@ -86,17 +85,15 @@ export default function Page() {
 
   return (
     <>
-      {/* HERO — polished background & fades */}
-      <header className="container relative pt-20 pb-10 overflow-hidden">
+      {/* HERO — tighter top/bottom so CTAs show above the fold */}
+      <header className="container relative pt-12 pb-6 overflow-hidden sm:pt-14 sm:pb-8 md:pt-16 md:pb-10">
         <div className="absolute inset-0 -z-10">
           <BlueprintFX />
-          {/* soft vignette from top */}
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-black/30" />
-          {/* fade to content at bottom */}
-          <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none bg-gradient-to-t from-black/40 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-20 sm:h-24 pointer-events-none bg-gradient-to-t from-black/40 to-transparent" />
         </div>
 
-        <div className="grid gap-5 sm:gap-8 md:grid-cols-12 items-start relative">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-12 items-start relative">
           {/* Left */}
           <div className="min-w-0 md:col-span-7">
             <p className="text-sm uppercase tracking-widest text-gray-500">
@@ -107,20 +104,19 @@ export default function Page() {
               John (Jack) Slavinskas
             </h1>
 
-            <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-200 max-w-2xl">
+            <p className="mt-2 sm:mt-3 text-base sm:text-lg text-gray-600 dark:text-gray-200 max-w-2xl">
               <Tx>
                 I work at the overlap of materials and software. International experience (Europe & North America).
                 I turn lignin and other biobased research into clean data, simple models, and small tools that help teams decide faster.
               </Tx>
             </p>
 
-            <div className="mt-6 max-w-xl min-w-0 overflow-hidden">
+            <div className="mt-4 sm:mt-5 max-w-xl min-w-0 overflow-hidden">
               <DynamicHeroKpis publicationsCount={6} />
             </div>
 
-            {/* CTAs — hover lift (applied to INNER span via className) */}
-            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
-              {/* Primary */}
+            {/* CTAs — tightened spacing */}
+            <div className="mt-4 sm:mt-5 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
               <MagneticButton
                 href={EXTERNAL_RESUME_URL}
                 className="btn w-full h-full inline-flex justify-center text-center text-[13px] sm:text-sm
@@ -130,7 +126,6 @@ export default function Page() {
                 <Tx>See Resume</Tx>
               </MagneticButton>
 
-              {/* Outline (downloads + projects) */}
               <MagneticButton
                 href={"downloads/Resume%20P.pdf"}
                 download="John_Slavinskas_Resume_1p.pdf"
@@ -160,7 +155,7 @@ export default function Page() {
                 <Tx>View Projects</Tx>
               </MagneticButton>
 
-              {/* Bottom row (plain anchors keep the same outline look) */}
+              {/* Bottom row */}
               <a
                 href="https://github.com/Tridude5"
                 target="_blank"
@@ -264,7 +259,6 @@ export default function Page() {
                 lg:auto-rows-[300px]
               "
             >
-              {/* LEFT — wider, tall */}
               <PhotoTile
                 src={`${base}/downloads/1683206302513.jfif`}
                 alt="Resume picture — headshot"
@@ -275,7 +269,6 @@ export default function Page() {
                 priority
               />
 
-              {/* TOP RIGHT — wide */}
               <PhotoTile
                 src={`${base}/downloads/Christmas_Market_Munich.jpg`}
                 alt="Christmas Market with friends in Munich"
@@ -285,7 +278,6 @@ export default function Page() {
                 sizes="(max-width: 640px) 100vw, 50vw"
               />
 
-              {/* BOTTOM RIGHT — tall */}
               <PhotoTile
                 src={`${base}/downloads/Caving_Syracuse.jpg`}
                 alt="Caving in Syracuse"
@@ -296,7 +288,6 @@ export default function Page() {
                 objectPosition="50% 45%"
               />
 
-              {/* FAR RIGHT — tall */}
               <PhotoTile
                 src={`${base}/downloads/Salzburg.jpg`}
                 alt="Salzburg, Austria"
