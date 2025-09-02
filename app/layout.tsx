@@ -1,13 +1,13 @@
+// /app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { baseMetadata } from "@/app/seo.config";   // ⬅️ central SEO config
-import JsonLdPerson from "@/components/JsonLd";     // ⬅️ JSON-LD <script/>
+import { baseMetadata } from "@/app/seo.config";
+import JsonLdPerson from "@/components/JsonLd";
 
 import { I18nProvider } from "@/components/i18n/I18nProvider";
 import Footer from "@/components/Footer";
 import AppEffects from "@/components/AppEffects";
-
 import StickyHeader from "@/components/StickyHeader";
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      {/* No fixed top padding here — StickyHeader adds an exact spacer */}
+      {/* No top padding here — header remains in flow since it's sticky */}
       <body className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased">
         <AppEffects />
         <I18nProvider>
@@ -31,7 +31,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-1">{children}</main>
           <Footer />
         </I18nProvider>
-        {/* SEO: JSON-LD (Person) */}
         <JsonLdPerson />
       </body>
     </html>
