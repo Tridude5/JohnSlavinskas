@@ -4,9 +4,8 @@ import "./globals.css";
 
 import { baseMetadata } from "@/app/seo.config";
 import JsonLdPerson from "@/components/JsonLd";
-
 import { I18nProvider } from "@/components/i18n/I18nProvider";
-import Header from "@/components/Header";           // ⬅️ use Header (not StickyHeader)
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppEffects from "@/components/AppEffects";
 
@@ -19,20 +18,18 @@ export const metadata: Metadata = {
   description:
     "Portfolio of John Slavinskas — Paper Engineer blending sustainable materials research, software/ML, and quantitative finance.",
 
-  // ✅ Robust favicon wiring (PNG + ICO + legacy "shortcut" + Apple + Safari pinned)
+  // ✅ Favicon wiring (matches /public/favicons exactly)
   icons: {
     icon: [
-      { url: "/favicons/favicon-32.png?v=6", sizes: "32x32", type: "image/png" },
-      { url: "/favicons/favicon-16.png?v=6", sizes: "16x16", type: "image/png" },
-      { url: "/favicons/favicon.ico?v=6" }, // some browsers prefer .ico
+      { url: "/favicons/favicon-32.png?v=8", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-16.png?v=8", sizes: "16x16", type: "image/png" },
+      { url: "/favicons/favicon.ico?v=8" }, // classic .ico fallback
     ],
-    shortcut: ["/favicons/favicon.ico?v=6"], // legacy alias some UAs still read
-    apple: [{ url: "/favicons/apple-touch-icon.png?v=6", sizes: "180x180" }],
-    other: [{ rel: "mask-icon", url: "/favicons/safari-pinned-tab.svg?v=6" }], // Safari pinned tab
+    // (no mask-icon added because there's no safari-pinned-tab.svg in your folder)
+    apple: [{ url: "/favicons/apple-touch-icon.png?v=8", sizes: "180x180" }],
   },
 
-  manifest: "/favicons/manifest.json?v=6",
-  // Nice touch for mobile status bar / PWA
+  manifest: "/favicons/manifest.json?v=8",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#0B0F1A" },
     { media: "(prefers-color-scheme: dark)", color: "#0B0F1A" },
@@ -42,7 +39,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      {/* Header is sticky itself, so no special padding needed here */}
+      <head>
+        {/* Extra safety: explicit <link>s in case something overrides metadata elsewhere */}
+        <link rel="icon" href="/favicons/favicon-32.png?v=8" sizes="32x32" type="image/png" />
+        <link rel="icon" href="/favicons/favicon-16.png?v=8" sizes="16x16" type="image/png" />
+        <link rel="icon" href="/favicons/favicon.ico?v=8" />
+        <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png?v=8" />
+        <link rel="manifest" href="/favicons/manifest.json?v=8" />
+        <meta name="theme-color" content="#0B0F1A" />
+      </head>
+
       <body className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased">
         <AppEffects />
         <I18nProvider>
