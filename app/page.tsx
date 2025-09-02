@@ -85,38 +85,42 @@ export default function Page() {
 
   return (
     <>
-      {/* HERO — tighter top/bottom so CTAs show above the fold */}
-      <header className="container relative pt-12 pb-6 overflow-hidden sm:pt-14 sm:pb-8 md:pt-16 md:pb-10">
+      {/* HERO — trimmed spacing so CTAs show sooner */}
+      <header className="container relative overflow-hidden pt-6 sm:pt-6 md:pt-5 lg:pt-4 pb-4">
         <div className="absolute inset-0 -z-10">
           <BlueprintFX />
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-black/30" />
-          <div className="absolute inset-x-0 bottom-0 h-20 sm:h-24 pointer-events-none bg-gradient-to-t from-black/40 to-transparent" />
+          {/* slightly shorter fade */}
+          <div className="absolute inset-x-0 bottom-0 h-16 sm:h-18 pointer-events-none bg-gradient-to-t from-black/40 to-transparent" />
         </div>
 
-        <div className="grid gap-4 sm:gap-6 md:grid-cols-12 items-start relative">
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-12 items-start relative">
           {/* Left */}
           <div className="min-w-0 md:col-span-7">
             <p className="text-sm uppercase tracking-widest text-gray-500">
               <Tx>Materials × Software × Finance</Tx>
             </p>
 
-            <h1 className="mt-1 text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight bg-gradient-to-r from-emerald-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent break-words">
+            {/* mt-0 (was mt-1) */}
+            <h1 className="mt-0 text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight bg-gradient-to-r from-emerald-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent break-words">
               John (Jack) Slavinskas
             </h1>
 
-            <p className="mt-2 sm:mt-3 text-base sm:text-lg text-gray-600 dark:text-gray-200 max-w-2xl">
+            {/* mt-3 (was mt-2/3/4 previously) */}
+            <p className="mt-3 text-base sm:text-lg text-gray-600 dark:text-gray-200 max-w-2xl">
               <Tx>
                 I work at the overlap of materials and software. International experience (Europe & North America).
                 I turn lignin and other biobased research into clean data, simple models, and small tools that help teams decide faster.
               </Tx>
             </p>
 
-            <div className="mt-4 sm:mt-5 max-w-xl min-w-0 overflow-hidden">
+            {/* mt-4 (was mt-6/5) */}
+            <div className="mt-4 max-w-xl min-w-0 overflow-hidden">
               <DynamicHeroKpis publicationsCount={6} />
             </div>
 
-            {/* CTAs — tightened spacing */}
-            <div className="mt-4 sm:mt-5 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
+            {/* CTAs — mt-3 (was mt-4/5/6) */}
+            <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[3.25rem]">
               <MagneticButton
                 href={EXTERNAL_RESUME_URL}
                 className="btn w-full h-full inline-flex justify-center text-center text-[13px] sm:text-sm
