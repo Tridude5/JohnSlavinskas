@@ -18,19 +18,20 @@ export const metadata: Metadata = {
   description:
     "Portfolio of John Slavinskas — Paper Engineer blending sustainable materials research, software/ML, and quantitative finance.",
 
-  // Google-friendly: stable 48x48 PNG + root ICO (no query strings)
+  // Files live in /public, so link with *relative* URLs (work under /JohnSlavinskas/)
   icons: {
     icon: [
-      { url: "/favicons/favicon-48.png", sizes: "48x48", type: "image/png" },
-      { url: "/favicon.ico", sizes: "any" }, // classic root .ico
-      // optional extras for browsers
-      { url: "/favicons/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicons/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "favicon-48.png", sizes: "48x48", type: "image/png" }, // Google Search prefers 48x48
+      { url: "favicon.ico", sizes: "any" },                         // classic fallback
+      // Optional extras:
+      { url: "favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "favicon-16.png", sizes: "16x16", type: "image/png" },
     ],
-    apple: [{ url: "/favicons/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [{ url: "apple-touch-icon.png", sizes: "180x180" }],     // optional
   },
 
-  manifest: "/favicons/manifest.json",
+  // Keep only if you placed a manifest at /public/manifest.json
+  manifest: "manifest.json",
   themeColor: "#000000",
 };
 
