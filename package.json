@@ -6,7 +6,7 @@
     "fetch:contrib": "node scripts/fetch-contrib.mjs",
     "prebuild": "npm run fetch:contrib",
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
     "preview": "npx http-server ./out -p 3000"
   },
   "dependencies": {
