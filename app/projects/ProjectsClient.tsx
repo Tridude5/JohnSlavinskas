@@ -77,7 +77,7 @@ Ran rolling-window backtests comparing climate-informed models to market-only ba
 Analyzed regime probabilities, allocation stability, and risk-adjusted performance
 
 Result:
-Financial indicators remained the primary drivers of regime changes, while climate variables influenced markets indirectly through pricing and policy channels, contributing to smoother regime transitions and improved risk-adjusted performance rather than acting as leading predictors.`,
+The model showed that financial indicators remain the primary drivers of regime changes, while climate variables influence markets indirectly through pricing and policy channels, contributing to smoother regime transitions and improved risk-adjusted performance rather than acting as leading predictors.`,
 Learned and visualized directional dependency structures using DAGs
 Ran rolling-window backtests comparing climate-informed models to market-only baselines and a 60/40 portfolio
 Analyzed regime probabilities, allocation stability, and risk-adjusted performance
