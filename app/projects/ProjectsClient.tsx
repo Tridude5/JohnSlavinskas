@@ -64,13 +64,22 @@ const projects: Project[] = [
   },
   {
     id: "wqu-capstone",
-    title: "WorldQuant University Capstone",
-    subtitle: "M.S. Financial Engineering",
-    status: "Planned",
-    period: "Target: Dec 2025",
+    title: "Capstone Project — Climate-Informed Regime Modeling with Dynamic Bayesian Networks",
+    subtitle: "WQU University Capstone",
+    status: "Completed",
+    period: "Sep-Dec 2025",
     summary:
-      "Capstone slated for December 2025. Topic TBD; likely directions include portfolio optimization, time-series modeling, or derivatives pricing.",
-    tags: ["finance", "ml"],
+      "Developed a climate-aware Dynamic Bayesian Decision Network (DBDN) to study how climate indicators and financial variables interact over time and influence market risk regimes. Built the full data pipeline, trained the network, and evaluated whether climate information improves regime detection and portfolio decisions relative to market-only models.
+
+Integrated climate indicators (temperature anomalies, carbon prices, climate policy uncertainty) with core market variables
+Designed and trained a Dynamic Bayesian Decision Network with regime, decision, and utility nodes
+Learned and visualized directional dependency structures using DAGs
+Ran rolling-window backtests comparing climate-informed models to market-only baselines and a 60/40 portfolio
+Analyzed regime probabilities, allocation stability, and risk-adjusted performance
+
+Result:
+The model showed that financial indicators remain the primary drivers of regime changes, while climate variables influence markets indirectly through pricing and policy channels, contributing to smoother regime transitions and improved risk-adjusted performance rather than acting as leading predictors.",
+    tags: ["bayesian networks", "DBN", "climate risk", "regime modeling", "python"],
   },
 ];
 
