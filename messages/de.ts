@@ -145,7 +145,7 @@ export default {
 
   // NEW: split labels/values used in your page
   "Capstone:": "Abschlussprojekt:",
-  "Sustainability (TBD).": "Nachhaltigkeit (folgt).",
+  "Climate-Informed Regime Modeling: Integrating Climate Risk into Dynamic Bayesian Decision Networks": "Klimainformierte Regimemodellierung: Integration von Klimarisiken in dynamische bayessche Entscheidungsnetzwerke",
 
   "MEng Paper Technology": "MEng Papiertechnik",
   "Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)": "Hochschule München (HM) · Okt 2023 – Jul 2025 (ZEvA)",
@@ -267,13 +267,30 @@ export default {
   "product": "Produkt",
 
   "Planned": "Geplant",
-  "WorldQuant University Capstone": "WorldQuant University Capstone",
-  "M.S. Financial Engineering": "M.Sc. Finanzingenieurwesen",
-  "Target: Dec 2025": "Ziel: Dez 2025",
-  "Capstone slated for December 2025. Topic TBD; likely directions include portfolio optimization, time-series modeling, or derivatives pricing.":
-    "Abschlussprojekt für Dezember 2025 geplant. Thema TBD; voraussichtliche Richtungen: Portfolio-Optimierung, Zeitreihen-Modellierung oder Derivate-Bewertung.",
-  "finance": "Finanzen",
-  "ml": "ML",
+  "Capstone Project — Climate-Informed Regime Modeling with Dynamic Bayesian Networks": "Klimainformierte Regimemodellierung: Integration von Klimarisiken in dynamische bayessche Entscheidungsnetzwerke",
+  "WorldQuant University Capstone": "WQU-Abschlussprojekt",
+
+  "I developed a climate-aware Dynamic Bayesian Decision Network (DBDN) to study how climate indicators and financial variables interact over time and influence market risk regimes. I built the full data pipeline, trained the network, and evaluated whether climate information improves regime detection and portfolio decisions relative to market-only models. Results showed that financial indicators remained the primary drivers of regime changes, while climate variables influenced markets indirectly through pricing and policy channels, contributing to smoother regime transitions and improved risk-adjusted performance.":
+  "Ich entwickelte ein klimainformiertes dynamisches bayessches Entscheidungsnetzwerk (DBDN), um zu untersuchen, wie Klimaindikatoren und Finanzvariablen im Zeitverlauf interagieren und Marktrisikoregime beeinflussen. Ich baute die vollständige Datenpipeline, trainierte das Netzwerk und evaluierte, ob Klimainformationen die Regimeerkennung und Portfolioentscheidungen gegenüber rein marktbasierten Modellen verbessern. Die Ergebnisse zeigten, dass Finanzindikatoren die primären Treiber von Regimewechseln bleiben, während Klimavariablen die Märkte indirekt über Preis- und Politikkanäle beeinflussen und zu stabileren Regimeübergängen sowie einer verbesserten risikoadjustierten Performance beitragen.",
+
+  "Integrated climate indicators (temperature anomalies, carbon prices, climate policy uncertainty) with core market variables":
+  "Klimaindikatoren (Temperaturanomalien, CO₂-Preise, klimapolitische Unsicherheit) mit zentralen Marktvariablen integriert",
+
+"Designed and trained a Dynamic Bayesian Decision Network with regime, decision, and utility nodes":
+  "Ein dynamisches bayessches Entscheidungsnetzwerk mit Regime-, Entscheidungs- und Nutzenknoten entworfen und trainiert",
+
+"Learned and visualized directional dependency structures using DAGs":
+  "Gerichtete Abhängigkeitsstrukturen mittels DAGs erlernt und visualisiert",
+
+"Ran rolling-window backtests comparing climate-informed models to market-only baselines and a 60/40 portfolio":
+  "Rolling-Window-Backtests durchgeführt und klimainformierte Modelle mit rein marktbasierten Baselines sowie einem 60/40-Portfolio verglichen",
+
+  "bayesian networks": "Bayessche Netze",
+"DBN": "DBN",
+"climate risk": "Klimarisiken",
+"regime modeling": "Regimemodellierung",
+"python": "Python",
+
 
   "Ask AI": "KI fragen",
   "Projects — John Slavinskas": "Projekte — John Slavinskas",
