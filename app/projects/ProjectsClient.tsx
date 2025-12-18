@@ -63,13 +63,12 @@ const projects: Project[] = [
     tags: ["software", "sports", "modeling", "product"],
   },
   {
-    {
-  id: "wqu-capstone",
-  title: "Capstone Project — Climate-Informed Regime Modeling with Dynamic Bayesian Networks",
-  subtitle: "WQU University Capstone",
-  status: "Completed",
-  period: "Sep-Dec 2025",
-  summary: `Developed a climate-aware Dynamic Bayesian Decision Network (DBDN) to study how climate indicators and financial variables interact over time and influence market risk regimes. Built the full data pipeline, trained the network, and evaluated whether climate information improves regime detection and portfolio decisions relative to market-only models.
+    id: "wqu-capstone",
+    title: "Capstone Project — Climate-Informed Regime Modeling with Dynamic Bayesian Networks",
+    subtitle: "WQU University Capstone",
+    status: "Completed",
+    period: "Sep-Dec 2025",
+    summary: `Developed a climate-aware Dynamic Bayesian Decision Network (DBDN) to study how climate indicators and financial variables interact over time and influence market risk regimes. Built the full data pipeline, trained the network, and evaluated whether climate information improves regime detection and portfolio decisions relative to market-only models.
 
 Integrated climate indicators (temperature anomalies, carbon prices, climate policy uncertainty) with core market variables
 Designed and trained a Dynamic Bayesian Decision Network with regime, decision, and utility nodes
@@ -79,9 +78,9 @@ Analyzed regime probabilities, allocation stability, and risk-adjusted performan
 
 Result:
 The model showed that financial indicators remain the primary drivers of regime changes, while climate variables influence markets indirectly through pricing and policy channels, contributing to smoother regime transitions and improved risk-adjusted performance rather than acting as leading predictors.`,
-  tags: ["bayesian networks", "DBN", "climate risk", "regime modeling", "python"],
-},
-
+    tags: ["bayesian networks", "DBN", "climate risk", "regime modeling", "python"],
+  },
+];
 
 // UI helpers
 function StatusBadge({ status }: { status: Project["status"] }) {
@@ -134,24 +133,26 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
 
       <div className={`${padding} relative`}>
         {/* status pill pinned top-right */}
-        <div className="absolute right-4 top-3 z-10"><StatusBadge status={p.status} /></div>
+        <div className="absolute right-4 top-3 z-10">
+          <StatusBadge status={p.status} />
+        </div>
 
         <div className={`flex flex-wrap items-start justify-between gap-3 ${gapRight}`}>
           <div>
             <h3 className={`${titleSize} font-semibold tracking-tight`}>{t(p.title)}</h3>
-            {p.subtitle && (
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t(p.subtitle)}</p>
-            )}
+            {p.subtitle && <p className="text-sm text-gray-500 dark:text-gray-400">{t(p.subtitle)}</p>}
           </div>
-          {p.period && (
-            <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{t(p.period)}</span>
-          )}
+          {p.period && <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{t(p.period)}</span>}
         </div>
 
         <p className="mt-3 text-sm text-gray-700 dark:text-gray-200 leading-6">{t(p.summary)}</p>
 
         {p.bullets && p.bullets.length > 0 && (
-          <ul className={`mt-3 list-disc pl-5 space-y-1 text-sm ${p.compact ? "hidden md:block md:space-y-0 md:list-none md:pl-0" : ""}`}>
+          <ul
+            className={`mt-3 list-disc pl-5 space-y-1 text-sm ${
+              p.compact ? "hidden md:block md:space-y-0 md:list-none md:pl-0" : ""
+            }`}
+          >
             {p.bullets.map((b, i) => (
               <li key={i}>{t(b)}</li>
             ))}
@@ -197,11 +198,7 @@ export default function ProjectsClient() {
   return (
     <div className="columns-1 md:columns-2 gap-6 [column-fill:_balance]">
       {projects.map((p, i) => (
-        <div
-          key={p.id ?? p.title}
-          id={p.id}
-          className="mb-6 break-inside-avoid scroll-mt-24"
-        >
+        <div key={p.id ?? p.title} id={p.id} className="mb-6 break-inside-avoid scroll-mt-24">
           <ProjectCard p={p} accentClass={accents[i % accents.length]} />
         </div>
       ))}
