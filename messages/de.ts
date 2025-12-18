@@ -249,7 +249,6 @@ export default {
   "materials": "Werkstoffe",
   "HSP": "HSP",
   "lignin": "Lignin",
-  "python": "Python",
   "ui": "UI",
 
   "In development": "In Entwicklung",
