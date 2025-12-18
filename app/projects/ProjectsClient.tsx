@@ -68,16 +68,15 @@ const projects: Project[] = [
     subtitle: "WQU University Capstone",
     status: "Completed",
     period: "Sep-Dec 2025",
-    summary: `Developed a climate-aware Dynamic Bayesian Decision Network (DBDN) to study how climate indicators and financial variables interact over time and influence market risk regimes. Built the full data pipeline, trained the network, and evaluated whether climate information improves regime detection and portfolio decisions relative to market-only models.
-
-Integrated climate indicators (temperature anomalies, carbon prices, climate policy uncertainty) with core market variables
-Designed and trained a Dynamic Bayesian Decision Network with regime, decision, and utility nodes
-Learned and visualized directional dependency structures using DAGs
-Ran rolling-window backtests comparing climate-informed models to market-only baselines and a 60/40 portfolio
-Analyzed regime probabilities, allocation stability, and risk-adjusted performance
-
-Result:
-The model showed that financial indicators remain the primary drivers of regime changes, while climate variables influence markets indirectly through pricing and policy channels, contributing to smoother regime transitions and improved risk-adjusted performance rather than acting as leading predictors.`,
+    summary:
+      "Developed a climate-aware Dynamic Bayesian Decision Network (DBDN) to study how climate indicators and financial variables interact over time and influence market risk regimes. Built the full data pipeline, trained the network, and evaluated whether climate information improves regime detection and portfolio decisions relative to market-only models.",
+    bullets: [
+      "Integrated climate indicators (temperature anomalies, carbon prices, climate policy uncertainty) with core market variables",
+      "Designed and trained a Dynamic Bayesian Decision Network with regime, decision, and utility nodes",
+      "Learned and visualized directional dependency structures using DAGs",
+      "Ran rolling-window backtests comparing climate-informed models to market-only baselines and a 60/40 portfolio",
+      "Result: Financial indicators remained the primary drivers of regime changes, while climate variables influenced markets indirectly through pricing and policy channels, contributing to smoother regime transitions and improved risk-adjusted performance",
+    ],
     tags: ["bayesian networks", "DBN", "climate risk", "regime modeling", "python"],
   },
 ];
@@ -101,38 +100,15 @@ function StatusBadge({ status }: { status: Project["status"] }) {
 function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
   const { t } = useI18n();
 
-  // track mouse position for a soft glimmer effect
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    el.style.setProperty("--x", `${x}px`);
-    el.style.setProperty("--y", `${y}px`);
-  };
-
   const padding = p.compact ? "p-5" : "p-6";
   const titleSize = p.compact ? "text-base" : "text-lg";
   const gapRight = p.compact ? "pr-24" : "pr-28";
 
   return (
-    <div
-      onMouseMove={handleMouseMove}
-      className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-zinc-900 shadow-sm transition-transform duration-300 will-change-transform hover:-translate-y-1 hover:shadow-xl"
-    >
-      {/* colorful top bar */}
+    <div className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-zinc-900 shadow-sm transition-transform duration-300 will-change-transform hover:-translate-y-1 hover:shadow-xl">
       <div className={`h-1 w-full bg-gradient-to-r transition-opacity duration-300 group-hover:opacity-90 ${accentClass}`} />
 
-      {/* soft glimmer following cursor */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          background: "radial-gradient(360px circle at var(--x) var(--y), rgba(255,255,255,0.12), transparent 40%)",
-        }}
-      />
-
       <div className={`${padding} relative`}>
-        {/* status pill pinned top-right */}
         <div className="absolute right-4 top-3 z-10">
           <StatusBadge status={p.status} />
         </div>
@@ -147,7 +123,7 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
 
         <p className="mt-3 text-sm text-gray-700 dark:text-gray-200 leading-6">{t(p.summary)}</p>
 
-        {p.bullets && p.bullets.length > 0 && (
+        {p.bullets && (
           <ul
             className={`mt-3 list-disc pl-5 space-y-1 text-sm ${
               p.compact ? "hidden md:block md:space-y-0 md:list-none md:pl-0" : ""
@@ -159,7 +135,7 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
           </ul>
         )}
 
-        {p.tags && p.tags.length > 0 && (
+        {p.tags && (
           <div className="mt-4 flex flex-wrap gap-2">
             {p.tags.map((tag) => (
               <span
@@ -168,16 +144,6 @@ function ProjectCard({ p, accentClass }: { p: Project; accentClass: string }) {
               >
                 {t(tag)}
               </span>
-            ))}
-          </div>
-        )}
-
-        {p.links && p.links.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {p.links.map((l) => (
-              <a key={l.href} href={l.href} className="btn-outline text-sm">
-                {t(l.label)}
-              </a>
             ))}
           </div>
         )}
@@ -194,7 +160,6 @@ export default function ProjectsClient() {
     "from-sky-400 via-cyan-400 to-blue-500",
   ];
 
-  // Masonry-style layout using CSS columns. Cards get natural, uneven stacking.
   return (
     <div className="columns-1 md:columns-2 gap-6 [column-fill:_balance]">
       {projects.map((p, i) => (
