@@ -310,13 +310,13 @@ export default function HomeClient() {
         <div className="grid md:grid-cols-3 gap-6">
           <FeaturedCard
             title="Eagle Scout Project"
-            blurb="Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers."
+            blurb="Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers"
             href="/projects#eagle-scout"
             accent="from-emerald-400 via-teal-400 to-emerald-500"
           />
           <FeaturedCard
             title="Prazise"
-            blurb="Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions. In active development."
+            blurb="Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions. In active development"
             href="/projects#prazise"
             accent="from-amber-400 via-orange-400 to-yellow-500"
           />
