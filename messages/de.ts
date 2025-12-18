@@ -144,7 +144,11 @@ export default {
   "WorldQuant University · Jan 2024 – Dec 2025 (DEAC)": "WorldQuant University · Jan 2024 – Dez 2025 (DEAC)",
 
   // NEW: split labels/values used in your page
-  "Capstone: Climate-Informed Regime Modeling: Integrating Climate Risk into Dynamic Bayesian Decision Networks": "Abchlussprojekt: Klimainformierte Regimemodellierung: Integration von Klimarisiken in dynamische bayessche Entscheidungsnetzwerke",
+  "Capstone:": "Abschlussprojekt:",
+
+"Climate-Informed Regime Modeling: Integrating Climate Risk into Dynamic Bayesian Decision Networks":
+  "Klimainformierte Regimemodellierung: Integration von Klimarisiken in dynamische bayessche Entscheidungsnetzwerke",
+
 
   "MEng Paper Technology": "MEng Papiertechnik",
   "Hochschule München (HM) · Oct 2023 – Jul 2025 (ZEvA)": "Hochschule München (HM) · Okt 2023 – Jul 2025 (ZEvA)",
