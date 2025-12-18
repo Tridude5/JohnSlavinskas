@@ -356,7 +356,8 @@ export default function HomeClient() {
                 <div className="text-gray-500"><Tx>WorldQuant University · Jan 2024 – Dec 2025 (DEAC)</Tx></div>
                 <div className="mt-1 text-gray-400">
                   <span className="font-medium text-gray-300"><Tx>Capstone:</Tx></span>{" "}
-                  <Tx>Sustainability (TBD).</Tx>
+                  <em><strong>Climate-Informed Regime Modeling:</strong></em> <em>Integrating Climate Risk into Dynamic Bayesian Decision Networks</em>
+
                 </div>
               </li>
               <li>
