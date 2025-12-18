@@ -322,7 +322,7 @@ export default function HomeClient() {
           />
           <FeaturedCard
             title="WQU Capstone — Climate Regimes"
-            blurb="Climate-informed regime modeling using a Dynamic Bayesian Decision Network. Tested whether climate risk improves market regime detection; results show financial indicators lead, while climate variables improve stability and risk-adjusted performance."
+            blurb="Dynamic Bayesian regime model testing whether climate risk improves market regime detection and portfolio stability"
             href="/projects"
             accent="from-violet-400 via-fuchsia-400 to-pink-500"
           />
