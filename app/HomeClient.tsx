@@ -310,19 +310,19 @@ export default function HomeClient() {
         <div className="grid md:grid-cols-3 gap-6">
           <FeaturedCard
             title="Eagle Scout Project"
-            blurb="Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers — built to last, delivered on time."
+            blurb="Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers."
             href="/projects#eagle-scout"
             accent="from-emerald-400 via-teal-400 to-emerald-500"
           />
           <FeaturedCard
             title="Prazise"
-            blurb="Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions — private by design. In active development."
+            blurb="Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions. In active development."
             href="/projects#prazise"
             accent="from-amber-400 via-orange-400 to-yellow-500"
           />
           <FeaturedCard
-            title="Efficient Frontier App"
-            blurb="Interactive mean-variance explorer with factor tilts, constraints, and stress tests — compare to benchmarks and export in one click."
+            title="WQU Capstone — Climate Regimes"
+            blurb="Climate-informed regime modeling using a Dynamic Bayesian Decision Network. Tested whether climate risk improves market regime detection; results show financial indicators lead, while climate variables improve stability and risk-adjusted performance."
             href="/projects"
             accent="from-violet-400 via-fuchsia-400 to-pink-500"
           />
