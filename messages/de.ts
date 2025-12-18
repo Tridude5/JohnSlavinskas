@@ -68,16 +68,16 @@ export default {
   "View project": "Projekt ansehen",
 
   "Eagle Scout Project": "Eagle-Scout-Projekt",
-  "Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers — built to last, delivered on time.":
-    "Individuelle Dugout-Aufbewahrungssysteme für die John Glenn High School. Geplant, genehmigt, finanziert und mit Freiwilligen umgesetzt — langlebig gebaut, pünktlich geliefert.",
+  "Custom dugout gear systems for John Glenn High School. Scoped, permitted, fundraised, and led volunteers":
+    "Individuelle Dugout-Aufbewahrungssysteme für die John Glenn High School. Geplant, genehmigt, finanziert und mit Freiwilligen umgesetzt",
 
   "Prazise": "Prazise",
-  "Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions — private by design. In active development.":
-    "Erholungsbewusste Trainings-Engine. Liest HF/HRV, Schlaf und jüngste Belastung, kalibriert Ziele automatisch und passt Einheiten an — datenschutzfreundlich konzipiert. In aktiver Entwicklung.",
+  "Recovery-aware training engine. Reads HR/HRV, sleep, and recent load to auto-calibrate targets and adjust sessions. In active development":
+    "Erholungsbewusste Trainings-Engine. Liest HF/HRV, Schlaf und jüngste Belastung, kalibriert Ziele automatisch und passt Einheiten an. In aktiver Entwicklung",
 
-  "Efficient Frontier App": "Efficient-Frontier-App",
-  "Interactive mean-variance explorer with factor tilts, constraints, and stress tests — compare to benchmarks and export in one click.":
-    "Interaktiver Mean-Variance-Explorer mit Faktor-Tilts, Restriktionen und Stresstests — mit Benchmarks vergleichen und mit einem Klick exportieren.",
+  "WQU Capstone — Climate Regimes": "WQU-Capstone — Klimaregime",
+  "Dynamic Bayesian regime model testing whether climate risk improves market regime detection and portfolio stability":
+    "Dynamisches bayessches Regimemodell zur Untersuchung, ob Klimarisiken die Erkennung von Marktregimen und die Portfoliostabilität verbessern",
 
   /* ===== EXPERIENCE (HOME) ===== */
   "Experience": "Erfahrung",
